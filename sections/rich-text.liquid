@@ -1,0 +1,481 @@
+<!-- rich-text.liquid -->
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+  <div class="{{ section.settings.setwidth }}">
+    {%- render 'style-section' -%}
+  <div class="section-block">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-12">
+      {%- if section.settings.title_top != blank -%}
+        <div class="subtop text-{{ section.settings.align-heading }} mb-2" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+      <h3 class="section-title-1 text-{{ section.settings.align-heading }} mb-3" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+        {{ section.settings.title }}
+      </h3>
+      {%- endif -%}
+      {% if section.settings.text != blank %}
+        <div class="rte text-{{ section.settings.align-heading }} txt-body-70">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+      <div class="text-{{ section.settings.align-heading }}">
+      {% for block in section.blocks %}
+        {%- case block.type -%}
+          {%- when 'spacer' -%}
+            <div class="hero-image__space" style="--hero-spacer: {{ block.settings.hero-spacer }}px;"></div>
+          {%- when 'sub_title' -%}
+              {%- if block.settings.subtitle != blank -%}
+                <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
+              {%- endif -%}
+            {%- when 'heading' -%}
+              {%- if block.settings.title -%}
+                <h2 class="mb-3 {{ block.settings.size_text }}">{{ block.settings.title }}</h2>
+              {%- endif -%}
+            {%- when 'paragraph' -%}
+              {%- if block.settings.subtext != blank -%}
+                <div class="m-0 parallax-banner__sub rte mb-3 txt-body">
+                  {{ block.settings.subtext }}
+                </div>
+              {%- endif -%}
+            {%- when 'image' -%}
+              <div class="d-flex {% if section.settings.align-heading == 'center' %} justify-content-center {%  elsif  section.settings.align-heading == 'right' %} justify-content-end {% endif %}">
+              {%- if block.settings.image != blank -%}
+                <div class="image-content__image-container overflow-hidden hero-img__wrap" style="--img-in-hero:{{ block.settings.img-in-hero }}px">
+                  <a href="{{ block.settings.image_link }}" class="image-content__image-wrapper" 
+                      style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                    {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                    <img class="image-content__image lazyload scale-in"
+                      src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
+                      data-src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}">
+                    </a >
+                </div>
+              {%- else -%}
+                <div class="image-content__image hero-img__wrap" style="--img-in-hero:{{ block.settings.img-in-hero }}px">
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {% endfor %}
+      <div class="d-flex justify-content-{{ section.settings.align-heading }} align-items-center">
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'button' -%}
+                {%- if block.settings.button != blank and block.settings.link != blank -%}
+                  <div class="mt-3">
+                    <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }}">
+                      {{ block.settings.button | escape }}
+                    </a>
+                  </div>
+                {%- endif -%}  
+            {%- endcase -%}
+        {%- endfor -%}
+        </div>
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "index-section-custom",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Talk about your brand"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sub_title",
+      "name": "Sub Title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Title",
+          "default": "Sub Title"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "Html / Description",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Html / Description",
+          "default": "Protection from the"
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "name": "Spacer",
+      "settings": [
+        {
+          "type": "range",
+          "id": "hero-spacer",
+          "min": 0,
+          "max": 100,
+          "step": 2,
+          "label": "Padding",
+          "default": 8
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "range",
+          "id": "img-in-hero",
+          "min": 0,
+          "max": 300,
+          "step": 4,
+          "label": "Width Image",
+          "default": 200
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link to"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button text",
+          "default": "discover now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link"
+        },
+        {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button",
+          "default": "btn-underline btn-underline-white",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+{%- if settings.second_image -%}
+{% if product.images.size > 1 %} 
+{%- assign image = product.images[1] -%}
+{%- assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+<img class="lazyload transition second-image" 
+    data-src="{{ img_url }}"
+    src="{{ image | image_url: width: 1, height: 1 }}"
+    data-widths="[180, 360, 540, 720]"
+    data-sizes="auto"
+    alt="{{ image.alt | escape }}"  
+    loading="lazy"
+    width="{{ image.width }}"
+    height="{{ image.height }}"/>
+    {%- endif -%}
+{%- endif -%}

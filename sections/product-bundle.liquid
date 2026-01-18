@@ -1,0 +1,460 @@
+{%- assign listProduct = product.metafields.custom.frequently_bought_together.value -%}
+{%- assign limit = section.settings.limit_bundle -%}
+{% if  listProduct != blank %}
+<style>
+
+  .fbt-item[data-checked="false"] .product-card__image-wr, .fbt-item[data-checked="false"] .fbt-item-price , .fbt-item[data-checked="false"]:before{
+    opacity: 0.3;
+  }
+  .fbt-item .product-card__info{
+    margin-bottom: 0;
+  }
+  .fbt-item:hover .first-image{
+    transform:none;
+  }
+  .fbt-checkbox{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .fbt-checkbox + label{
+    position: relative;
+  }
+  .fbt-checkbox + label:before{
+    width: 18px;
+    height: 18px;
+    content: "";
+    margin-right:8px;
+    display: inline-block;
+    vertical-align: text-top;
+    background-color: white;
+    border:1px solid var(--g-input-border);
+    border-radius: 2px;
+  }
+  .fbt-checkbox:checked + label:before{
+    border-color:var(--g-main);
+    background-color:var(--g-main);
+  }
+  .fbt-checkbox:checked + label:after{
+    position: absolute;
+    content:"";
+    left: 6px;
+    top: 4px;
+    width: 6px;
+    height:10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .fbt-wrap-box{
+    flex-wrap: wrap;
+    column-gap: calc(var(--g-gutter) + 10px );
+    row-gap: 20px;
+  }
+  .fbt-wrap-box .fbt-item{
+    max-width: calc(25% - calc(var(--g-gutter) + 10px ));
+    flex: 0 0 calc(25% - calc(var(--g-gutter) + 10px ));
+    height: auto;
+    position: relative;
+  }
+  /*.bundle-padding .fbt-wrap-box .fbt-item{
+    max-width: 160px;
+    flex: 0 0 160px;
+  }*/
+  
+  .fbt-wrap-box .fbt-item:not(:first-child):before{
+    font-family: var(--g-font-2);
+    content:"+";
+    position: absolute;
+    top:50%;
+    left:calc(0px - calc(var(--g-gutter) + 10px) + 8px);
+    width: 24px;
+    height:24px;
+    transform: translate(0,-50%);
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fbtproduct-form__variants{
+    margin-top: 8px;
+    border:1px solid  var(--g-input-border);
+    padding: 4px 32px 4px 16px;
+    background-color: transparent;
+    border-radius: var(--g-input-radius);
+  }
+  @media(max-width:480px){
+    .fbt-wrap-box .fbt-item:not(:first-child):before{
+      left:calc(0px - calc(var(--g-gutter) - 4px));
+    }
+    .fbt-wrap-box{
+      column-gap: calc(var(--g-gutter));
+    }
+    .bundle-padding .fbt-wrap-box .fbt-item{
+      max-width: calc(50% - calc(var(--g-gutter)/2));
+      flex: 0 0 calc(50% - calc(var(--g-gutter)/2));
+    }
+  }
+  
+  .fbtproduct-form__variants option{
+    color:var(--color-body-text);
+    font-size: 14px;
+  }
+  .fbtproduct-form__variants option:disabled {
+      color: rgba(var(--color-body-text-rgb),0.5);
+  }
+  .fpt-total{
+    color: var(--g-main);
+    font-weight: 600;
+    font-size: var(--g-h4-font-size);
+  }
+  .fpt-totalcompare{
+    text-decoration: line-through;
+    color:rgba(var(--color-body-text-rgb),.6);
+  }
+  .bundle-padding{
+    padding:2rem;
+  }
+  @media(max-width:480px){
+    .bundle-padding{
+      padding:2rem 1.5rem;
+    }
+    .fbtright-box{
+      border-top:1px solid rgba(var(--g-color-heading-rgb),.1);
+    }
+  }
+</style>
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" 
+data-section-id="{{ section.id }}"  
+data-section-type="bundleproduct" >
+  <div class="container">
+    <div class="{% if section.settings.enable_border %} border bundle-padding {% endif %}">
+        {% if section.settings.bundle_title != blank %}
+          <h4 class="mb-4 {{ section.settings.size_text }}">{{ section.settings.bundle_title }}</h4>
+        {% endif %}
+          <div class="fbt-wrap row" >
+            <div id="bundle-{{ section.id }}"  class="fbt-wrap-box d-flex col-lg-9">
+              {% for product in listProduct limit: limit %}
+              <div class="fbt-item product-card js-product-card " data-checked="{%- if product.available -%} true {%- else -%} false {%- endif -%}"  data-item="{{ product.selected_or_first_available_variant.id }}">
+                    <div class="product-card__image-wr overflow-hidden">
+                    {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+                    <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+                      {%- assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+                      <img class="lazyload transition first-image"
+                            data-src="{{ img_url }}"
+                            src="{{ image | image_url: width: 1, height: 1 }}"
+                            data-sizes="auto"
+                            data-widths="[180, 360, 540, 720]"
+                            alt="{{ image.alt | escape }}"
+                            loading="lazy"
+                            width="{{ image.width }}"
+                            height="{{ image.height }}">
+                    </a>
+                  </div>
+                  <div class="product-card__info  pt-3 text-left ">
+                      <div class="product-card__name d-flex align-items-start">
+                        <input type="checkbox" {% if product.available %} checked="checked" {% else  %} disabled="disabled" {% endif %} class="fbt-checkbox" id="{{ product.title | handle }}">
+                        <label class="mb-0" for="{{ product.title | handle }}"><span>{{ product.title }}</span></label>
+                        </div>
+                      <div class=" fbt-item-price product-card__price {% if product.compare_at_price > product.price %}product-card__pricesale {% endif %}">
+                        {%- if product.first_available_variant -%}
+                              {%- assign price = product.first_available_variant.price -%}
+                          {%- else -%}
+                              {%- assign price = product.price -%}
+                          {%- endif -%}
+                          <span class="fbt-price" data-fbtprice="{{ price }}"> {{ price | money }} </span>
+                        {%- if product.compare_at_price -%}
+                        <s class="product-card__regular-price fbt-price-compare" data-price-at="{{ product.compare_at_price }}">{{ product.compare_at_price | money }}</s>
+                        {%- endif -%}
+                        {% unless product.available %}
+                          <span class="ml-2 product-tag product-tag--absolute text-uppercase " style="background-color: {{ settings.sold_bg }};color:{{ settings.sold_cl }}">{{ 'products.product.sold_out' | t }}</span>
+                        {% endunless %} 
+                    </div>
+                    {%- if product.has_only_default_variant -%}
+                    <input id="remove_the_dis_cart_btn" name="id" value="{{ variant.id }}" type="hidden">
+                    {%- else -%}
+                    <select name="id" class="fbtproduct-form__variants" data-item="{{ product.variants.first.id }}">
+                      {% for variant in product.variants %}
+                        {% if variant.available %}
+                          {% if variant == product.selected_or_first_available_variant %}
+                              <option selected="selected" 
+                              value="{{ variant.id }}" 
+                              data-id="{{ variant.id }}"
+                              data-image="{{ variant.featured_image | image_url: width: 500 }}" 
+                              data-price="{{ variant.price }}"
+                              {% if variant.compare_at_price %}
+                                data-price-compare="{{ variant.compare_at_price }}"
+                              {% endif %}>
+                                {{ variant.title }}
+                              </option>
+                          {% else %}
+                          <option 
+                            value="{{ variant.id }}" 
+                            data-id="{{ variant.id }}"
+                            data-image="{{ variant.image | image_url: width: 500 }}" 
+                            data-price="{{ variant.price }}" 
+                            {% if variant.compare_at_price %}
+                            data-price-compare="{{ variant.compare_at_price }}"
+                          {% endif %}>
+                            {{ variant.title }}
+                          </option>
+                          {% endif %}
+                          
+                        {% else %}
+                          <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+                        {% endif %}
+                      {% endfor %}
+                      </select>
+                    {%- endif -%}
+                  </div>
+                    
+              </div>
+              {% endfor %}
+            </div>
+            <div class="col-lg-3">
+              <div class="fbtright-box pt-4 pt-lg-0 mt-2 mt-lg-0">
+                <p class="mb-1">{{ 'general.product_bundle.total' | t }}</p>
+                <div class="d-flex gap-2 mb-3 align-items-center">
+                  <div class="fpt-totalcompare"></div>
+                  <div class="fpt-total"></div>
+                </div>
+                <button id="fbt-button" class="btn btn-theme">
+                  <div class="product-card__loading spinner-border" role="status"></div>
+                  <span>{{ section.settings.btn_add }}</span>
+                </button>
+                <div class="fpt-save mt-3" data-txtsave="{{ 'general.product_bundle.save' | t }}"></div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div> 
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Frequently Bought",
+    "class": "section",
+    "settings": [
+      {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+      {
+        "type": "text",
+        "id": "bundle_title",
+        "label": "Title",
+        "default": "Frequently Bought Together"
+      },
+      {
+          "type": "select",
+          "id": "size_text",
+          "default": "h4",
+          "options": [
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+        "type": "header",
+        "content": "Bundle"
+      },
+      {
+        "type": "range",
+        "id": "limit_bundle",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "label": "Litmit Products",
+        "default": 3
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_border",
+        "label": "Enable Border",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "btn_add",
+        "label": "Text Button",
+        "default": "Add selected item(s)"
+      },
+      {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+    ]
+  }
+{% endschema %}

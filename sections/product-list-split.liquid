@@ -1,0 +1,484 @@
+<!-- product-list-split.liquid -->
+{%- style -%}
+    .split-section .slick-prev{
+      left:-38px;
+    }
+    .split-section .slick-next{
+      right:-38px;
+    }
+{%- endstyle -%}
+<div class="customstyle{{ section.id }} split-section" data-aos="{{ section.settings.animation }}">
+    {%- render 'style-section' -%}
+  <div >
+    <div class="section-block">
+      <div class="{{ section.settings.setwidth }}">
+        <div class="row mx-0">
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                {%- when 'left_block' -%}
+                {%- liquid
+                    assign imagecol1 = block.settings.image1 
+                    assign imagecol2 = block.settings.image2 
+                    assign bg_block = block.settings.bg_block
+                    assign img_radius = block.settings.radius_image
+                    assign htmlBottom = block.settings.html_bottom
+                    assign pos = block.settings.e_pos
+                    case pos
+                    when 'top-left'
+                    assign top = 0
+                    assign right = 'auto'
+                    assign left = 0
+                    assign bottom = 'auto'
+                    when 'top-right'
+                    assign top = 0
+                    assign right = 0
+                    assign left = 'auto'
+                    assign bottom = 'auto'
+                    when 'bottom-left'
+                    assign top = 'auto'
+                    assign right = 'auto'
+                    assign left = 0
+                    assign bottom = 0
+                    when 'bottom-right'
+                    assign top = 'auto'
+                    assign right = 0
+                    assign left = 'auto'
+                    assign bottom = 0
+                    endcase
+                -%}
+                    <div class="col-md-6 col-12 px-0 mb-5 mb-md-0 left-{{ block.id }}">
+                        {%- style -%}
+                        .left-{{ block.id }} .split-plist--image .split-plist--imagemain{
+                                border-radius: {{ img_radius }};
+                                overflow: hidden;
+                          }
+                          .left-{{ block.id }} .split-posimage{
+                            position: absolute;
+                            top:{{top}};
+                            right:{{right}};
+                            left:{{left}};
+                            bottom:{{bottom}};
+                            z-index:1;
+                          }
+                        {%- endstyle -%}
+                        <div class="split-plist--image d-flex h-100 align-items-center justify-content-center flex-column" style="background-color: {{ bg_block }};">
+                        {%- if imagecol2 != blank -%}
+                            <div class="split-posimage">
+                              <img class="lazyload"
+                                  src="{{ imagecol2 | image_url: width: 600 }}"
+                                  data-src="{{ imagecol2 | image_url: width: 600 }}"
+                                  alt="{{ imagecol2.alt | escape }}"
+                                  loading="lazy"
+                                  width="{{ imagecol2.width }}"
+                                  height="{{ imagecol2.height }}">
+                          </div>
+                        {%- endif -%}
+                        {%- if imagecol1 != blank -%}
+                            <noscript>
+                                <img src="{{ imagecol1 | image_url: width: 600 }}" alt="{{ imagecol1.alt }}" class="image-content__image"
+                                  loading="lazy"
+                                  width="{{ imagecol1.width }}"
+                                  height="{{ imagecol1.height }}">
+                            </noscript>
+                            <div class="image-content__image-container split-plist-container">
+                                <div  class="image-content__image-wrapper " style="padding-top:{{ 1 | divided_by: imagecol1.aspect_ratio | times: 100 }}%;">
+                                {% assign img_url = imagecol1 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                <img class="image-content__image lazyload split-plist--imagemain"
+                                    src="{{ imagecol1 | image_url: width: 600 }}"
+                                    data-src="{{ img_url }}"
+                                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                    data-aspectratio="{{ imagecol1.aspect_ratio }}"
+                                    data-sizes="auto"
+                                    alt="{{ imagecol1.alt | escape }}"
+                                    loading="lazy"
+                                    width="{{ imagecol1.width }}"
+                                    height="{{ imagecol1.height }}">
+                                </div>
+                            </div>
+                            {%- else -%}
+                            <div class="image-content__image split-plist--imagemain">
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            </div>
+                            {%- endif -%}
+                            {%- if htmlBottom != blank -%}
+                            <div class="left_split-html position-relative">
+                                {{ htmlBottom }}
+                            </div>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                {%- when 'product_block' -%}
+                {%- liquid
+                  assign htmltop = block.settings.html_top
+                -%}
+                    <div class="col-md-6 col-12 px-0 d-flex ">
+                        <div class="split-p--right mx-auto">
+                        {%- if htmltop != blank -%}
+                          <div class="product-html--top section-title-1 mb-5">
+                              {{ htmltop }}
+                          </div>
+                        {%- endif -%}
+                        <div class="productlist-wrapper dots-negative" data-aos="{{ section.settings.animation }}">
+                          <div class="productlist-slider row" id="Productlist-{{ section.id }}"
+                               style="opacity:0"
+                               data-rows="1"
+                               data-slidesToShow="{{ block.settings.show }}"
+                               data-arrows="{{ block.settings.arrows }}"
+                               data-dots="{{ block.settings.dots }}" 
+                               data-draggable="{{ block.settings.draggable }}" 
+                               data-infinite="{{ block.settings.infinite }}" 
+                               data-section-id="{{ section.id }}" 
+                               data-section-type="productlist">
+                            {%- assign collection = collections[block.settings.collection] -%}
+                            {%- assign limit = block.settings.limit -%}
+                            {%- if collection != blank -%}
+                            {%- for product in collection.products limit: limit -%}
+                            <div class="productlist-item col">
+                              {%- render 'product-card', product: product -%}
+                            </div>
+                            {%- endfor -%}
+                            {%- else -%}
+                            {%- for i in (1..limit) -%}
+                            <div class="productlist-item col">
+                              {%- render 'product-grid-blank' -%}
+                            </div>
+                            {%- endfor -%}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {%- endcase -%}
+            {%- endfor -%}
+        </div>
+        {%- if section.blocks.size == 0 -%}
+            {%- render 'no-blocks' -%}
+        {%- endif -%}
+        </div>
+    </div>
+  </div>
+  </div>
+  
+  {% schema %}
+{
+  "name": "Product list (Split)",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "left_block",
+      "name": "Image Text",
+      "limit": 1,
+      "settings": [
+        {
+          "id": "image1",
+          "type": "image_picker",
+          "label": "Image Main"
+        },
+        {
+          "type": "text",
+          "id": "radius_image",
+          "label": "Border Radius Image",
+          "default": "0px 0px 0px 0px",
+          "info": "0px 0px 0px 0px"
+        },
+        {
+          "type": "textarea",
+          "id": "html_bottom",
+          "label": "HTML / Description"
+        },
+        {
+          "id": "image2",
+          "type": "image_picker",
+          "label": "Background Image"
+        },
+        {
+          "type": "select",
+          "id": "e_pos",
+          "label": "Background Position",
+          "default": "top-left",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top-right",
+              "label": "Top Right"
+            },
+            {
+              "value": "bottom-left",
+              "label": "Bottom Left"
+            },
+            {
+              "value": "bottom-right",
+              "label": "Bottom Right"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bg_block",
+          "label": "Background Text Block",
+          "default": "#FFFAF2"
+        }
+      ]
+    },
+    {
+      "type": "product_block",
+      "name": "Product List",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "html_top",
+          "label": "HTML / Description"
+        },
+        {
+          "label": "Collection",
+          "id": "collection",
+          "type": "collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "arrows",
+          "label": "Arrows",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "draggable",
+          "label": "Draggable",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "dots",
+          "label": "Dots",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "infinite",
+          "label": "Infinite",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "limit",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Limit items",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "show",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "label": "Display items",
+          "default": 1
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product list (Split)",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "left_block"
+        },
+        {
+          "type": "product_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

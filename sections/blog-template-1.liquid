@@ -1,0 +1,459 @@
+<!-- blog-template-1.liquid -->
+{%- liquid
+    assign blog_layout  = section.settings.blog_layout
+    assign grid_column  = section.settings.grid_column
+    assign image_size   = section.settings.image_size
+    assign enable_btn_blog = section.settings.enable_btn_blog
+    assign enable_btn_line = section.settings.enable_btn_line
+    assign enable_date  = section.settings.enable_date
+    assign enable_tag   = section.settings.enable_tag
+    assign enable_comment = section.settings.enable_comment
+    assign enable_short = section.settings.enable_short
+    assign animation    = section.settings.animation
+
+    if blog_layout == 'grid' 
+      case grid_column
+      when '2'
+        assign col = "col-lg-6 col-12" 
+      when '3'
+        assign col = "col-lg-4 col-12" 
+      when '4'
+        assign col = "col-lg-3 col-12" 
+      else
+        assign col = "col-lg-6 col-12" 
+      endcase
+    else
+      assign col = "col-12 col-md-12" 
+    endif 
+-%}
+<style>
+  .sidebar-blog-wrap.is_stuck{padding-top:20px}
+  .blog__item .blog__content{
+    text-align: left;
+  }
+  .article__photo-wrapper.portrait{
+    padding-top: 120% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.square{
+    padding-top: 100% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.landscape{
+    padding-top: 75% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.wide{
+    padding-top: 56% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.portrait img,.article__photo-wrapper.square img, .article__photo-wrapper.landscape img,.article__photo-wrapper.wide img{
+    height: 100%;
+    object-fit: cover;
+  }
+  @media(max-width:749px){
+    .blog__item--3 .article__photo-wrapper{
+      padding-top: 100% !important;
+    }
+  }
+  {%- if blog_layout == 'list' %}
+  @media (min-width: 768px){
+    .blog__item.blog__item--1 {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .blog__item.blog__item--1 .content-block__image,.blog__item .blog__content{
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+    .blog__item.blog__item--1 .blog__content{
+      padding:0px 16px 16px 40px;
+    }
+  }
+ 
+  .blog__title-link{
+    margin-bottom: 30px;
+  }
+  .blog__item.blog__item--3 .content-block__image,.blog__item.blog__item--3 .blog__content{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .article__photo-container{
+    margin-bottom: 0;
+  }
+  .blog__item.blog__item--5 .content-block__image,.blog__item.blog__item--5 .blog__content{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .article__photo-container{
+    margin-bottom: 0;
+  }
+{%- endif -%}
+</style>
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}">
+  <div class="container">
+    <div class="row {% if section.settings.sidebar_position == 'left' %}flex-row-reverse{% endif %}">
+      {%- assign limit = section.settings.limit -%}
+      {%- paginate blog.articles by limit -%}
+      <div class="{% if section.settings.sidebar_enable %}col-md-9 {% if section.settings.sidebar_position == 'left' %} pl-lg-5 {% else %} pr-lg-5{% endif %} {% else %}col-12{% endif %}">
+        <div class="row">
+          {%- for article in blog.articles -%}
+          <div class="{{ col }} {% if forloop.index == 3 %}col--last{% endif %}">
+            {%- liquid
+              case section.settings.item_style
+              when 'blog-1'
+                render 'blog-grid-1', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short, animation: animation
+              when 'blog-3'
+                render 'blog-grid-3', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-5'
+                render 'blog-grid-5', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-6'
+                render 'blog-grid-6', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-7'
+                render 'blog-grid-7', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short
+              else
+                render 'blog-grid-blank'
+              endcase
+            -%}
+            
+          </div>
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          {% render 'pagination', paginate: paginate, anchor: '', padding-top: 'pagination-blog' %}
+        {%- endif -%}
+      </div>
+      {%- endpaginate -%}
+      {%- if section.settings.sidebar_enable -%}
+      {%- render 'blogSidebar' -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Blog template ",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "blog_layout",
+      "label": "Layout",
+      "default": "list",
+      "options": [
+        {
+          "value": "list",
+          "label": "List"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "grid_column",
+      "label": "Grid Column",
+      "default": "3",
+      "info": "Only work with Grid layout",
+      "options": [
+        {
+          "value": "2",
+          "label": "2 Columns"
+        },
+        {
+          "value": "3",
+          "label": "3 Columns"
+        },
+        {
+          "value": "4",
+          "label": "4 Columns"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "item_style",
+      "label": "Style Item ",
+      "default": "blog-1",
+      "options": [
+        {
+          "value": "blog-1",
+          "label": "Item Basic"
+        },
+        {
+          "value": "blog-3",
+          "label": "Item Overlay"
+        },
+        {
+          "value": "blog-5",
+          "label": "Item Box"
+        },
+        {
+          "value": "blog-6",
+          "label": "Item Classic"
+        },
+        {
+          "value": "blog-7",
+          "label": "Item Classic Box"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        }
+      ],
+      "default": "auto",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_btn_blog",
+      "label": "Enable Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_btn_line",
+      "label": "Enable Button Line",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_date",
+      "label": "Enable Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tag",
+      "label": "Enable Tag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_comment",
+      "label": "Enable comment",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_short",
+      "label": "Enable Excerpt",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 6,
+      "max": 50,
+      "step": 1,
+      "label": "Limit",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "checkbox",
+      "id": "sidebar_enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "sidebar_position",
+      "label": "Position",
+      "default": "right",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,62 @@
+<div class="modal-body p-0">
+    <div class="row m-0">
+      <div class="col-12 p-0 bg-newsletter">
+          <div class="bg-newsletter-padding">
+            
+            {%- if pnewletter_bgimage != blank -%}
+                <div class="image-content__image-container overflow-hidden">
+                    <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: pnewletter_bgimage.aspect_ratio | times: 100 }}%;">
+                        {% assign img_url = pnewletter_bgimage | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                        <img class="image-content__image lazyload"
+                        src="{{ pnewletter_bgimage | image_url: width: 1, height: 1 }}"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ pnewletter_bgimage.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ pnewletter_bgimage.alt | escape }}"
+                        loading="lazy"
+                        width="{{ pnewletter_bgimage.width }}"
+                        height="{{ pnewletter_bgimage.height }}">
+                    </div>
+                </div>
+            {%- else -%}
+                <div style="height: 300px;">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+            {%- endif -%}
+            <div class="popup-newsletter--content pt-4 text-center px-lg-5 pb-lg-5 pb-4 px-4"> 
+                {% if pnewletter_title != blank %}
+                <h3 class="modal-title popup-newsletter--title mb-2  {{ pnew_size_heading }}">
+                {{ pnewletter_title }}
+                </h3>
+                {% endif %}
+                {% if pnewletter_description != blank %}
+                <div class="popup-newsletter--description pb-5">
+                {{ pnewletter_description }}
+                </div>
+                {% endif %}
+    
+                {% form 'customer' %}
+                {{ form.errors | default_errors }}
+                {% if form.posted_successfully? %}
+                <p class="form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                {% else %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="d-flex form-group input-basic row m-0 justify-content-center">
+                <input id="popupNewsletter" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" 
+                placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" 
+                name="contact[email]" class="col-lg col-12 mb-3 mb-lg-0 form-control" autocapitalize="off">
+                <label  for="popupNewsletter" class="label--hidden">{{ 'general.newsletter_form.newsletter_placeholder' | t }}</label>
+                <div class="pl-lg-3">
+                    <button type="submit" class="btn btn-theme js-btnPopupNewsletter" name="commit">
+                    <span class="d-sm-inline">{{ 'general.newsletter_form.submit' | t }}</span>
+                    </button>
+                </div>
+                </div> 
+                {% endif %}
+                {% endform %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,608 @@
+<!-- collection-2-col.liquid -->
+<style>
+    {%- if section.settings.enable_box -%}
+    @media (min-width: 992px){
+        .collectionlist-wrapper-{{ section.id }}{
+            padding:calc(var(--g-gutter) + 10px);
+            background:{{section.settings.bg_box}};
+        }
+    }
+    {%- endif -%}
+    .collection-2-col{
+        padding: 60px 0px 40px 0px;
+        background-repeat: round;
+    }
+    .collection-2-col .top{
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        z-index: 2;
+    }
+    .collection-2-col .hv-image img{
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        transition: all .3s ease;
+    }
+    .collection-2-col .name-collection{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10%;
+    }
+    .collection-2-col .name-collection .collection-info > a{
+        transition: all .3s ease;
+        color: {{ section.settings.color_name_collection }};
+    }
+    .collection-2-col .btn-theme{
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: none;
+        padding: 0;
+        background-color: {{ section.settings.bg_button }};
+    }
+    .collection-2-col .btn-theme .icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+    .collection-2-col .btn-theme:hover{
+        border: none;
+        background: {{ section.settings.bg_button_hover }};
+    }
+    .collection-2-col .btn-theme::before{
+        display: none;
+    }
+    .collection-2-col .btn-theme svg{
+        fill: currentColor;
+    }
+    .collection-2-col .btn-theme:hover svg{
+        color: {{ section.settings.color_button_hover }};
+    }
+    .collection-2-col .view-more{
+        margin-top: 30px;
+    }
+    .collection-2-col .view-more h3{
+        font-style: normal;
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 36px;
+        font-family: var(--g-font-2);
+    }
+    .collection-2-col .view-more >a{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .collection-2-col .view-more h3,.collection-2-col .view-more >a,.collection-2-col .btn-theme svg{
+        color: {{ section.settings.color_text_collection }};
+    }
+    .collection-2-col .view-more >a:hover{
+        color: var(--header-menuhover);
+    }
+    .collection-2-col .view-more >a svg{
+        width: 12px;
+        height: auto;
+        margin-left: 10px;
+    }
+
+    .item-block:empty{
+        display: none;
+    }
+    .item-block{
+        margin-bottom: 30px;
+    }
+    .collection-info p{
+        color: {{ section.settings.color_count }};
+    }
+   
+    .collectionlist-item:hover .name-collection{
+        background-color: #fff;
+    }
+    .collectionlist-item:hover .collection-info > a{
+        color: var(--g-main);
+        border-bottom: 1px solid var(--g-main);
+    }
+    @media (min-width:1200px) {
+        .collection-2-col .name-collection{
+            padding:6px 30px 31px 59px;
+        }
+        .collection-2-col .name-collection .collection-info > a{
+            transform: translateY(23px);
+            max-width: max-content;
+            margin-bottom: 33px;
+            display: inline-block;
+        }
+        .collection-info p{
+            transform: translateY(23px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s ease;
+        }
+        .collectionlist-item:hover .collection-info p{
+            transform: translateY(-5px);
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    @media (min-width:1500px) {
+        .collection-2-col .view-more{
+            max-width: 50%;
+            margin: auto;
+        }  
+        .collection-2-col .collection-2-col-heading{
+            max-width: 50%;
+            text-align: center;
+            margin: auto;
+        }
+        .collection-2-col .view-more{
+            padding-top: 110px;
+        }
+    }
+    @media (max-width:768px) {
+        .collection-2-col .view-more h3{
+            font-size: 16px;
+            line-height: 1.2;
+        }
+    }
+    /* image hover */
+    .collection-card__image{
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .effect-image:hover img{
+        transform: scale(1.03);
+    }
+    @media (min-width:768px) {
+        .collection-left{
+            max-width: 46.3%;
+        }
+        .collection-right{
+            max-width: 53.7%;
+        }
+    }
+</style>
+{%- include 'style-section' -%}
+<div class="collection-2-col customstyle{{ section.id }}" data-aos={{section.settings.animation}}  >
+   
+    <div class="{{ section.settings.setwidth }}">
+        <div class="collection-2-col-heading">
+            {% if  section.settings.sub_title != blank %}
+            <h4>{{ section.settings.sub_title }}</h4>
+            {% endif %}
+            {% if  section.settings.title != blank %}
+            <h2 >{{ section.settings.title }}</h2>
+            {% endif %}
+            <p >{{ section.settings.decoration }}</p>
+        </div>
+        <div class="row">
+            <div class="col-12 collection-left">
+                <div class="row">
+                {%- for block in section.blocks -%}
+                {%- case block.settings.width -%}
+                    {%- when '25%' -%}
+                    {%- assign block_width = 'col-lg-3 col-md-3' -%}
+                    {%- when '33%' -%}
+                    {%- assign block_width = 'col-xl-4 col-lg-5 col-md-5' -%}
+                    {%- when '50%' -%}
+                    {%- assign block_width = 'col-sm-6' -%}
+                    {%- when '66%' -%}
+                    {%- assign block_width = 'col-xl-8 col-lg-7 col-md-7' -%}
+                    {%- when '75%' -%}
+                    {%- assign block_width = 'col-lg-9 col-md-9' -%}
+                    {%- when '100%' -%}
+                    {%- assign block_width = 'col-12' -%}
+                    {%- endcase -%}
+             
+                        {%- case block.type -%}
+                        {%- when 'collectionleft' -%}
+                            <div class="{{block_width}} item-block collectionlist-item {% if section.settings.effect_image %}effect-image{% endif %} " data-aos={{section.settings.animation}}  {{ block.shopify_attributes }}>
+                                {%- assign featured_collection = collections[block.settings.collection] -%}
+                                {%- assign featured_image = block.settings.image -%}
+                                {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                                {%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+                                <div class="collection-card-4" {{ block.shopify_attributes }}>
+                                    <div class="collection-card__image position-relative ">
+                                    <a class="hv-image" href="{{featured_collection.url | default :'#'}}">
+                                        {%- if featured_image != blank -%}
+                                        <img width="auto" height="auto" class="lazyload transition {% if section.settings.rounded %} rounded-circle {% endif %}" data-srcset="{{ featured_image | img_url: '600x'}}">
+                                        {%- elsif featured_collection.image != blank -%}
+                                        <img width="auto" height="auto" class="lazyload transition {% if section.settings.rounded %} rounded-circle {% endif %}" data-srcset="{{ featured_collection.image | img_url: '600x'}}">
+                                        {%- else -%}
+                                        {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                        {%- endif -%}
+                                    </a>
+                                    <div class="name-collection {{ section.settings.setname }} text-center m-0 ">
+                                        <div class="collection-info text-left">
+                                            <a class=" font-family-1 h4" href="{{featured_collection.url | default :'#'}}">
+                                                {{ collectionTitle }}
+                                            </a>
+                                            {%- if section.settings.enable_items -%}
+                                            <p>{{ featured_collection.products_count | default: 0 }} {{ featured_collection.products_count | pluralize: 'product', 'products' }}</p> 
+                                            {%- endif -%} 
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        {%- endcase -%}
+           
+                {%- endfor -%}
+                </div>
+                {%- if section.settings.text_view_more != blank -%}
+                <div class="view-more">
+                    <h3>{{ section.settings.text_view_more }}</h3>
+                    <a href="{{ section.settings.link_view_more }}">{{ section.settings.text_button }} {% include 'icon-button' %}</a>
+                </div>
+                {%- endif -%}
+            </div>
+            <div class="col-12 collection-right">
+                <div class="row">
+                    {%- for block in section.blocks -%}
+                    {%- case block.settings.width -%}
+                    {%- when '25%' -%}
+                    {%- assign block_width = 'col-lg-3 col-md-3' -%}
+                    {%- when '33%' -%}
+                    {%- assign block_width = 'col-xl-4 col-lg-5 col-md-5' -%}
+                    {%- when '50%' -%}
+                    {%- assign block_width = 'col-sm-6' -%}
+                    {%- when '66%' -%}
+                    {%- assign block_width = 'col-xl-8 col-lg-7 col-md-7' -%}
+                    {%- when '75%' -%}
+                    {%- assign block_width = 'col-lg-9 col-md-9' -%}
+                    {%- when '100%' -%}
+                    {%- assign block_width = 'col-12' -%}
+                    {%- endcase -%}
+                   
+                        {%- case block.type -%}
+                        {%- when 'collectionright' -%}
+                        <div class="{{block_width}} item-block">
+                        <div class=" collectionlist-item {% if section.settings.effect_image %}effect-image{% endif %}" {{ block.shopify_attributes }}>
+                            {%- assign featured_collection2 = collections[block.settings.collection2] -%}
+                            {%- assign featured_image2 = block.settings.image2 -%}
+                            {%- capture current -%}{%- cycle 1, 2, 3, 4, 5, 6 -%}{%- endcapture -%}
+                            {%- assign collectionTitle = featured_collection2.title | default: 'Collection title' -%}
+                            <div class="collection-card-4" {{ block.shopify_attributes }}>
+                                <div class="collection-card__image position-relative ">
+                                <a class="hv-image" href="{{featured_collection2.url | default :'#'}}">
+                                    {%- if featured_image2 != blank -%}
+                                    <img width="auto" height="auto" class="lazyload transition {% if section.settings.rounded %} rounded-circle {% endif %}" data-srcset="{{ featured_image2 | img_url: '600x'}}">
+                                    {%- elsif featured_collection2.image != blank -%}
+                                    <img width="auto" height="auto" class="lazyload transition {% if section.settings.rounded %} rounded-circle {% endif %}" data-srcset="{{ featured_collection2.image | img_url: '600x'}}">
+                                    {%- else -%}
+                                    {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                    {%- endif -%}
+                                </a>
+                                <div class="name-collection {{ section.settings.setname }} text-center m-0 ">
+                                    <div class="collection-info text-left">
+                                        <a class=" font-family-1 h4" href="{{featured_collection2.url | default :'#'}}">
+                                            {{ collectionTitle }}
+                                        </a>
+                                        {%- if section.settings.enable_items -%}
+                                        <p>{{ featured_collection2.products_count | default: 0 }} {{ featured_collection2.products_count | pluralize: 'product', 'products' }}</p> 
+                                        {%- endif -%}
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {%- endcase -%}
+                   
+                    {%- endfor -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Collection 2 col",
+    "tag": "section",
+    "class": "spaced-section spaced-service",
+    "settings": [
+    {
+        "type": "select",
+        "id": "animation",
+        "options": [
+          { "value": "", "label": "None"},
+          { "value": "fade", "label": "Fade"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-right", "label": "Fade Right"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+          { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+          { "value": "flip-up", "label": "Flip Up"},
+          { "value": "flip-down", "label": "Flip Down"},
+          { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "slide-up", "label": "Slide Up"},
+          { "value": "slide-down", "label": "Slide Down"},
+          { "value": "slide-left", "label": "Slide Left"},
+          { "value": "slide-right", "label": "Slide Right"},
+          { "value": "zoom-in", "label": "Zoom In"},
+          { "value": "zoom-in-up", "label": "Zoom In Up"},
+          { "value": "zoom-in-down", "label": "Zoom In Down"},
+          { "value": "zoom-in-left", "label": "Zoom In Left"},
+          { "value": "zoom-in-right", "label": "Zoom In Right"},
+          { "value": "zoom-out", "label": "Zoom Out"},
+          { "value": "zoom-out-up", "label": "Zoom Out Up"},
+          { "value": "zoom-out-down", "label": "Zoom Out Down"},
+          { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+          { "value": "zoom-out-right", "label": "Zoom Out Right"}
+        ],
+        "label": "Select Animation"
+    },
+    {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "60px 0px 60px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "select",
+        "id": "setwidth",
+        "label": "Full Width",
+        "default": "container",
+        "options": [
+          {
+            "value": "container",
+            "label": "Box"
+          },
+          {
+            "value": "container-fluid",
+            "label": "Container Fluid"
+          },
+          {
+            "value": "full",
+            "label": "Full"
+          }
+        ]
+      },
+        {
+            "type": "color",
+            "id":"bgsection",
+            "label":"Background color",
+            "default":"transparent"
+        },
+        {
+            "type": "image_picker",
+            "id":"bg_image",
+            "label":"Background image"
+        },
+        {
+            "type": "header",
+            "content": "Heading"
+        },
+        {
+            "type": "text",
+            "id":"sub_title",
+            "label":"Sub title"
+        },
+        {
+            "type": "text",
+            "id":"title",
+            "label":"Title"
+        },
+        {
+            "type": "text",
+            "id":"decoration",
+            "label":"Text decoration"
+        },
+        {
+            "type": "header",
+            "content": "Setting collection"
+        },
+        {
+           "type": "checkbox",
+           "id":"enable_items",
+           "label":"Show number of items",
+           "default":false
+        },
+        {
+            "type": "checkbox",
+            "id":"effect_image",
+            "label":"Effect image",
+            "default":false
+         },
+        {
+            "type": "color",
+            "id":"color_text_collection",
+            "label":"Color text collection",
+            "default":"#000"
+         },
+        {
+            "type": "color",
+            "id":"color_name_collection",
+            "label":"Color name collection",
+            "default":"#fff"
+         },
+         {
+            "type": "color",
+            "id":"color_count",
+            "label":"Color count",
+            "default":"#000"
+         },
+        {
+            "type": "select",
+            "id": "setname",
+            "label": "Index name Collection",
+            "default": "top",
+            "options": [
+              {
+                "value": "top",
+                "label": "Top"
+              },
+              {
+                "value": "bottom",
+                "label": "Bottom"
+              }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "View more"
+        },
+        {
+            "type": "text",
+            "id":"text_view_more",
+            "label":"Text"
+        },
+        {
+            "type": "text",
+            "id":"text_button",
+            "label":"Text button"
+        },
+        {
+            "type": "url",
+            "id":"link_view_more",
+            "label":"Link button"
+        }
+    ],
+    "blocks":[
+    {
+        "type": "collectionleft",
+        "name": "Collection left",
+        "settings":[
+            {
+                "type": "select",
+                "id": "width",
+                "label": "Width item",
+                "default": "50%",
+                "options": [
+                {
+                    "value": "25%",
+                    "label": "25%"
+                },
+                {
+                    "value": "33%",
+                    "label": "33%"
+                },
+                {
+                    "value": "50%",
+                    "label": "50%"
+                },
+                {
+                    "value": "66%",
+                    "label": "66%"
+                },
+                {
+                    "value": "75%",
+                    "label": "75%"
+                },
+                {
+                    "value": "100%",
+                    "label": "100%"
+                }
+                ]
+            },  
+            {
+                "id": "collection",
+                "type": "collection",
+                "label": "Collection"
+            },
+            {
+                "id": "image",
+                "type": "image_picker",
+                "label": "Image"
+            }
+        ]
+    },
+    {
+        "type": "collectionright",
+        "name": "Collection right",
+        "settings":[
+            {
+            "type": "select",
+            "id": "width",
+            "label": "Width item",
+            "default": "50%",
+            "options": [
+              {
+                "value": "25%",
+                "label": "25%"
+              },
+              {
+                "value": "33%",
+                "label": "33%"
+              },
+              {
+                "value": "50%",
+                "label": "50%"
+              },
+              {
+                "value": "66%",
+                "label": "66%"
+              },
+              {
+                "value": "75%",
+                "label": "75%"
+              },
+              {
+                "value": "100%",
+                "label": "100%"
+              }
+            ]
+           },  
+            {
+                "id": "collection2",
+                "type": "collection",
+                "label": "Collection"
+            },
+            {
+                "id": "image2",
+                "type": "image_picker",
+                "label": "Image"
+            }
+        ]
+    }
+    ],
+    "presets":[
+        {
+            "name": "Collection 2 col",
+            "blocks": [
+                {
+                    "type": "collectionright"
+                },
+                {
+                    "type": "collectionright"
+                },
+                {
+                    "type": "collectionleft"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

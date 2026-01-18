@@ -1,0 +1,332 @@
+{%- liquid
+  assign display_map = false
+  assign onboarding = false
+  assign bg_image = section.settings.background_image
+  assign map_code = section.settings.map_code
+
+  if section.settings.api_key == blank and bg_image == blank
+    assign onboarding = true
+  endif
+  if section.settings.api_key != blank and section.settings.map_address
+    assign display_map = true
+  endif
+-%}
+
+<style>
+  {% if bg_image.src != blank %}
+  #MapSection--{{ section.id }} .map-section__image {
+    background-position: {{ section.settings.background_image_position }};
+  }
+
+  @media only screen and (max-width: 750px) {
+    #MapSection--{{ section.id }} .map-section__image {
+      padding-top: {{ 1 | divided_by: bg_image.aspect_ratio | times: 100 }}%;
+    }
+  }
+  {% endif %}
+  .map-section {
+    position: relative;
+    overflow: hidden;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .map-section__wrapper{
+    height: 100%;
+    flex-shrink: 0;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 100%;
+    -webkit-flex-basis: 100%;
+    -moz-flex-basis: 100%;
+    flex-basis: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .map-section__content-wrapper{
+    position: relative;
+    text-align: center;
+    height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-preferred-size: 100%;
+    -webkit-flex-basis: 100%;
+    -moz-flex-basis: 100%;
+    flex-basis: 100%;
+    flex-grow: 0;
+  }
+  .map-section__content{
+    position: relative;
+    display: inline-block;
+    background-color: var(--color-body);
+    padding: 35px;
+    text-align: center;
+    z-index: 3;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -webkit-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-align-content: center;
+    -ms-align-content: center;
+    align-content: center;
+  }
+  .map-section__image{
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    }
+   .map-section__iframe{
+    position: relative;
+   }
+   .map-section__iframe::before{
+    content: "";
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.1);
+    pointer-events: none;
+   }
+  @media only screen and (min-width: 990px){
+    .map-section__content-wrapper{
+        -ms-flex-preferred-size: 33%;
+        -webkit-flex-basis: 33%;
+        -moz-flex-basis: 33%;
+        flex-basis: 33%;
+    }
+  }
+  @media only screen and (min-width: 750px){
+    .map-section__image{
+        position: absolute;
+    }
+    .map-section__background-wrapper{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .map-section {
+        min-height: 500px;
+    }
+    .map-section__content{
+       
+        margin: 64px 0;
+        min-height: 300px;
+    }
+  }
+</style>
+
+
+<div id="MapSection--{{ section.id }}"
+     class="map-section
+           {% if display_map %}map-section--display-map{% endif %}
+           {% if onboarding == true %}map-section--onboarding{% endif %}"
+     data-section-id="{{ section.id }}"
+     data-section-type="map">
+  <div class="container map-section__wrapper">
+    <div class="map-section__content-wrapper">
+      <div class="map-section__content flex-column">
+        {% if section.settings.heading != blank %}
+          <h3 class="h3 mb-3">{{ section.settings.heading | escape }}</h3>
+        {% endif %}
+        {% if section.settings.address != blank %}
+          <div class="rte-setting">{{ section.settings.address }}</div>
+          {% if section.settings.map_address != blank and section.settings.button_text != blank %}
+            <p class="mt-4">
+              <a href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}"
+                 class="btn btn-theme map_section__directions-btn button d-inline-flex align-items-center"
+                 target="_blank"
+                 rel="noopener"
+                 aria-describedby="a11y-new-window-external-message"
+              >
+                {% if section.settings.show_pin %}<span class="d-inline-block mr-2">{% render 'icon-pin' %}</span>{% endif %}
+                <span>{{ section.settings.button_text | escape }}</span>
+              </a>
+            </p>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="map-section__background-wrapper w-100">
+      {% if bg_image != blank %}
+        <section class="d-block map-section__image lazyload js"
+            data-bgset="{% render 'bgset', image: bg_image %}"
+            data-sizes="auto"
+            data-parent-fit="cover"
+            data-image-loading-animation>
+        </section>
+       <noscript>
+         <div class="map-section__image" style="background-image: url({{ bg_image | image_url: 'x800', crop: 'top' }});"></div>
+       </noscript>
+      {% elsif map_code != blank %}
+      <div class="map-section__image map-section__iframe" >{{ section.settings.map_code }}</div>
+      {% elsif onboarding == true %}
+        <div class="placeholder-background">
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {% endif %}
+      {% if display_map %}
+        <div class="map-section__container"
+             id="Map-{{ section.id }}"
+             data-map
+             data-address-setting="{{ section.settings.map_address | escape }}"
+             data-api-key="{{ section.settings.api_key }}">
+        </div>
+        <div class="map-section__overlay" data-map-overlay></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Map",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "id": "heading",
+      "type": "text",
+      "label": "Heading",
+      "default": "Our store"
+    },
+    {
+      "id": "address",
+      "type": "richtext",
+      "label": "Address and hours",
+      "default": "<p>123 Fake St.<br>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>"
+    },
+    {
+      "id": "map_address",
+      "type": "text",
+      "label": "Map address",
+      "info": "Google Maps will find the exact location",
+      "default": "301 Front St W, Toronto"
+    },
+    {
+      "id": "button_text",
+      "type": "text",
+      "label": "Map link label",
+      "default": "Get directions"
+    },
+    {
+      "id": "show_pin",
+      "type": "checkbox",
+      "label": "Show pin",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "BACKGROUND"
+    },
+    {
+      "id": "api_key",
+      "type": "text",
+      "label": "Google Maps API key",
+      "info": "You’ll need to [register a Google Maps API Key](https://help.shopify.com/manual/using-themes/troubleshooting/map-section-api-key) to display the map"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Image",
+      "info": "Displayed if the map isn’t loaded"
+    },
+    {
+      "type": "textarea",
+      "id": "map_code",
+      "label": "Iframe Google Map code",
+      "info": "[Get map here](https://www.embedgooglemap.net/)"
+    },
+    {
+      "type": "select",
+      "id": "background_image_position",
+      "label": "Image position",
+      "default": "center center",
+      "options": [
+        {
+          "label": "Top left",
+          "value": "top left"
+        },
+        {
+          "label": "Top Center",
+          "value": "top center"
+        },
+        {
+          "label": "Top Right",
+          "value": "top right"
+        },
+        {
+          "label": "Center Left",
+          "value": "center left"
+        },
+        {
+          "label": "Center Center",
+          "value": "center center"
+        },
+        {
+          "label": "Center Right",
+          "value": "center right"
+        },
+        {
+          "label": "Bottom Left",
+          "value": "bottom left"
+        },
+        {
+          "label": "Bottom Center",
+          "value": "bottom center"
+        },
+        {
+          "label": "Bottom Right",
+          "value": "bottom right"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Map"
+    }
+  ]
+}
+{% endschema %}

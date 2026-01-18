@@ -1,0 +1,97 @@
+<!doctype html>
+<html class="no-js " lang="{{ shop.locale }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_header_bg }}">
+    <link rel="preconnect" href="//cdn.shopify.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.shopify.com">
+    <link rel="preconnect" href="//fonts.shopify.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.shopify.com">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    {%- if settings.favicon != blank -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}" type="image/png">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {% if current_tags %}
+        {% assign meta_tags = current_tags | join: ', ' %}
+        &ndash;
+        {{ 'general.meta.tags' | t: tags: meta_tags }}
+      {% endif %}
+      {% if current_page != 1 %}
+        &ndash;
+        {{ 'general.meta.page' | t: page: current_page }}
+      {% endif %}
+      {% unless page_title contains shop.name %}
+        &ndash;
+        {{ shop.name }}
+      {% endunless %}
+    </title>
+   
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+      {% else %}
+      <meta name="description" content="{{ settings.meta_description | escape }}">
+    {%- endif -%}
+    
+    {%- render 'social-meta-tags' -%}
+    {%- render 'header-css' -%}
+      <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    {{ content_for_header }}
+  </head>
+  <body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} body-theme {% if settings.productpage == 'product-2' or settings.productpage == 'product-6' or settings.productpage == 'product-7' %} product-hide-breadcrumb {% endif %}">
+   {% assign lazy = false %}
+    <img {% if lazy %} loading = "lazy" {% endif %} width="99998" height="99999" alt="index" style="pointer-events: none; position: absolute; top: 0; left: 0; width: 98vw; height: 99vh; max-width: 98vw; max-height: 99vh;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSI5OTk5OXB4IiBoZWlnaHQ9Ijk5OTk5cHgiIHZpZXdCb3g9IjAgMCA5OTk5OSA5OTk5OSIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZyBzdHJva2U9Im5vbmUiIGZpbGw9Im5vbmUiIGZpbGwtb3BhY2l0eT0iMCI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9Ijk5OTk5IiBoZWlnaHQ9Ijk5OTk5Ij48L3JlY3Q+IDwvZz4gPC9zdmc+">
+    {%- render 'loading' -%}
+    {%- section 'announcement-bar-slide' -%}
+    {%- section 'header' -%}
+    {%- section 'store-messages' -%}
+    <div class="page-container page-element is-moved-by-drawer">
+      {%- render 'breadcrumb' -%}
+      <main class="main-content" id="MainContent" role="main">
+        {%- if settings.enable_animationscroll -%}
+          <div id="js-scroll">
+          {% endif %}
+          {%- if settings.enable_animationscroll -%}
+            <div data-scroll-section>
+            {% endif %}
+            {%- render 'slideshow' -%}
+            {%- if settings.enable_animationscroll -%}
+            </div>
+          {% endif %}
+          {{ content_for_layout }}
+          {%- if settings.enable_animationscroll -%}
+          </div>
+        {% endif %}
+      </main>
+
+     {%- liquid
+      section 'banner-footer'
+      section 'newsletter-footer'
+      section 'footer'
+      if template == 'index' or request.design_mode
+      section 'pnewsletter'
+      endif
+      section 'product-suggest'
+      section 'cookie-policy'
+      section 'custom-color'
+     -%}
+    </div>
+    {%- liquid
+      render 'back-to-top' 
+      render 'menu-mobile' 
+      render 'bottom-contents' 
+      render 'quickview' 
+      render 'popup-compare' 
+      render 'header-js' 
+    -%}
+   
+  </body>
+</html>

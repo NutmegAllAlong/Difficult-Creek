@@ -1,0 +1,576 @@
+<!-- service.liquid -->
+
+<style>
+  .customstyle{{ section.id }} .iconx8 svg, .customstyle{{ section.id }} .iconx8 .icon, .customstyle{{ section.id }} .iconx8 [class^=icon-]{
+      width: {{ section.settings.size }}px;
+      height: {{ section.settings.size }}px;
+      font-size: {{ section.settings.size }}px;
+    }
+
+  .customstyle{{ section.id }} .services-slider .slick-dots{
+    position: relative;
+    bottom: 0;
+  }
+  .customstyle{{ section.id }} .service-icon-box{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px dashed transparent;
+    transition: border .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+  }
+  .customstyle{{ section.id }} .service-1{
+    gap: 20px;
+    border-radius: 5px;
+   
+  }
+  .customstyle{{ section.id }} .services-item:hover .service-icon-box{
+    /* border-color: var(--g-color-heading) !important; */
+    color: var(--g-color-heading) !important;
+  }
+  .customstyle{{ section.id }} .service-2 .media-body{
+
+  }
+  
+  @media (min-width:1200px){
+    .customstyle{{ section.id }} .services-item:not(:last-child):before{
+      position:absolute;
+      content:'';
+      right:0;
+      top:50%;
+      width:1px;
+      height:194px;
+      transform:translateY(-50%);
+      border-color:{{ section.settings.color_border }};
+      border-style: dashed;
+      border-width: 0 1px 0 0;
+    }
+  }
+  {% if section.settings.bg_section != blank %}
+  .customstyle{{ section.id }} .section-header *{
+    color: #fff;
+  }
+  .customstyle{{ section.id }} .service-1{
+    padding: 7%;
+  }
+  {% endif %}
+  {% if section.settings.rows == "2" %}
+  .customstyle{{ section.id }} .services-item{
+    margin-bottom: 30px;
+  }
+  {% endif %}
+</style>
+
+{%- liquid
+  assign carousel =  section.settings.enable_carousel
+  assign service_heading = section.settings.service_heading
+-%}
+<div class="customstyle{{ section.id }} {% if section.settings.layout == 'style-3' %} block-sv3 {% endif %}" data-aos="{{ section.settings.animation }}" >
+  {%- render 'style-section' -%}
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-block sv-bgsub-{{ section.id }}" style="padding:{{ section.settings.paddingbox }};">
+    {%- render 'section-heading' -%}
+    <div class="services-wrapper dots-negative">
+      <div class="services-slider row mb-0" id="service-list-{{ section.id }}"
+           data-rows="{{ section.settings.rows }}"
+           data-slidesToShow="{{ section.settings.show }}"
+           data-slidestoscroll="{{ section.settings.show }}"
+           data-arrows="{{ section.settings.arrows }}"
+           data-dots="{{ section.settings.dots }}" 
+           data-draggable="{{ section.settings.draggable }}" 
+           data-infinite="{{ section.settings.infinite }}" 
+           data-section-id="{{ section.id }}" 
+           {% if carousel %}
+           data-section-type="slickCarousels"
+           {% endif %}>
+        {%- for block in section.blocks -%}
+        <div class="{% if carousel %}  col {% else %} col-12 col-lg mb-4 mb-lg-0 {% endif %} services-item carousel__slide-wrapper--{{ block.id }}" 
+        {{ block.shopify_attributes }} >
+        <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+          {%- case section.settings.layout -%}
+          {%- when 'style-1' -%}
+          <div class="media service-1 text-left align-items-center" style="background-color:{{ block.settings.bgblock }}; padding: 15px;">
+            {% if block.settings.image_icon == blank  %}
+              <span class=" mr-4 iconx8 service-icon-box" style="color:{{ section.settings.iconcolor }}; border-color: currentColor;">
+                {{ block.settings.icon | default: '[[ Icon ]]' }}
+              </span>
+            {% endif %}
+            {% if block.settings.image_icon != blank %}
+              <span class="mr-4 service-image-box">
+                <img src="{{ block.settings.image_icon | image_url: width: 1920 }}" alt="">
+              </span>
+            {% endif %}
+            <div class="media-body">
+              {%- if block.settings.title != blank -%}
+              <h5 class="mt-0 mb-1 font-weight-bold text-capitalize {{ service_heading }}" style="color:{{ section.settings.titlecolor }};">{{ block.settings.title }}</h5>
+              {%- endif -%}
+              <div style="color:{{ section.settings.subcolor }};">{{ block.settings.description }}</div>
+            </div>
+          </div>
+          {%- when 'style-2' -%}
+          <div class="service-2 text-center justify-content-center" style="background-color:{{ block.settings.bgblock }}; padding: 15px;">
+            {% if block.settings.image_icon == blank  %}
+              <span class=" mr-4 iconx8 service-icon-box" style="color:{{ section.settings.iconcolor }};">
+                {{ block.settings.icon | default: '[[ Icon ]]' }}
+              </span>
+            {% endif %}
+            {% if block.settings.image_icon != blank %}
+              <span class="mr-4 service-image-box">
+                <img src="{{ block.settings.image_icon | image_url: width: 1920 }}" alt="">
+              </span>
+            {% endif %}
+            <div class="media-body">
+              {%- if block.settings.title != blank -%}
+              <h5 class="mt-0 mb-1 font-weight-bold text-capitalize {{ service_heading }}" style="color:{{ section.settings.titlecolor }};">{{ block.settings.title }}</h5>
+              {%- endif -%}
+              <div style="color:{{ section.settings.subcolor }};">{{ block.settings.description }}</div>
+            </div>
+          </div>
+          {%- endcase -%}
+        </div>
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- if section.blocks.size == 0 -%}
+    {%- render 'no-blocks' -%}
+    {%- endif -%}
+  </div>
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Services",
+  "class": "index-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id":"bg_section",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_header",
+      "label": "Image header"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Service"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Items "
+    },
+    {
+      "type": "select",
+      "id": "rows",
+      "label": "Rows",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 row"
+        },
+        {
+          "value": "2",
+          "label": "2 rows"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Display items",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "paddingbox",
+      "label": "Inner Padding ",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "color",
+      "id": "iconcolor",
+      "label": "Icon Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "titlecolor",
+      "label": "Title Color",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "subcolor",
+      "label": "Sub Title Color",
+      "default": "#999999"
+    },
+    {
+      "type":"color",
+      "id":"color_border",
+      "label":"Color border",
+      "default":"transparent"
+    },
+    {
+      "type": "range",
+      "id": "size",
+      "min": 14,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Size Icon",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "service_heading",
+      "label": "Heading Item",
+      "default": "h5",
+      "options": [
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Style",
+      "default": "style-1",
+      "options": [
+        {
+          "value": "style-1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style-2",
+          "label": "Style 2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Carousel "
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_carousel",
+      "label": "Enable Carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service",
+      "settings": [
+        {
+          "type": "color",
+          "id": "bgblock",
+          "label": "Background Block",
+          "default": "#ffffff"
+        },
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Title",
+          "default": "Service heading"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "HTML / Description",
+          "default": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
+          "info": "💡 [HTML Buider.](https://ap2020.myshopify.com/pages/html-builder)"
+        },
+        {
+          "type": "textarea",
+          "id": "icon",
+          "label": "Icon",
+          "info": "💡 [SVG Icon.](https://ap2020.myshopify.com/pages/html-builder#html-icon)"
+        },
+        {
+          "type":"image_picker",
+          "id":"image_icon",
+          "label":"Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "service"
+        },
+        {
+          "type": "service"
+        },
+        {
+          "type": "service"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

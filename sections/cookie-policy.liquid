@@ -1,0 +1,145 @@
+
+    <!-- cookie-policy.liquid -->
+    {%- if section.settings.enable_cookie_policy -%}
+    <style>
+      .js-cookie-policy{
+        --color-body-text-rgb: {{ section.settings.cookie_color }};
+        --g-color-heading: {{ section.settings.cookie_color }};
+        --g-font-color-subtop: {{ section.settings.cookie_color }}
+      }
+      .js-cookie-policy{
+        color:var(--color-body-text-rgb);
+        display:none;position:fixed;width:100%;bottom:0;left:0;z-index:99;
+        background:{{ section.settings.cookie_background }};
+        padding:16px 0;
+        box-shadow: 0 0 5px 1px rgba(0,0,0,0.05);
+      }.js-cookie-policy a{
+        color:rgba(var(--color-body-text-rgb),1);
+        text-decoration-color:rgba(var(--color-body-text-rgb),1);
+      }.js-btn-ok{padding:10px 30px;font-size: 12px;}
+      .js-cookie-policy.style-2{
+        max-width: 500px;
+        width: 100%;
+        padding:24px 16px;
+        right: 1rem;
+        bottom:1rem;
+        left:auto;
+      }
+    </style>
+    {%- liquid
+      assign cookie_style =  section.settings.cookie_style
+    -%}
+    <div class="js-cookie-policy cookie-{{ section.id }} {{ cookie_style }}"  
+      data-section-id="{{ section.id }}" 
+      data-section-type="cookie" >
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-12  {% if cookie_style == 'style-2' %} mb-4 {%- else -%} col-sm-8 col-md-9 col-lg-10 {% endif %}">
+            {{ section.settings.cookie_message }}
+            {%- if section.settings.cookie_url_text != blank -%}
+            <a class="link" title="{{ section.settings.cookie_url_text }}"  href="{{ section.settings.cookie_url }}" target="_blank">{{ section.settings.cookie_url_text }}</a>
+            {%- endif -%}
+          </div>
+          <div class="col"><button class="btn js-btn-ok {{ section.settings.style_btn }}">{{ section.settings.cookie_ok }}</button></div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+{% schema %}
+{
+  "name": "Cookie Policy",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_cookie_policy",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "cookie_style",
+      "label": "Style",
+      "default": "style-1",
+      "options": [
+        {
+          "value": "style-1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style-2",
+          "label": "Style 2"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "cookie_background",
+      "label": "Background",
+      "default": "#222222"
+    },
+    {
+      "type": "color",
+      "id": "cookie_color",
+      "label": "Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "textarea",
+      "id": "cookie_message",
+      "default": "This website uses cookies to ensure you get the best experience on our website.",
+      "label": "Message"
+    },
+    {
+      "type": "url",
+      "id": "cookie_url",
+      "label": "Privacy Policy URL"
+    },
+    {
+      "type": "text",
+      "id": "cookie_url_text",
+      "default": "Learn More",
+      "label": "Info link text"
+    },
+    {
+      "type": "text",
+      "id": "cookie_ok",
+      "default": "Got it!",
+      "label": "Accept button text"
+    },
+    {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button",
+          "default": "btn-theme btn-white",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        }
+  ]
+}
+{% endschema %}

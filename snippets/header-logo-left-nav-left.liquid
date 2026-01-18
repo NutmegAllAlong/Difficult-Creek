@@ -1,0 +1,44 @@
+
+<div class="header-top__wrap d-flex flex-wrap py-lg-4 py-2 w-100">
+    <div class="d-flex d-lg-none toggle-menu-mobile align-items-center">
+        {%- render 'button-toggle-menu-mobile' -%}
+        <span class="modal__toggle-search-mobile" aria-hidden="true" focusable="false" role="presentation">
+        {% render 'icon-search' %}
+        </span>
+    </div>
+    <div class="menudesk-left col-search pr-2 d-flex">
+        <div class="col_bottom__left d-flex align-items-center">
+            {%- render 'header-search', link_list_search: section.settings.link_list_search, e_search: section.settings.sidebar_search -%}
+            <div class="d-none d-lg-flex align-items-center">
+                {%- liquid
+                assign enable_image = section.settings.enable_image
+                assign enable_name = section.settings.enable_name 
+                if section.settings.e_hd_currency and localization.available_countries.size > 1
+                    render 'localization' id: 'HeaderCountryForm', enable_image: enable_image, enable_name: enable_name
+                endif
+                if section.settings.enable_language_selector and localization.available_languages.size > 1 
+                    render 'localization-language', id: 'HeaderLanguageForm', enable_name: enable_name
+                endif
+                -%}
+            </div>
+        </div>
+    </div>
+    <div class="px-2 col-logo text-center">
+        {%- render 'site-logo' -%}
+    </div>
+    <div class="header-bottom__right col-bottom__right">
+        {%- render 'header-login' -%}
+        {%- render 'block-wishlist' -%}
+        {%- render 'block-cart' -%}
+    </div>
+</div>
+<div class="d-none d-lg-flex justify-content-center col-menu">
+
+{%- liquid
+    assign main_linklist = section.settings.main_linklist
+    assign blocks = section.blocks
+-%}
+{%- render 'block-menu', main_linklist: main_linklist, blocks: blocks -%}
+</div>
+
+

@@ -1,0 +1,491 @@
+<style>
+  .section-brand-links {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin: 30px 0 20px
+  }
+  .section-brand-links .brand_link {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center
+  }
+  .section-brand-links .brand_link.disabled {
+    pointer-events: none;
+    color: #b3b3b3
+  }
+  .section-brand__subheading {
+    margin-bottom: 10px
+  }
+  .title_brand {
+    text-transform: uppercase;
+    font-weight: 700;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 100px;
+    flex: 0 0 100px;
+    width: 100px
+  }
+  .content_brand {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+  }
+  .link_brand {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap
+  }
+  .link_brand li {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 160px;
+    flex: 0 0 160px;
+    min-width: 160px;
+    line-height: 50px;
+  }
+  .link_brand a {
+    color: #222;
+    position: relative
+  }
+  .link_brand a:hover {
+    color: var(--g-main)
+  }
+  hr {
+    border-color: rgba(0, 0, 0, 0.1)
+  }
+  .section-brand .first hr {
+    border-color: transparent !important
+  }
+  .section-brand__subheading {
+    margin: 10px 0
+  }
+  .s-brand .menu-label {
+    top: -24px;
+    line-height: 14px;
+  }
+</style>
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}">
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-brand">
+      {%- render 'section-heading' -%}
+
+      {% assign characters = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,other' %}
+      {% assign arrayChar = characters | split: ',' %}
+
+      {% capture brandList %}
+        <div class="section-brand-links">
+          {% for char in arrayChar %}
+            {%- liquid
+              assign isDisabled = true 
+              for block in section.blocks 
+                if block.settings.title == char 
+                  assign isDisabled = false 
+                  break 
+                endif 
+              endfor 
+            -%}
+
+            <a href="#brands-{{ char }}" class="brand_link {% if isDisabled %}disabled{% endif %}">
+              {% if char == 'other' %}#
+              {% else %}
+                {{ char | capitalize }}
+              {% endif %}
+            </a>
+          {% endfor %}
+        </div>
+      {% endcapture %}
+
+      {{ brandList }}
+
+      {% for block in section.blocks %}
+        <div id="brands-{{ block.settings.title }}" class="s-brand {% if forloop.first %}first{% endif %}">
+          <hr/>
+          <div class="content_brand">
+            <div class="title_brand">
+              <h3>
+                {% if block.settings.title == 'other' %}#
+                {% else %}
+                  {{ block.settings.title }}
+                {% endif %}
+              </h3>
+            </div>
+            <ul class="link_brand list--inline list-unstyled">
+              {% for link in linklists[block.settings.linklist].links %}
+                <li>
+                  <a target="_blank" href="{{ link.url }}" title="{{ link.title }}">
+                    {% render  'processMenuTitle', itemName: link.title %}
+                    {% render 'processMenuLabel', itemName: link.title %}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+
+      {{ brandList }}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brands",
+  "class": "page-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background color"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Brands"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description",
+      "default": "HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "character",
+      "name": "Character",
+      "settings": [
+        {
+          "type": "select",
+          "id": "title",
+          "label": "Character",
+          "default": "a",
+          "options": [
+            {
+              "label": "A",
+              "value": "a"
+            },
+            {
+              "label": "B",
+              "value": "b"
+            },
+            {
+              "label": "C",
+              "value": "c"
+            },
+            {
+              "label": "D",
+              "value": "d"
+            },
+            {
+              "label": "E",
+              "value": "e"
+            },
+            {
+              "label": "F",
+              "value": "f"
+            },
+            {
+              "label": "G",
+              "value": "g"
+            },
+            {
+              "label": "H",
+              "value": "h"
+            },
+            {
+              "label": "I",
+              "value": "i"
+            },
+            {
+              "label": "J",
+              "value": "j"
+            },
+            {
+              "label": "K",
+              "value": "k"
+            },
+            {
+              "label": "L",
+              "value": "l"
+            },
+            {
+              "label": "M",
+              "value": "m"
+            },
+            {
+              "label": "N",
+              "value": "n"
+            },
+            {
+              "label": "O",
+              "value": "o"
+            },
+            {
+              "label": "P",
+              "value": "p"
+            },
+            {
+              "label": "Q",
+              "value": "q"
+            },
+            {
+              "label": "R",
+              "value": "r"
+            },
+            {
+              "label": "S",
+              "value": "s"
+            },
+            {
+              "label": "T",
+              "value": "t"
+            },
+            {
+              "label": "U",
+              "value": "u"
+            },
+            {
+              "label": "V",
+              "value": "v"
+            },
+            {
+              "label": "W",
+              "value": "w"
+            },
+            {
+              "label": "X",
+              "value": "x"
+            },
+            {
+              "label": "Y",
+              "value": "y"
+            },
+            {
+              "label": "Z",
+              "value": "z"
+            },
+            {
+              "label": "Other",
+              "value": "other"
+            }
+          ]
+        },
+        {
+          "type": "link_list",
+          "id": "linklist",
+          "label": "Menu"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

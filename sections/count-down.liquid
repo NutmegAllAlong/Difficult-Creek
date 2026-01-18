@@ -1,0 +1,458 @@
+<!-- count-down.liquid -->
+{%- style -%}
+    .customstyle{{ section.id }} *{
+        color:{{ section.settings.color }};
+        --cd-overlay-rgb:{{ section.settings.overlay.red }},{{ section.settings.overlay.green }}, {{ section.settings.overlay.blue }};
+        --cd-color:{{ section.settings.color.red }},{{ section.settings.color.green }},{{ section.settings.color.blue }};
+    }
+    .cd-section{
+        overflow:hidden;
+    }
+    .cd-bg{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-size:cover;
+        background-position: center;
+        {% if section.settings.e_blur %}
+        filter:blur(4px);
+        transform: scale(1.1);
+        {% endif %}
+    }
+    .cd-bg:before{
+        content:"";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color:rgba(var(--cd-overlay-rgb),{{ section.settings.opacity }});
+    }
+    .content-countdown{
+      position:relative;
+      z-index:3;
+    }
+    .countdown-item ul li:not(:last-child){
+        border-right:1px solid  rgba(var(--cd-color),0.2);
+    }
+    .countdown-item ul li {
+        padding:0 16px;
+        line-height:1;
+        text-align:center;
+    }
+    .countdown-item ul li .countdown-time{
+        font-size:var(--g-h3-font-size);
+        margin-bottom:0.3rem;
+        min-width:64px;
+        text-align:center;
+        display: block;
+    }
+    .countdown-item ul li .countdown-time b{
+        font-weight:500;
+    }
+    .countdown-item ul li .countdown-text{
+        font-size: .75rem;
+        letter-spacing: 1.7px;
+        text-transform:uppercase;
+        display:block;
+    }
+    @media (max-width:749px){
+      .countdown-item ul li .countdown-time{
+        font-size:calc(var(--g-h3-font-size) - 8px);
+        min-width:max-content;
+      }
+    }
+    
+{%- endstyle -%}
+{%- liquid
+  assign bg_full = section.settings.bg_full
+-%}
+{%- render 'style-section' -%}
+{%- if bg_full -%}
+  <div style="background-color: {{ section.settings.bgsection }};" data-aos="{{ section.settings.animation }} " class=" cd-section position-relative customstyle{{ section.id }}">
+    {% if section.settings.image_bg != blank %}
+      {% assign bg_image = section.settings.image_bg %}
+        <section class="cd-bg lazyload"
+            data-bgset="{% render 'bgset', image: bg_image %}"
+            data-sizes="auto"
+            data-parent-fit="cover" 
+            loading="lazy"></section>
+    {% endif %}
+{%- endif -%}
+
+<div class="{{ section.settings.setwidth }}">
+    <div class="{% if section.settings.enable_padding %} px-lg-5 px-2 {% endif %} {% unless bg_full %}  customstyle{{ section.id }} {% endunless %}   cd-section position-relative" data-aos="{{ section.settings.animation }}" >
+      {% unless bg_full %}  
+      {% if section.settings.image_bg != blank %}
+          {% assign bg_image = section.settings.image_bg %}
+            <section class="cd-bg lazyload"
+                data-bgset="{% render 'bgset', image: bg_image %}"
+                data-sizes="auto"
+                data-parent-fit="cover" 
+                loading="lazy"></section>
+        {% endif %}
+      {% endunless %}  
+            <div class="row align-items-center content-countdown">
+                <div class="col-lg-5 col-12">
+                    {%- if  section.settings.title != blank -%}
+                        <h3 class="text-lg-left text-center {{ section.settings.size_text }}">{{ section.settings.title }}</h3>
+                    {%- endif -%}
+                    {%- if  section.settings.des != blank -%}
+                        <div class="text-lg-left text-center">{{ section.settings.des }}</div>
+                    {%- endif -%}
+                </div>
+                <div class="col-lg-7 col-12 d-flex align-items-center {% if section.settings.e_button %} justify-content-between {% else %} justify-content-center {% endif %} mt-lg-0 mt-4 flex-lg-row flex-column">
+                    <div class="js-countdown countdown-item" data-time="{{ section.settings.data_countdown }}"></div>
+                    {%- if section.settings.e_button -%}
+                        <div>
+                            <a href="{{ section.settings.link_button }}" class="btn {{ section.settings.style_btn }} mt-4 mt-lg-0">{{ section.settings.txt_button }}</a>
+                        </div>
+                    {%- endif -%} 
+                    
+                </div>
+            </div>
+    </div>
+</div>
+{%- if bg_full -%}
+  </div>
+{%- endif -%}
+
+   {% schema %}
+{
+  "name": "Count Down",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "bg_full",
+      "label": "Full Background",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_padding",
+      "label": "Enable Inner Padding",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "e_blur",
+      "label": "Enable Blur",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity Overlay",
+      "default": 0.5
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Title Count Down"
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Text Size Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "text",
+      "id": "data_countdown",
+      "label": "Time count down",
+      "default": "2025-05-11T00:00:00",
+      "info": "2025-05-11T00:00:00"
+    },
+    {
+      "type": "checkbox",
+      "id": "e_button",
+      "label": "Enable Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "txt_button",
+      "label": "Text Button",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "link_button",
+      "label": "Link Button"
+    },
+    {
+      "type": "select",
+      "id": "style_btn",
+      "label": "Style Button",
+      "default": "btn-theme",
+      "options": [
+        {
+          "value": "btn-theme",
+          "label": "Button Box"
+        },
+        {
+          "value": "btn-theme btn-white",
+          "label": "Button Box White"
+        },
+        {
+          "value": "btn-underline",
+          "label": "Button Line"
+        },
+        {
+          "value": "btn-underline btn-underline-white",
+          "label": "Button Line White"
+        },
+        {
+          "value": "btn-outline",
+          "label": "Button Outline"
+        },
+        {
+          "value": "btn-outline btn-outline-white",
+          "label": "Button Outline White"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Count Down"
+    }
+  ]
+}
+{% endschema %}
+   

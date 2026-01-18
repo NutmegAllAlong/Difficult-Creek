@@ -1,0 +1,410 @@
+<!-- shop-the-look.liquid -->
+
+<div class="customstyle{{ section.id }} split-section shopthelook" data-aos="{{ section.settings.animation }}" data-section-type="shopthelook" 
+  style="--color-body : {{ section.settings.bgsection }}">
+    {%- render 'style-section' -%}
+  <div >
+    <div class="section-block">
+      <div class="{{ section.settings.setwidth }}">
+        <div class="row mx-0 {% if section.settings.enable_right %} flex-row-reverse {% endif %}">
+            <div class="col-lg-6 col-12 px-0">
+              <div class="image-content__image-container">
+                {%- if section.settings.image != blank -%}
+                <div class="position-relative image-content__image-wrapper overflow-hidden " 
+                    style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;">
+                    {% assign img_url = section.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                    <img class="image-content__image lazyload scale-in"
+                        src="{{ section.settings.image | image_url: width: 1, height: 1 }}"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ section.settings.image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ section.settings.image.width }}"
+                        height="{{ section.settings.image.height }}"
+                      >
+                </div>
+                {%- else -%}
+                <div class="image-content__image">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+                <ul id="dot-{{ section.id }}" class="list-unstyled position-static">
+                  {%- for block in section.blocks -%}
+                    {%- liquid
+                      assign left = block.settings.left
+                      assign top = block.settings.top
+                    -%}
+                    <li class="hotspot-dotwrap hotspot-solid position-absolute {% if forloop.first %} active {% endif %}" data-pos="{{ forloop.index | minus: 1 }}"
+                      style="top:{{ top }}%;left:{{ left }}%; --dot-color: {{ block.settings.dot_color.red }},{{ block.settings.dot_color.green }},{{ block.settings.dot_color.blue }};">
+                        <button class="hotspot-dot"  id="pover-{{ block.id }}" data-hotspot>
+                          <span class="visually-hidden">{{ forloop.index | minus: 1 }}</span>
+                      </button>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+            </div>
+            </div>
+            <div class="col-lg-6 col-12 px-0 d-flex align-items-center">
+                <div class="split-p--right mx-auto py-5 py-lg-0">
+                    <div class="product-html--top">
+                      {%- if section.settings.title_top != blank -%}
+                        <div class="subtop text-center text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+                      {%- endif -%}
+                      {%- if section.settings.title != blank -%}
+                      <h3 class="section-title-1 text-center  {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+                        <span>{{ section.settings.title }}</span>
+                      </h3>
+                      {%- endif -%}
+                      {%- if section.settings.des != blank -%}
+                      <div class="text-center font-family-2 mb-5 txt-body-70" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+                      {%- endif -%}
+                    </div>
+                <div class="shopthelook-wrapper " data-aos="{{ section.settings.animation }}">
+                    <div class="shopthelook-slider row mb-0" id="Shopthelook-{{ section.id }}"
+                        style="opacity:0"
+                        data-rows="1"
+                        data-slidesToShow="1"
+                        data-arrows="{{ section.settings.arrows }}"
+                        data-dots="{{ section.settings.dots }}" 
+                        data-draggable="{{ section.settings.draggable }}" 
+                        data-infinite="{{ section.settings.infinite }}" 
+                        data-section-id="{{ section.id }}" 
+                        data-section-type="slickCarousels">
+                    {%- for block in section.blocks -%}
+                        <div class="productlist-item col carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+                            {%- if block.settings.product_item != blank -%}
+                                {%- render 'product-card', product: block.settings.product_item -%}
+                            {%- else -%}
+                            {%- render 'product-grid-blank' -%}
+                            {%- endif -%}
+                        </div>
+                    {%- endfor -%}
+                    </div>
+                </div>
+                </div>
+            </div>
+           
+        </div>
+        {%- if section.blocks.size == 0 -%}
+            {%- render 'no-blocks' -%}
+        {%- endif -%}
+        </div>
+    </div>
+  </div>
+  </div>
+
+  
+  {% schema %}
+{
+  "name": "Shop the look",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "id": "image",
+      "type": "image_picker",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_right",
+      "label": "Enable Right Image",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Text Heading"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Custom content"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product_item",
+          "label": "Product"
+        },
+        {
+          "type": "header",
+          "content": "Position"
+        },
+        {
+          "type": "range",
+          "id": "left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 25
+        },
+        {
+          "type": "color",
+          "id": "dot_color",
+          "label": "Color Hot Spots",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the look",
+      "blocks": [
+        {
+          "type": "product_block"
+        },
+        {
+          "type": "product_block"
+        },
+        {
+          "type": "product_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

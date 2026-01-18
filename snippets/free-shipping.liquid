@@ -1,0 +1,13 @@
+{%- if settings.free_shipping_enable -%}
+<div class="free-shipping">
+  <div class="free-shipping-content d-flex align-items-center">
+    <svg class="hide" aria-hidden="true" focusable="false" role="presentation" class="icon icon-package" viewBox="0 0 64 64"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><path class="a" d="M32 54.52L10 41.95v-19.9L32 9.48l22 12.57v19.9L32 54.52z"/><path class="a" d="M32 54.52v-19.9l22-12.57M32 34.62L10 22.05M41.7 15.02L21 28.33v8.38"/></svg>
+    
+  <span class="js-free-shipping-text"></span>
+  </div>
+  <div class="progress js-free-shipping" data-value="{{ settings.free_shipping_value | times: 100 }}" data-start="{{ settings.free_first }}" data-end="{{ settings.free_end }}">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+</div>
+
+{%- endif -%}

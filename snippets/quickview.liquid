@@ -1,0 +1,153 @@
+<style>
+  .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0 0 24px;min-height: 400px;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:8px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .slick-dots{bottom:20px}#jsQuickview .slick-dots li button:before{font-size:35px;color:#000;transition:all ease .3s}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-add-button{display: inline-block; float: left; margin-left: 20px; width: calc(100% - 120px);}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:#fff}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;display:inline-block;width:100px;float:left}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
+  #qv-product-images .slick-prev{left: 20px;}#qv-product-images .slick-next{right: 20px;}
+  #qv-product-images .slick-prev,#qv-product-images .slick-next{opacity: 0;transition: all 0.3s ease;}
+  #qv-product-images:hover .slick-next{opacity: 1;}
+  #qv-product-images:hover .slick-prev{opacity: 1;}
+  #qv-product-images .slick-slide img {height: 400px;object-fit: cover;width: 100%;}
+  .qv-content .spr-badge-caption{
+    font-size: calc(var(--g-font-size) - 2px);
+    color:rgba(var(--color-body-text-rgb),0.7);
+  }
+  .qv-content .spr-icon{
+    top:0px;
+    width:auto;
+  }
+  .qv-content .spr-icon:before{
+    font-size: 14px !important;
+  }
+  .qv-product-rv .spr-badge{
+    display:flex;
+    align-items:center;
+  }
+  .qv-content .spr-badge-starrating{
+    margin-right: 6px;
+    font-size:14px;
+  }
+  @media (min-width:1000px){
+    #qv-product-images{min-height: 660px;margin:0}
+    #qv-product-images .slick-slide img {height: 660px;}
+  }
+  @media( max-width:999px ){
+    .qv-content{
+      padding: 0 !important;
+    }
+  }
+
+  .qv-product-title{
+    font-size: calc(var(--g-h3-font-size) - 0.5rem);
+  }
+  .qv-product-compare-price{
+    color:rgba(var(--color-body-text-rgb), 0.6);
+  }
+  input.qv-quantity[type=number]::-webkit-inner-spin-button,
+  input.qv-quantity[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input.qv-quantity[type=number] {
+    -moz-appearance: textfield;
+    background-color: transparent;
+  }
+  .popup-quantity{
+    border:1px solid var(--g-input-border);
+    border-radius: var(--g-font-radius-btn);
+  }
+  .qv-minus,.qv-plus{
+    flex:0 0 1.6rem;
+    text-align: center;
+    font-size: calc(var(--g-font-size) + 2px);
+  }
+  .list-product-options select{display:none;}
+  .list-product-options label{cursor: pointer;margin-right: 12px;}
+  .list-product-options label.active:after{
+    border-color: var(--g-color-heading);
+    opacity: 1;
+    transform: scale(1);
+  }
+  .list-product-options label.have-background{text-indent: -9999px;}
+  .round-color.list-product-options label.have-background{
+    min-width: 30px;
+    height: 30px;
+    border: none;
+    margin-right: 12px;
+    border-radius: 50%;
+  }
+  .round-color.list-product-options .color label:after{
+    border-radius: 50%;
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+  }
+  .round-color.list-product-options .color label[data-value=white], .round-color.list-product-options .color label[data-value=White]{
+    border:1px solid #ddd!important;
+  }
+ 
+</style>
+<!-- quickview.liquid -->
+<div class="modal fade bd-example-modal-lg" id="jsQuickview" role="dialog" aria-hidden="true" data-type="{{ settings.select_product_option_display }}" 
+  data-color="{{ settings.qv_variant }}">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header p-0">
+        <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="row m-0">
+          <div id="loading_qv"><span class="loader-line"></span></div>
+          <div class="col-lg-7 p-0 left-qv">
+            <div id="qv-product-images" class="qv-product-images"></div>
+          </div>
+          <div class="qv-content col-lg-5 d-flex flex-column align-items-center align-self-center right-qv">
+            <div class="holder h-100 pl-md-4 w-100">
+              <h3 class="qv-product-title pb-2 mb-0"></h3>
+              {%- if settings.enable_review -%}
+                <div class="qv-product-rv pb-3"> </div>
+              {%- endif -%}
+              <h5 class="qv-product-price font-family-2 mb-3"></h5>
+              <s class="qv-product-compare-price ml-2"></s>
+              {%- if settings.qv_des -%}
+              <div class="qv-product-description mb-1 txt-body-70"></div>
+              {%- endif -%}
+              <div class="qv-add-to-cart clearfix pt-3 pb-4">
+                {%- if settings.select_product_option_display == 'list' -%}
+                	<div class="qv-product-options list-product-options {% if settings.color_circle %} round-color {% endif %}"></div>
+                {%- else -%}
+            <div class="qv-product-options"></div>
+                {%- endif -%}
+                <div class="d-flex">
+                  <div class="quantity popup-quantity d-flex h-100 align-items-center">
+                    <span class="hide">{{ 'products.product.quantity' | t }}</span>
+                    <div class="qv-minus"><a class="qv-qtity disabled-anchor d-block" href="#" data-multi="-1">-</a></div>
+                    <input type="number" class="qv-quantity" value="1" min="1">
+                    <div class="qv-plus"><a class="qv-qtity disabled-anchor d-block" href="#" data-multi="1">+</a></div>
+                  </div>
+                  <button type="submit" class="btn btn-theme gradient-theme qv-add-button">{{ 'general.quickview.addtocart' | t }}</button>
+                </div>
+              </div>
+              {%- render 'free-shipping' -%}
+              <div class="pt-4">
+                {%- if settings.qv_sku -%}
+                <div class=" text-uppercase qv-sku"><small class="text-body d-inline-block" style="min-width: 80px;">{{ 'general.quickview.sku' | t }}: </small><small class="qv-view-sku text-uppercase"></small></div>
+                {%- endif -%}
+                {%- if settings.qv_type -%}
+                <div class="text-uppercase"><small class="text-body d-inline-block" style="min-width: 80px;">{{ 'general.quickview.type' | t }}: </small><small class="qv-view-type text-uppercase"></small></div>
+                {%- endif -%}
+                {%- if settings.qv_vendor -%}
+                <div class="text-uppercase"><small class="text-body d-inline-block" style="min-width: 80px;">{{ 'general.quickview.vendor' | t }}: </small><small class="qv-view-vendor text-uppercase"></small></div>
+                {%- endif -%} 
+              </div>
+            
+              <div class="pt-4">
+                <a class="qv-view-product small link" href="#">
+                  {{ 'general.quickview.view_full' | t }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

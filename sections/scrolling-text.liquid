@@ -1,0 +1,374 @@
+
+    {%- liquid
+      assign scroll_type = section.settings.scroll_type
+      assign speed = section.settings.speed
+      assign size = section.settings.size_text
+      assign size_icon = section.settings.size_icon
+      assign text_style = section.settings.text_style
+    -%}
+  <style>
+      .customstyle{{ section.id }}{
+        background:{%- if section.settings.gradient_bg != blank -%} {{ section.settings.gradient_bg }} {%- else -%} {{ section.settings.background }} {%- endif -%};
+              color:{{ section.settings.text }};
+          --color-body-text-rgb:{{ section.settings.text.red }}, {{ section.settings.text.green }}, {{ section.settings.text.blue }};
+          --g-color-heading: {{ section.settings.text }};
+      }
+    
+    .text-scroll{
+      grid: auto / auto-flow max-content;
+      justify-content: center;
+      display: grid;
+      overflow: hidden;
+    }
+    .textscroll-item .image-content__image{
+      width: {{ size_icon }}px;
+    }
+    .textscroll-item{
+      grid: auto / auto-flow auto max-content;
+      place-items: center;
+      display: grid;
+      animation-duration: {{ speed }}s;
+    }
+    .type-outline{
+        -webkit-text-stroke: 1px {{ section.settings.text }};
+        -webkit-text-fill-color: transparent;
+    }
+  </style>
+  {%- render 'style-section' -%}
+  <!-- scrolling-text.liquid -->
+  <div class="scroling-section customstyle{{ section.id }}" 
+        data-aos="{{ section.settings.animation }}" >
+      <div class="text-scroll">
+        {%- for i in (1..10) -%}
+          <span class="textscroll-item {% if scroll_type == 'from-left' %} anim-loop-left {% else %} anim-loop-right {% endif %}">
+          {%- for block in section.blocks -%}
+           <span class=" px-5 {{ size }} type-{{ text_style }} mb-0 d-flex align-items-center">
+            {% if block.settings.image != blank %}
+              <img class="image-content__image mr-2"
+                src="{{ block.settings.image | image_url: width: 240 }}"
+                alt="{{ block.settings.image.alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}">
+            {% endif %}
+            {{ block.settings.code }}
+           </span>
+              
+           
+          {%- endfor -%} 
+        </span>
+      {%- endfor -%}
+      </div>
+    
+    
+  </div>
+  
+
+  {% schema %}
+{
+  "name": "Scrolling Text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "Body"
+        }
+      ],
+      "label": "Text Size"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "default": "solid",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "outline",
+          "label": "Outline"
+        }
+      ],
+      "label": "Text Style"
+    },
+    {
+      "type": "range",
+      "id": "size_icon",
+      "label": "Icon Size",
+      "unit": "px",
+      "min": 4,
+      "max": 120,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Auto - Scrolling",
+      "info": "This config only work with Auto - Scrolling"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scrolling Speed",
+      "unit": "s",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "default": 10,
+      "info": "Auto - Scrolling"
+    },
+    {
+      "type": "select",
+      "id": "scroll_type",
+      "default": "from-right",
+      "options": [
+        {
+          "value": "from-left",
+          "label": "From Left"
+        },
+        {
+          "value": "from-right",
+          "label": "From Right"
+        }
+      ],
+      "label": "Scroll Animation",
+      "info": "Auto - Scrolling"
+    },
+    {
+      "type": "header",
+      "content": "Color",
+      "info": "Background, Color"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "id": "gradient_bg",
+      "type": "color_background",
+      "label": "Background Gradient"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "code",
+          "label": "Text",
+          "default": "Promo Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Scrolling Text",
+      "blocks": [
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

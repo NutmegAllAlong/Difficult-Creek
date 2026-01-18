@@ -1,0 +1,518 @@
+<!-- quotes.liquid -->
+<style>
+  .customstyle{{ section.id }}{
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    background-size:cover !important;
+  }
+  .quotes-wrapper-square .slick-prev{
+    left:-5px;
+  }
+  .quotes-wrapper-square .slick-next{
+    right:-5px;
+  }
+</style>
+<quotes-section class="d-block customstyle{{ section.id }} {% if section.settings.image_bg != blank %} lazyload {% endif %}" 
+data-aos="{{ section.settings.animation }}" 
+style="{% if section.settings.image_bg != blank %}background-image:url({{ section.settings.image_bg | image_url: width: 1, height: 1 }}){% endif %}"
+data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="lazy">
+  {%- render 'style-section' -%}
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-block">
+    {%- render 'section-heading' -%}
+    {%- if section.blocks.size > 0 -%}
+    <div class="quotes-wrapper dots-negative quotes-wrapper-square" > 
+      <div class="quotes-slider row" id="Quotes-{{ section.id }}" 
+           data-rows="1"
+           data-slidesToShow="{{ section.settings.show }}"
+           data-slidestoscroll="{{ section.settings.show }}"
+           data-arrows="{{ section.settings.arrows }}"
+           data-dots="{{ section.settings.dots }}" 
+           data-draggable="{{ section.settings.draggable }}" 
+           data-infinite="{{ section.settings.infinite }}" 
+           data-section-id="{{ section.id }}" 
+           data-section-type="slickCarousels">
+           <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }} quote__slide-wrapper-first" {{ block.shopify_attributes }}  
+            style="
+            --f-bg:{{ section.settings.f_bg }};
+            --g-color-heading:{{ section.settings.f_color }};
+            --color-body-text:{{ section.settings.f_color }};"
+          >
+            <div class="d-flex  quote__slide quote__style_1 text-left ">
+                <div class="quote-wrap"  style="">
+                {%- if section.settings.f_title != blank -%}
+                    <h5 class="mb-3">{{ section.settings.f_title }}</h5>
+                {%- endif -%}
+                {%- if section.settings.f_des != blank -%}
+                    <div class="text-body">{{ section.settings.f_des }}</div>
+                {%- endif -%}
+                </div>
+            </div>
+           </div>
+        {%- for block in section.blocks -%}
+        <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }} 
+            style="
+            --g-quote-square:{{ section.settings.border_item }}; 
+            --g-rate:{{ section.settings.color_rated }};
+            {%- if section.settings.color_item != 'rgba(0,0,0,0)' -%}
+            --color-body-text:{{ section.settings.color_item }};
+            --g-color-heading : {{ section.settings.color_item }};
+            --color-body-text-rgb: {{ section.settings.color_item.red }}, {{ section.settings.color_item.green }}, {{ section.settings.color_item.blue }};
+            {%- endif -%}"
+          >
+          {%- liquid
+            assign quote = block.settings.quote
+            assign rate = block.settings.rate
+            assign avatar = block.settings.avatar
+            assign author = block.settings.author
+            assign info = block.settings.info
+            assign bg_item = section.settings.bg_item
+            assign size_text = section.settings.size_text
+            assign aligntext = section.settings.aligntext
+          -%}
+          {% render 'quote-style-3', quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext %}
+          
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size == 0 -%}
+    {%- render 'no-blocks' -%}
+    {%- endif -%}
+  </div>
+</div>
+</quotes-section >
+
+{% schema %}
+{
+  "name": "Testimonials Square",
+  "class": "index-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "User reviews"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "First Block"
+    },
+    {
+      "type": "text",
+      "id": "f_title",
+      "label": "Title First Block",
+      "default": "We let our customers speak for themselves."
+    },
+    {
+      "type": "textarea",
+      "id": "f_des",
+      "label": "Des First Block",
+      "default": "4.98 average<br>213 reviews"
+    },
+    {
+      "type": "color",
+      "id": "f_bg",
+      "label": "Background First Block",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "f_color",
+      "label": "Color First Block",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Item"
+    },
+    {
+      "type": "color",
+      "id": "bg_item",
+      "label": "Background Item",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_item",
+      "label": "Border Item",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_item",
+      "label": "Color Item",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "color_rate",
+      "label": "Color Rate",
+      "default": "#f1f1f1"
+    },
+    {
+      "type": "color",
+      "id": "color_rated",
+      "label": "Color Rated",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "aligntext",
+      "label": "Text Align ",
+      "default": "text-left",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "Left"
+        },
+        {
+          "value": "text-center",
+          "label": "Center"
+        },
+        {
+          "value": "text-right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "txt-body",
+      "options": [
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "txt-body",
+          "label": "Body"
+        }
+      ],
+      "label": "Text Size"
+    },
+    {
+      "type": "header",
+      "content": "Carousel"
+    },
+    {
+      "type": "range",
+      "id": "show",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Show",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "60px 0px 60px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "info",
+          "label": "Author's info"
+        },
+        {
+          "type": "range",
+          "id": "rate",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Text",
+          "default": "Add customer reviews and testimonials to showcase your store’s happy customers."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials Square",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

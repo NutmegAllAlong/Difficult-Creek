@@ -1,0 +1,688 @@
+<!-- s_team_member.liquid -->
+ <div class="customstyle{{ section.id }}">
+   {%- render 'style-section' -%}
+<div class="steam-member__wrap {{ section.settings.setwidth }}">
+  <div class="steam-member__content">
+   {%- render 'section-heading' -%}
+    <div class="smembers row"
+    data-rows="{{ section.settings.rows }}"
+    data-slidesToShow="{{ section.settings.show }}"
+    data-arrows="{{ section.settings.arrows }}"
+    data-dots="{{ section.settings.dots }}" 
+    data-draggable="{{ section.settings.draggable }}" 
+    data-infinite="{{ section.settings.infinite }}" 
+    data-section-id="{{ section.id }}" 
+    data-section-type="slickCarousels"
+    >
+      {% for block in section.blocks %}
+      <div class="smember-wr " data-aos="{{ section.settings.animation }}">
+        <div class="smember--style{{ section.settings.layout }}">
+          <div class="smember-photo ">
+            {% if block.settings.image != blank %}
+              <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                <img src="{{ block.settings.image | image_url: width: 1, height: 1 }}" alt="{{ block.settings.name | handle }}" 
+                  class="lazyload" 
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080]"
+                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"/>
+              </div>
+            {% else %}
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+           
+          </div>
+          {% if block.settings.name != blank %}
+          <div class="smember-info py-4">
+            <h3 class="h4 mb-1">{{ block.settings.name }}</h3>
+            <span class="smember-role txt-body-60 small">{{ block.settings.position }}</span>
+            <!--  -->
+            <div class="smember-icons pt-3">
+              {% if block.settings.facebook != blank %}
+              <a target="_blank" href="{{ block.settings.facebook }}" title="{{ block.settings.name }} in facebook" class="smember-icon">
+                {%- render 'icon-facebook' -%}
+              </a>
+              {% endif %}
+              {% if block.settings.twitter != blank %}
+              <a target="_blank" href="{{ block.settings.twitter }}" title="{{ block.settings.name }} in twitter plus" class="smember-icon">
+                {%- render 'icon-twitter' -%}
+              </a>
+              {% endif %}
+              {% if block.settings.instagram != blank %}
+              <a target="_blank" href="{{ block.settings.instagram }}" title="{{ block.settings.name }} in instagram" class="smember-icon">
+                {%- render 'icon-instagram' -%}
+              </a>
+              {% endif %}
+              {% if block.settings.pinterest != blank %}
+              <a target="_blank" href="{{ block.settings.pinterest }}" title="{{ block.settings.name }} in pinterest" class="smember-icon">
+                {%- render 'icon-pinterest' -%}
+              </a>
+              {% endif %}
+            </div>
+            <!--  -->
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+
+{% style %}
+
+  {% comment %}========================   CSS Liquid ========================{% endcomment %}
+  {% comment %}
+  #shopify-section-{{ section.id }} .smember--style1 .smember-icons:before {background:var(--g-color-heading)}
+  #shopify-section-{{ section.id }} .smember--style1 .smember-icons {background:var(--g-color-heading)}
+  #shopify-section-{{ section.id }} .smember--style2 .smember-icons {background:var(--g-color-heading)}
+  #shopify-section-{{ section.id }} .smember--style2 .smember-icons:before {border-right-color:var(--g-color-heading)}
+  #shopify-section-{{ section.id }} .smember--style3 .smember-icons {background:var(--g-color-heading)}
+  #shopify-section-{{ section.id }} .smember--style4 .smember-icon{color:var(--g-color-heading);background:var(--g-color-heading)}
+  {% endcomment %}
+  {% comment %}========================   Pure CSS  ========================{% endcomment %}
+
+.smember--style1 .smember-name,
+.smember--style3 .smember-name{
+  font-size:18px;margin:0
+}
+.smember--style2 span.smember-role,
+.smember--style3 span.smember-role{
+  color:#999;
+  font-size:12px;
+  display:block
+}
+.smember-photo{
+  text-align:center
+}
+.smember-icon svg{
+  height:15px;
+  vertical-align:middle;
+  margin:0 6px;
+}
+.smember--style1{
+  overflow:hidden
+}
+.smember--style1 .smember-photo{
+  overflow:hidden;
+  position:relative
+}
+.smember--style1 .smember-photo img {
+  transition: 0.3s cubic-bezier(0, 0, 0, 0.1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.smember--style1 .smember-icons {
+  margin-top: 10px;
+  transition: opacity .3s ease;
+}
+.smember--style1 .smember-icons > *:not(:last-child){
+  margin-right:20px;
+}
+.smember--style1 .smember-icons > *{
+  opacity:0.5;
+  transition:all .3s ease;
+}
+
+.smember-wr{
+  padding:0px 15px;
+}
+.smember--style1 span.smember-role {
+  display: block;
+}
+.smember--style1 .smember-info{
+  background:#fff;
+  transition: transform .3s ease;
+}
+.smember--style1:hover .smember-info{
+  transform:translateY(-20%);
+}
+.smember--style1:hover .smember-icons{
+  opacity:1;
+}
+.smember--style1:hover .smember-photo img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+@media (min-width:768px){
+  .smember--style1 .smember-icons{
+    opacity:0;
+  }
+  .smember--style1 .smember-icons > *:hover{
+    opacity:1;
+  }
+}
+.smember--style2 {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  -webkit-transition: 0.25s cubic-bezier(0.43, 0.44, 0.63, 0.61);
+  transition: 0.25s cubic-bezier(0.43, 0.44, 0.63, 0.61);
+}
+.smember--style2 .smember-photo {
+  position: relative;
+}
+.smember--style2 .smember-icons {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  width: 40px;
+  padding: 10px 0;
+  left: -7px;
+}
+.smember--style2 .smember-icons:before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  bottom: -7px;
+  border: 7px solid transparent;
+}
+.smember--style2 .smember-name {
+  font-size: 18px;
+  margin: 0;
+  position: relative;
+  padding-bottom: 3px;
+}
+.smember--style2 .smember-name:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  height: 1px;
+  width: 30px;
+  background: #000;
+  bottom: 0;
+}
+.smember--style4 .smember-icon {
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+.smember--style3 {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  -webkit-transition: 0.25s cubic-bezier(0.43, 0.44, 0.63, 0.61);
+  transition: 0.25s cubic-bezier(0.43, 0.44, 0.63, 0.61);
+}
+.smember--style3 .smember-photo {
+  position: relative;
+}
+.smember--style3 .smember-icons {
+  position: absolute;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding: 7px 10px;
+  left: 0;
+}
+.smember--style3:hover {
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+.smember--style3 .smember-icon i:hover {
+  background: #fff;
+  color: #444;
+}
+.smember--style4 {
+  position: relative;
+  border: 1px solid var(--g-input-border);
+  background: var(--color-body);
+  padding: 16px;
+}
+.smember--style4 .smember-photo {
+  overflow: hidden;
+  position: relative;
+}
+.smember--style4 .smember-photo img {
+  -transition: all 0.3s cubic-bezier(0, 0, 0, 0.1);
+  transition: 0.3s cubic-bezier(0, 0, 0, 0.1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.smember--style4 .smember-icons {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  width: 30px;
+}
+.smember--style4 .smember-icons a:first-child {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+}
+.smember--style4 .smember-icons a:nth-child(2) {
+  -webkit-transition-delay: 0.15s;
+  transition-delay: 0.15s;
+}
+.smember--style4 .smember-icons a:nth-child(3) {
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+.smember--style4 .smember-icons a:nth-child(4) {
+  -webkit-transition-delay: 0.25s;
+  transition-delay: 0.25s;
+}
+.smember--style4 .smember-info {
+  background: var(--color-body);
+  padding-bottom: 0 !important;
+}
+.smember--style4 .smember-name {
+  font-size: 20px;
+  margin: 0;
+  line-height: normal;
+}
+.smember--style4 span.smember-role {
+  font-size: 12px;
+  display: block;
+}
+.smember--style4:hover .smember-photo img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.smember--style4 .smember-icon {
+  -webkit-transform: translateX(50px);
+  transform: translateX(50px);
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0, 0, 0, 0.2),
+    transform 0.3s cubic-bezier(0, 0, 0, 0.2);
+  transition: -webkit-transform 0.3s cubic-bezier(0, 0, 0, 0.2),
+    transform 0.3s cubic-bezier(0, 0, 0, 0.2);
+  width: 30px;
+  margin-bottom: 2px;
+  display: inline-block;
+}
+.smember--style4:hover .smember-icon {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Team member",
+  "class": "index-section",
+  "max_blocks": 50,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Member setting"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background color"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_header",
+      "label": "Image header"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Custom content"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "1",
+          "label": "Style 1"
+        },
+        {
+          "value": "2",
+          "label": "Style 2"
+        },
+        {
+          "value": "3",
+          "label": "Style 3"
+        },
+        {
+          "value": "4",
+          "label": "Style 4"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "rows",
+      "label": "Rows",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 row"
+        },
+        {
+          "value": "2",
+          "label": "2 rows"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Display items",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Distance"
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "60px 0px 60px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Avatar"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "John Smith"
+        },
+        {
+          "type": "text",
+          "id": "position",
+          "label": "Position",
+          "default": "CEO"
+        },
+        {
+          "type": "header",
+          "content": "Contact"
+        },
+        {
+          "type": "url",
+          "id": "facebook",
+          "label": "Facebook"
+        },
+        {
+          "type": "url",
+          "id": "twitter",
+          "label": "Twitter"
+        },
+        {
+          "type": "url",
+          "id": "instagram",
+          "label": "Instagram"
+        },
+        {
+          "type": "url",
+          "id": "pinterest",
+          "label": "Pinterest"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Team member",
+      "category": "# Shopify section",
+      "blocks": [
+        {
+          "type": "member",
+          "settings": {
+            "name": "Abdul Khalek",
+            "position": "CEO & Founder"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "UX Designer",
+            "position": "CEO & Founder"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Abdur Rahman",
+            "position": "Developer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,726 @@
+<!-- video.liquid -->
+
+
+  <style>
+    #VideoSection--{{ section.id }} .video-section__cover-content .video-text text{
+      color: {{ section.settings.color }};
+      fill:  {{ section.settings.color }};
+    }
+    {%- if section.settings.show_overlay -%}
+    #VideoSection--{{ section.id }} .video-section__cover-text {
+      color: {{ section.settings.overlay_text }};
+    }
+    #VideoSection--{{ section.id }} .video-section__load-player-button-triangle {
+      border-left-color: {{ section.settings.overlay_text }};
+    }
+    #VideoSection--{{ section.id }} .video-section__load-player-button.animated .video-section__load-player-button-circle,
+    #VideoSection--{{ section.id }} .video-section__load-player-button-circle {
+      border-color: {{ section.settings.overlay_text }};
+    }
+    #VideoSection--{{ section.id }} .video-section__cover-overlay {
+      background-color: {{ section.settings.overlay_color }};
+      opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    }
+    .customstyle{{ section.id }} .video-block-title{
+        font-size: 32px;
+    }
+    
+    .customstyle{{ section.id }} .video-block-item-content{
+      background-color: #fff;
+      padding: 15px 0px;
+      border-radius: 5px;
+    }
+    .customstyle{{ section.id }} .video-style-2 .video-block{
+          padding: 50px 4%;
+      }
+    @media (min-width:576px) {
+      .customstyle{{ section.id }} .product-card{
+        display: flex;
+        align-items: center;
+        padding: 20px 0px;
+      }
+      .customstyle{{ section.id }} .slick-slide > div:not(:last-child) .product-card{
+        border-bottom: 1px dashed #E5E5E5 ;
+      }
+      .customstyle{{ section.id }} .product-card__image-wr{
+        width: 100%;
+        max-width: 22%;
+      }
+      .customstyle{{ section.id }} .product-card__info{
+        padding: 0;
+        padding-left: 15px;
+        flex: 1;
+      }
+      .customstyle{{ section.id }} .product-card .js-countdown,
+      .customstyle{{ section.id }} .product-form__item,
+      .customstyle{{ section.id }} .product-label{
+        display: none !important;
+      }
+      .customstyle{{ section.id }} .product-card--style2 .product-form__item--submit{
+        position: relative;
+        margin: 0;
+        transform: translate(0);
+        border: none;
+      }
+      .customstyle{{ section.id }} .product-card:hover,
+      .customstyle{{ section.id }} .product-card--style2:hover .product-card__info{
+        transform: unset !important;
+      }
+      .customstyle{{ section.id }} .productlist-item{
+        padding: 0px 30px;
+      }
+      
+    }
+    @media (min-width:1200px) {
+      .customstyle{{ section.id }} .video-style-2{
+        display: flex;
+        align-items: center;
+      }
+      .customstyle{{ section.id }} .video-style-2 .video-section{
+        width:33.33%;
+      }
+      .customstyle{{ section.id }} .video-style-2 .video-block{
+        width:66.66%;
+        padding: 50px 4%;
+      }
+    }
+    @media (min-width:1500px) {
+      .customstyle{{ section.id }} .video-style-2 .video-section{
+        width:47.4%;
+      }
+      .customstyle{{ section.id }} .video-style-2 .video-block{
+        width:52.6%;
+        padding: 50px 4%;
+      }
+    }
+    @media (max-width:476px) {
+      .customstyle{{ section.id }} .product-card__name{
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box !important;
+      }
+    }
+  {%- endif -%}
+  </style>
+
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+<div class="{{ section.settings.setwidth }}" >
+  
+  
+  {%- render 'style-section' -%}
+  {% comment %}  {% endcomment %}
+  {% if section.settings.style_section == 'style_2' %}  
+  <div class="video-style-2">
+  {% endif %}
+  {% comment %}  {% endcomment %}
+  <div id="VideoSection--{{ section.id }}" class="video-section video-section--{{ section.settings.cover_image_height }}" data-section-id="{{ section.id }}" data-section-type="video" data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}">
+    <div class="video-section__body-overlay"></div>
+    <div class="video-section__modal">
+      <div class="video-wrapper">
+        <button class="video-section__player-close">
+          <span class="visually-hidden">{{ 'video.close' | t }}</span>
+          {%- render 'icon-close' -%}
+        </button>
+        <div class="video-section__player"></div>
+      </div>
+    </div>
+    <div class="video-section__cover" style="--g-height-videosection:{{ section.settings.height_video }}px;--g-height-videosection-mobile:{{ section.settings.height_video_mobile }}px;">
+      <div class="video-section__cover-background">
+        {%- if section.settings.cover_image == blank -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- else -%}
+        <div class="position-relative image-content__image-wrapper" >
+          {% assign img_url = section.settings.cover_image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+          <img class="image-content__image lazyload"
+              src="{{ section.settings.cover_image | image_url: width: 1920 }}"
+              data-src="{{ img_url }}"
+              data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+              data-aspectratio="{{ section.settings.cover_image.aspect_ratio }}"
+              data-sizes="auto"
+              alt="{{ section.settings.cover_image.alt | escape }}"
+              loading="lazy"
+              width="{{ section.settings.cover_image.width }}"
+              height="{{ section.settings.cover_image.height }}">
+            
+        </div>
+        {%- endif -%}
+      </div>
+      <div class="video-section__cover-overlay"></div>
+      <div class="video-section__cover-content">
+        <button class="video-section__load-player-button video-section__load-player-button--large position-relative">
+          <span class="visually-hidden">{{ 'video.play' | t }}</span>
+          {%- if section.settings.text_circle != blank -%}
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 120 120" class="video-text">
+          <defs>
+          <path d="M 60, 60 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0" id="txt-path"></path>
+          </defs>
+          <text>
+          <textPath startOffset="0" xlink:href="#txt-path"> {{ section.settings.text_circle }}</textPath>
+          </text>
+          </svg>
+      {%- endif -%}
+          <div class="video-section__load-player-icon">
+            <div class="video-section__load-player-mark">
+              <!-- <div class="anim-mark"></div>
+              <div class="anim-mark anim-mark2"></div> -->
+            </div>
+            <div class="video-button-animation"></div>
+            <!-- <div class="video-section__load-player-button-circle"></div> -->
+            <div class="video-section__load-player-button-triangle"></div>
+          </div>
+          
+        </button>
+        {%- if section.settings.title != blank -%}
+          <h3 class="mt-4 {{ section.settings.size_text }}"  style="--g-color-heading:{{ section.settings.color }};">{{ section.settings.title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.des != blank -%}
+          <p class="mt-3" style="color:{{ section.settings.color }};">{{ section.settings.des }}</p>
+        {%- endif -%}
+        <p class="video-section__error mb-0"></p>
+      </div>
+    </div>
+  </div>
+  {% comment %}  {% endcomment %}
+  {%  assign has_block = 0 %}
+  {%- for block in section.blocks -%}
+    {% if block.type == "product" %}
+      {%  assign has_block = 1 %}
+    {% endif %}
+  {% endfor %}
+  {% if has_block == 1 %}
+    <div class="video-block">
+      <div class="row">
+        {%- for block in section.blocks -%}
+          {%- case block.settings.width -%}
+          {%- when '25%' -%}
+          {%- assign block_width = 'col-lg-3 col-md-3' -%}
+          {%- when '33%' -%}
+          {%- assign block_width = 'col-xl-4 col-lg-5 col-md-5' -%}
+          {%- when '41%' -%}
+          {%- assign block_width = 'col-md-5' -%}
+          {%- when '50%' -%}
+          {%- assign block_width = 'col-md-6' -%}
+          {%- when '59%' -%}
+          {%- assign block_width = 'col-md-7' -%}
+          {%- when '66%' -%}
+          {%- assign block_width = 'col-xl-8 col-lg-7 col-md-7' -%}
+          {%- when '75%' -%}
+          {%- assign block_width = 'col-lg-9 col-md-9' -%}
+          {%- when '100%' -%}
+          {%- assign block_width = 'col-12' -%}
+          {%- endcase -%}
+          {%- case block.type -%}
+          {%- when 'product' -%}
+            <div class="{{block_width}} video-block-items">
+              {% if block.settings.block_title != blank %}
+                <div class="video-block-title mb-4 font-family-1 text-capitalize" style="color:{{ block.settings.color_title }}">{{ block.settings.block_title }}</div>
+              {% endif  %}
+                <div class="video-block-item-content" data-rows="{{ block.settings.rows }}"
+                data-slidesToShow="{{ block.settings.show }}"
+                data-arrows="{{ block.settings.arrows }}"
+                data-dots="{{ block.settings.dots }}" 
+                data-draggable="{{ block.settings.draggable }}" 
+                data-infinite="{{ block.settings.infinite }}" 
+                data-section-id="{{ block.id }}" 
+                data-section-type="productlist">
+                  {%- assign collection = collections[block.settings.collection] -%}
+                  {%- assign limit = block.settings.limit -%}
+                  {%- if collection != blank -%}
+                  {%- for product in collection.products limit: limit -%}
+                  <div class="productlist-item col">
+                    {%- render 'product-card-video', product: product,enable_review: block.settings.enable_review,enable_type: block.settings.enable_type  -%}
+                  </div>
+                  {%- endfor -%}
+                  {%- else -%}
+                  {%- for i in (1..limit) -%}
+                  <div class="productlist-item col">
+                    {%- render 'product-grid-blank' -%}
+                  </div>
+                  {%- endfor -%}
+                  {%- endif -%}
+                </div>
+            </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif  %}
+  {% if section.settings.style_section == 'style_2' %} 
+  </div>
+  {% endif %}
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Video",
+  "class": "index-section index-section--video",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "style_section",
+      "label": "Style section",
+      "default": "style_1",
+      "options": [
+        {
+          "value": "style_1",
+          "label": "Style 1"
+        },
+        {
+          "value": "style_2",
+          "label": "Style 2"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "text",
+      "id": "text_circle",
+      "label": "Text Circle"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Image with text"
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Heading Size"
+    },
+    {
+      "type": "text",
+      "id": "des",
+      "label": "Description"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "Video link",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Cover"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show overlay",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacity",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Size Video"
+    },
+    {
+      "type": "range",
+      "id": "height_video",
+      "min": 300,
+      "max": 800,
+      "step": 5,
+      "unit": "px",
+      "label": "Height Video",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "height_video_mobile",
+      "min": 300,
+      "max": 800,
+      "step": 5,
+      "unit": "px",
+      "label": "Height Video Mobile",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "product",
+        "name": "Product",
+        "settings":[
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Width item",
+            "default": "50%",
+            "options": [
+              {
+                "value": "25%",
+                "label": "25%"
+              },
+              {
+                "value": "33%",
+                "label": "33%"
+              },
+              {
+                "value": "41%",
+                "label": "41%"
+              },
+              {
+                "value": "50%",
+                "label": "50%"
+              },
+              {
+                "value": "59%",
+                "label": "59%"
+              },
+              {
+                "value": "66%",
+                "label": "66%"
+              },
+              {
+                "value": "75%",
+                "label": "75%"
+              },
+              {
+                "value": "100%",
+                "label": "100%"
+              }
+            ]
+           },  
+           {
+            "type": "text",
+            "id":"block_title",
+            "label": "Title"
+           },
+           {
+            "type": "color",
+            "id":"color_title",
+            "label": "Color Title",
+            "default": "#000"
+           },
+           {
+              "label": "Collection",
+              "id": "collection",
+              "type": "collection"
+            },
+            {
+              "type": "checkbox",
+              "id": "arrows",
+              "label": "Arrows",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "draggable",
+              "label": "Draggable",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "dots",
+              "label": "Dots",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "infinite",
+              "label": "Infinite",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "enable_type",
+              "label": "Show vendor",
+              "default": true
+            },
+            {
+              "type": "checkbox",
+              "id": "enable_review",
+              "label": "Show rating",
+              "default": false
+            },
+            {
+              "type": "select",
+              "id": "rows",
+              "label": "Rows",
+              "default": "1",
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 row"
+                },
+                {
+                  "value": "2",
+                  "label": "2 rows"
+                },
+                {
+                  "value": "3",
+                  "label": "3 rows"
+                }
+              ]
+            },
+           {
+            "type": "range",
+            "id": "limit",
+            "min": 3,
+            "max": 30,
+            "step": 1,
+            "label": "Limit items",
+            "default": 6
+          },
+          {
+            "type": "range",
+            "id": "show",
+            "min": 1,
+            "max": 6,
+            "step": 1,
+            "label": "Display items",
+            "default": 1
+          }
+        ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video",
+      "category": "Video"
+    }
+  ]
+}
+{% endschema %}

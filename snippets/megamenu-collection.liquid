@@ -1,0 +1,135 @@
+{%- liquid
+    assign link_column = ''
+    assign menu_width = block.settings.menu_width
+    assign menu_column = block.settings.menu_column
+    assign enable_menu_collection = block.settings.enable_menu_collection
+    assign menu_collection_width = block.settings.menu_collection_width
+    assign enable_items_count = block.settings.enable_items_count
+    assign image_size = block.settings.image_size
+
+    case menu_column
+      when 1
+      assign link_column = 'col-sm-12'
+      when 2
+      assign link_column = 'col-sm-6'
+      when 3
+      assign link_column = 'col-sm-4'
+      when 4
+      assign link_column = 'col-sm-3'
+      when 5
+      assign link_column = 'col-1-5'
+      when 6
+      assign link_column = 'col-sm-2'
+      else
+      assign link_column = 'col-sm-2'
+    endcase
+  -%}
+  <div class="{{ menu_width }}">
+    <div class="row">
+      {%- if link.links != blank -%}
+      <div class="mega-col mega-link {% if enable_menu_collection == false %} col-12 {% else %} col {% endif %}">
+        <div class="row">
+          {%- if link.links != blank -%}
+          {%- for childlink in link.links -%}
+          <div class="{{ link_column }}">
+            <div class="mega-col-inner ">
+              <div class="menu-title">
+                <a href="{{ childlink.url }}" >
+                  {%- render 'processMenuTitle' , itemName: childlink.title -%}
+                  {%- render 'processMenuLabel' , itemName: childlink.title -%}
+                </a>
+              </div>
+              <div class="widget-inner">
+                <ul class="nav-links">
+                  {%- if childlink.links != blank -%}
+                  {%- for grandchildlink in childlink.links -%}
+                  <li>
+                    <a href="{{ grandchildlink.url }}" >
+                      {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
+                      {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
+                    </a>
+                  </li>
+                  {%- endfor -%}
+                  {%- endif -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+  
+      {% if enable_menu_collection %}
+        <div class="mega-col col" style="max-width:{{ menu_collection_width }}%;flex:0 0 {{ menu_collection_width }}%;">    
+          <div class="row">
+            {% for i in (1..6) %}
+              {%- liquid
+                assign menu_collection_var = 'menu_collection_' | append: i 
+                assign featured_collection = block.settings[menu_collection_var]
+              -%}
+              {%- if featured_collection != blank -%}
+                <div class="collection_menu col">
+                  {%- liquid
+                    capture current cycle 1, 2, 3, 4, 5, 6
+                    endcapture
+                    assign collectionTitle = featured_collection.title | default: 'Collection title'
+                    if featured_collection.image
+                        assign featured_image = featured_collection.image | image_url: width: 1200
+                    else
+                        assign featured_image = featured_collection.products.first | image_url: width: 1200 
+                    endif
+                  -%}
+                  <div class="collection-card-1 text-center mt-3" {{ block.shopify_attributes }}>
+                  <div class="collection-card__image image-content__image-container overflow-hidden">
+                    <a class="image-content__image-wrapper hv-image-saturate overflow-hidden {{ image_size }}" href="{{ featured_collection.url | default : '#' }}" 
+                    {%- if featured_image != blank -%}
+                    style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100 }}%;"
+                    {% else %}
+                    style=""
+                    {%- endif -%}
+                    >
+                      {%- if featured_image != blank -%}
+                      {% assign img_url = featured_image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                      <img class="lazyload transition" 
+                      src="{{ featured_image | image_url: width: 1, height: 1 }}"
+                      data-src="{{ img_url }}" 
+                      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                      data-aspectratio="{{ featured_image.aspect_ratio }}"
+                      data-sizes="auto"
+                      loading="lazy"
+                      width="{{ featured_image.width }}"
+                      height="{{ featured_image.height }}">
+                      {%- else -%}
+                      {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg position-absolute' }}
+                      {%- endif -%}
+                    </a>
+                  </div>
+                  <h5 class="pt-3 m-0">
+                    <a class="" href="{{ featured_collection.url | default : '#' }}">
+                      {{ collectionTitle }}
+                    </a>
+                  </h5>
+                  {%- if enable_items_count -%}
+                    <p class=" txt-body-60">{{ featured_collection.products_count | default: 0 }}
+                    {%- if featured_collection.products_count > 1 -%}
+                    {{ 'collections.general.items' | t }}
+                  {%- else -%}
+                    {{ 'collections.general.item' | t }}
+                  {%- endif -%}</p>
+                  {%- endif -%}
+  
+                  </div>
+                </div>
+              {%- endif -%}
+              
+            {% endfor %}
+          </div>
+         
+          
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  

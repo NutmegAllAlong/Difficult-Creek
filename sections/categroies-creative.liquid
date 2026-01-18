@@ -1,0 +1,519 @@
+{%- render 'style-section' -%}
+{%-liquid
+    assign radius_top_left = section.settings.radius_top_left 
+    assign radius_top_right = section.settings.radius_top_right 
+    assign radius_bottom_right = section.settings.radius_bottom_right 
+    assign radius_botton_left = section.settings.radius_bottom_left 
+    assign text_color = section.settings.text
+-%}
+<style>
+  .customstyle{{ section.id }}  .hover-text{
+    --g-color-heading: {{ text_color }};
+    --color-body-text : {{ text_color }};
+    --color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;
+  }
+    .categories-creative-block{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .c-list{
+    position: relative;
+    align-items: center;
+    padding: 1rem 1rem;
+  }
+  
+  @media(min-width:750px){
+    hover-image:not(:first-child) .c-list:before{
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--g-color-heading);
+        position: absolute;
+        top:50%;
+        left:-2px;
+        opacity: 0.2;
+    }
+    .c-list{
+        padding:1rem 2.5rem
+    }
+    }
+  .hover-text {
+    margin: 0;
+    position: relative;
+    z-index:2;
+  }
+  .hover-text::before{
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 2px;
+    background-color: var(--g-color-heading);
+    bottom: -4px;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .hover-text:hover::before{
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+  }
+  .hover-image {
+    position: absolute;
+    top: 0;
+    width: 300px;
+    height: 360px;
+    object-fit: cover;
+    transform-origin: center center;
+    transform:translateY(-50%) translate(-50%) scale(0.8);
+    opacity:0;
+    pointer-events: none;
+    visibility:hidden;
+    z-index:1;
+    border-radius: {{ radius_top_left }}px {{ radius_top_right }}px {{ radius_bottom_right }}px {{ radius_botton_left }}px;
+    transition:opacity .2s cubic-bezier(.215,.61,.355,1),transform .4s cubic-bezier(.215,.61,.355,1),visibility .4s cubic-bezier(.215,.61,.355,1);
+  }
+  hover-image:hover .hover-image {
+    transform:translateY(-50%) translate(-50%) scale(1.0);
+    opacity:1;
+    visibility:inherit;
+  }
+  .customstyle{{ section.id }} .categories-creative--heading-outline{
+    -webkit-text-stroke: 1px var(--g-color-heading);
+    -webkit-text-fill-color: transparent;
+  }
+  .sup-count{
+    font-size: calc(var(--g-font-size) - 2px );
+    top:-1.2em;
+    -webkit-text-stroke: 0px var(--g-color-heading);
+    -webkit-text-fill-color: rgba(var(--color-body-text-rgb),0.6);
+  }
+</style>
+<div class="customstyle{{ section.id }} categories-creative categories-creative-{{ section.id }}" 
+    data-aos="{{ section.settings.animation }}"
+     data-section-id="{{ section.id }}" 
+    data-section-type="categories-creative">
+    <div class="{{ section.settings.setwidth }}">
+        <div class="section-block">
+            {%- render 'section-heading' -%}
+            <div class="categories-creative-block">
+                {%-liquid
+                  assign size_text= section.settings.size_text
+                  assign outline_text = section.settings.outline_text
+                  assign e_uppercase = section.settings.enable_uppercase
+                -%}
+                {%- for block in section.blocks -%}
+                    {%- assign featured_collection = collections[block.settings.collection] -%}
+                    {%- assign featured_image = block.settings.image -%}
+                    {%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+                    <hover-image img-src="{% if featured_image != blank %}{{ featured_image | image_url: width: 600 }}{% endif %}">
+                        <div class="position-relative c-list">
+                          <a href="{{ featured_collection.url }}" class="hover-text {{ size_text }} {% if outline_text %} categories-creative--heading-outline {% endif %} {% if e_uppercase %} text-uppercase {% endif %}">
+                            {{ collectionTitle }}
+                            <sup class="font-family-2 sup-count txt-body-60">
+                              {{ featured_collection.products_count | default: 0 }}
+                              {% assign c = featured_collection.products_count | plus: 0 %}
+                                {%- if c > 1 -%}
+                                  {{ 'collections.general.items' | t | default : 'items' }}
+                              {%- else -%}
+                                  {{ 'collections.general.item' | t | default : 'item' }}
+                              {%- endif -%}
+                            </sup>
+                          </a>
+                          {% if featured_image != blank %}
+                            <img class="hover-image" src="{{ featured_image | image_url: width: 600 }}" loading="lazy" width="300" height="360" alt="{{ collectionTitle }}">
+                          {% endif %}
+                      </div>
+                    </hover-image>
+                   
+                {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    class HoverImage extends HTMLElement {
+        constructor() {
+          super();
+          this.text = this.innerText;
+          this.dataSize = this.getAttribute('data-size');
+          this.imgSrc = this.getAttribute('img-src');
+          this.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        }
+      
+        connectedCallback() {
+          this.img = this.querySelector('.hover-image');
+          this.addEventListener('mousemove', this.handleMouseMove.bind(this));
+          /*this.addEventListener('mouseleave', this.handleMouseLeave.bind(this)); */
+        }
+      
+        handleMouseMove(e) {
+          if ( this.img != null  ){
+            const hoverImageWidth = this.img.getBoundingClientRect().width;
+            const hoverImageHeight = this.img.getBoundingClientRect().height;
+            const containerRect = this.getBoundingClientRect();
+            const x = e.clientX - containerRect.left;
+            const y = e.clientY - containerRect.top;
+            this.img.style.left = `${x}px`;
+            this.img.style.top = `${y}px`;
+          }
+        }
+      
+       /*handleMouseLeave() {
+          if ( this.img != null  ){
+            this.img.style.left = `50%`;
+            this.img.style.top = `50%`;
+            this.img.style.opacity = `0`;
+            this.img.style.transform = `translate(-50%,-50%)`;
+            this.img.style.visibility = `hidden`;
+            }
+        }*/
+      }
+      customElements.define('hover-image', HoverImage);
+
+</script>
+{% schema %}
+{
+  "name": "Categories Creative",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Categories Creative"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description",
+      "default": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Style Text "
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Heading Size"
+    },
+    {
+      "type": "checkbox",
+      "id": "outline_text",
+      "label": "Enable Outline Text",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_uppercase",
+      "label": "Enable Uppercase",
+      "default": false
+    },
+      {
+        "type": "number",
+        "id": "radius_top_left",
+        "label": "Radius Top Left",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "radius_top_right",
+        "label": "Radius Top Right",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "radius_bottom_right",
+        "label": "Radius Bottom Right",
+        "default": 0
+      },
+      {
+        "type": "number",
+        "id": "radius_bottom_left",
+        "label": "Radius Bottom Left",
+        "default": 0
+      },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories Creative",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

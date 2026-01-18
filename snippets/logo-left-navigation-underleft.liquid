@@ -1,0 +1,117 @@
+<!-- header-logo-left-nav-left.liquid -->
+<div class="header-top__wrap d-flex py-lg-3 py-2 w-100">
+    <div class="d-flex d-lg-none toggle-menu-mobile align-items-center">
+      {%- render 'button-toggle-menu-mobile' -%}
+      <span class="modal__toggle-search-mobile" aria-hidden="true" focusable="false" role="presentation">
+        {% render 'icon-search' %}
+      </span>
+    </div>
+      <div class="d-flex align-items-center justify-content-center justify-content-lg-start col-logo ">
+          <div class="pl-lg-0 ml-lg-0">
+          {%- render 'site-logo' -%}
+          </div>
+      </div>
+    {% comment %}
+      <div class="d-flex align-items-center justify-content-center col-search col-lg-6">
+        {% liquid
+            assign icon_search = section.settings.icon_search
+            case icon_search
+            when 'text'
+              assign styleSearch = 'text'
+            when 'icon-text'
+              assign styleSearch = 'icon-text'
+            else
+              assign styleSearch = 'icon'
+            endcase
+          %}
+        {%- if settings.predictive_search_enabled -%}
+              <predictive-search class="search-modal__form" data-loading-text="{{ 'general.accessibility.loading' | t }}">
+            {%- endif -%}
+          
+           
+              <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+                <div class="field d-flex">
+                  <input type="hidden" name="type" value="product">
+                  <input class="search__input field__input w-100 mr-atuo px-3 py-3"
+                    id="Search-In-Modal"
+                    type="search"
+                    name="q"
+                    value=""
+                    placeholder="{{ 'general.search.placeholder' | t }}"
+                    {%- if settings.predictive_search_enabled -%}
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-owns="predictive-search-results-list"
+                      aria-controls="predictive-search-results-list"
+                      aria-haspopup="listbox"
+                      aria-autocomplete="list"
+                      autocorrect="off"
+                      autocomplete="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                    {%- endif -%}
+                  >
+                  <label class="field__label visually-hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                  <input type="hidden" name="options[prefix]" value="last">
+                  <button class="search__button field__button border-0" aria-label="{{ 'general.search.search' | t }}">
+                    {% render 'icon-search' %}
+                  </button>
+                </div>
+                
+                {%- if settings.predictive_search_enabled -%}
+                  <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+                    <div class="predictive-search__loading-state">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+                {%- endif -%}
+                {%- if linklists[link_list_search].links.size > 0 -%}
+                  <div class="search-trend mt-4">
+                    {%- if linklists[link_list_search].title != blank -%}
+                      <h2 class="mb-2 text-uppercase txt-body-60 small h6">{{ linklists[link_list_search].title }}</h2>
+                    {%- endif -%}
+                    <ul class="list-group list-group-flush">
+                      {%- for link in linklists[link_list_search].links -%}
+                      <li class="list-group-item border-0 pl-0 pt-1 pb-0 rte mb-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                  {%- endif -%}
+              </form>
+            {%- if settings.predictive_search_enabled -%}
+              </predictive-search>
+            {%- endif -%}
+      </div>
+    {% endcomment %}
+      <div class="header-bottom__right col-bottom__right">
+          <div class="d-none d-lg-flex align-items-center">
+              {%- liquid
+                assign enable_image = section.settings.enable_image
+                assign enable_name = section.settings.enable_name 
+                if section.settings.e_hd_currency and localization.available_countries.size > 1
+                  render 'localization' id: 'HeaderCountryForm', enable_image: enable_image, enable_name: enable_name
+                endif
+              if section.settings.enable_language_selector and localization.available_languages.size > 1 
+                  render 'localization-language', id: 'HeaderLanguageForm', enable_name: enable_name
+                endif
+              -%}
+          </div>
+          {%- render 'header-search', link_list_search: section.settings.link_list_search, e_search: section.settings.sidebar_search -%}
+          {%- render 'header-login' -%}
+          {%- render 'block-wishlist' -%}
+          {%- render 'block-cart' -%}
+      </div>
+  </div>
+  
+  <div class="d-none d-lg-flex col-menu">
+  {%- liquid
+      assign main_linklist = section.settings.main_linklist
+      assign blocks = section.blocks
+  -%}
+  {%- render 'block-menu', main_linklist: main_linklist, blocks: blocks -%}
+  </div>
+    

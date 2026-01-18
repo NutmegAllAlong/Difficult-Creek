@@ -1,0 +1,9 @@
+{%- if product.metafields.info.countdown != blank -%}
+    
+    <div class="d-flex align-items-center product-countdown flex-lg-row flex-column ">
+        {% if title_heading != blank %}
+            <div class="h5 mb-0">{{ title_heading }}</div>
+        {% endif %}
+        <div class="js-countdown ml-lg-auto" data-time="{{ product.metafields.info.countdown }}"></div>
+    </div>
+{%- endif -%}

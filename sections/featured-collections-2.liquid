@@ -1,0 +1,578 @@
+<!-- featured-collection-2.liquid -->
+{%- liquid
+    assign colortext = section.settings.colortext
+    assign imagecol1 = section.settings.image1 
+    assign imagecol2 = section.settings.image2
+    assign imagecol3 = section.settings.image3
+    assign html1 = section.settings.colhtml1
+    assign html2 = section.settings.colhtml2
+    assign featured_collection1 = section.settings.collection1
+    assign featured_collection2 = section.settings.collection2
+    assign featured_collection3 = section.settings.collection3
+    assign collectionTitle1 = section.settings.collection_title1
+    assign collectionTitle2 = section.settings.collection_title2
+    assign collectionTitle3 = section.settings.collection_title3
+    if collectionTitle1 == blank 
+    assign collectionTitle1 = featured_collection1.title | default: 'Collection title'
+    else 
+    assign collectionTitle1 = section.settings.collection_title1
+    endif
+    if collectionTitle2 == blank 
+    assign collectionTitle2 = featured_collection2.title | default: 'Collection title'
+    else 
+    assign collectionTitle2 = section.settings.collection_title2
+    endif
+    if collectionTitle3 == blank 
+    assign collectionTitle3 = featured_collection3.title | default: 'Collection title'
+    else 
+    assign collectionTitle3 = section.settings.collection_title3
+    endif
+-%}
+{%- style -%}
+    :root{
+        --collection-color:{{ colortext.red }},{{ colortext.green }},{{ colortext.blue }};
+    }
+    .collection-item--info{
+        --color-body-text-rgb:{{ colortext.red }},{{ colortext.green }},{{ colortext.blue }};
+        bottom:0;
+        left: 0;
+        right:0;
+        pointer-events:none;
+    }
+    .collection-item--info h4 a,.collection-count{
+        color:rgba(var(--collection-color),1);
+    }
+    .customstyle{{ section.id }}{ 
+        position: relative;
+        background-position:{{ section.settings.e_pos }} !important;
+        background-repeat:{{ section.settings.e_repeat }} !important;
+        background-size:{{ section.settings.e_size }} !important;
+    }
+{%- endstyle -%}
+<section class="customstyle{{ section.id }} lazyload"  
+data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
+data-sizes="auto"
+data-parent-fit="cover" 
+data-aos="{{ section.settings.animation }}" 
+>
+{%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}" >
+    <div class="section-block">
+      {%- render 'section-heading' -%}
+      <div class="collectionlist-wrapper">
+        <div class="row">
+          <div class="col-lg-6 col-12 pr-xl-4 ">
+            <div class="pr-xl-2">
+            {%- if html1 != blank -%}
+              <div class="collection-html2 " data-aos="{{ section.settings.animation }}" data-aos-duration="500" >{{ html1 }}</div>
+            {%- endif -%}
+              <div class="collection-item" data-aos="{{ section.settings.animation }}" data-aos-duration="700">
+                {%- if imagecol1 != blank -%}
+                  <noscript>
+                    <img src="{{ imagecol1 | image_url: width: 600 }}" alt="{{ imagecol1.alt }}" class="image-content__image" loading="lazy"
+                      width="{{ imagecol1.width }}"
+                      height="{{ imagecol1.height }}">
+                  </noscript>
+                  <div class="image-content__image-container mt-5">
+                    <a title="{{ collectionTitle1 | escape }}" href="{{ featured_collection1.url | default : '#' }}" class="z-out image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: imagecol1.aspect_ratio | times: 100 }}%;">
+                      {% assign img_url = imagecol1 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                      <img class="image-content__image lazyload"
+                        src="{{ imagecol1 | image_url: width: 1, height: 1 }}"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ imagecol1.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ collectionTitle1 | escape }}"
+                        loading="lazy"
+                        width="{{ imagecol1.width }}"
+                        height="{{ imagecol1.height }}">
+                    </a>
+                    <div class="position-absolute collection-item--info d-flex px-lg-5 px-4 py-4 mb-xl-2 mb-0 align-items-center">
+                        <h4 class="flex-grow-1 mb-0">
+                            <a title="{{ collectionTitle1 | escape }}" class="" href="{{ featured_collection1.url | default : '#' }}">
+                              {{ collectionTitle1 }}
+                            </a>
+                          </h4>
+                          <p class="mb-0 collection-count small">{{ featured_collection1.products_count | default: 0 }} 
+                            {%- if featured_collection1.products_count > 1 -%}
+                               {{ 'collections.general.items' | t }}
+                            {%- else -%}
+                                {{ 'collections.general.item' | t }}
+                            {%- endif -%}
+                            </p>
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div class="image-content__image mt-5">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+              <div class="collection-item pl-xl-5" data-aos="{{ section.settings.animation }}" data-aos-duration="900" >
+                {%- if imagecol2 != blank -%}
+                <div class="pt-2">
+                  <noscript>
+                    <img src="{{ imagecol2 | image_url: width: 600 }}" alt="{{ imagecol2.alt }}" class="image-content__image"  loading="lazy"
+                      width="{{ imagecol2.width }}"
+                      height="{{ imagecol2.height }}">
+                  </noscript>
+                  <div class="image-content__image-container mt-xl-5 mt-3 ml-xl-5">
+                    <a title="{{ collectionTitle2 | escape }}" href="{{ featured_collection2.url | default : '#' }}" class="z-out image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: imagecol2.aspect_ratio | times: 100 }}%;">
+                      {% assign img_url = imagecol2 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                      <img class="image-content__image lazyload"
+                        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ imagecol2.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ collectionTitle2 | escape }}"
+                        loading="lazy"
+                        width="{{ imagecol2.width }}"
+                        height="{{ imagecol2.height }}">
+                    </a>
+                    <div class="position-absolute collection-item--info d-flex px-lg-5 px-4 py-4 mb-xl-2 mb-0 align-items-center">
+                        <h4 class="flex-grow-1 mb-0">
+                            <a  title="{{ collectionTitle2 | escape }}" class="" href="{{ featured_collection2.url | default : '#' }}">
+                              {{ collectionTitle2 }}
+                            </a>
+                          </h4>
+                          <p class="mb-0 collection-count small">{{ featured_collection2.products_count | default: 0 }} 
+                            {%- if featured_collection2.products_count > 1 -%}
+                               {{ 'collections.general.items' | t }}
+                            {%- else -%}
+                                {{ 'collections.general.item' | t }}
+                            {%- endif -%}
+                            </p>
+                    </div>
+                  </div>
+                </div>
+                {%- else -%}
+                  <div class="image-content__image mt-5 ml-xl-3">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-12 pl-xl-4">
+            <div class="pl-xl-2">
+              <div class="collection-item mt-xl-0 mt-3" data-aos="{{ section.settings.animation }}" data-aos-duration="800">
+                  {%- if imagecol3 != blank -%}
+                    <noscript>
+                      <img src="{{ imagecol3 | image_url: width: 600 }}" alt="{{ imagecol3.alt }}" class="image-content__image"  loading="lazy"
+                        width="{{ imagecol3.width }}"
+                        height="{{ imagecol3.height }}">
+                    </noscript>
+                    <div class="image-content__image-container">
+                      <a title="{{ collectionTitle3 | escape }}" href="{{ featured_collection3.url | default : '#' }}" class="z-out image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: imagecol3.aspect_ratio | times: 100 }}%;">
+                        {% assign img_url = imagecol3 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                        <img class="image-content__image lazyload"
+                          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                          data-src="{{ img_url }}"
+                          data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                          data-aspectratio="{{ imagecol3.aspect_ratio }}"
+                          data-sizes="auto"
+                          alt="{{ collectionTitle3 | escape }}"
+                          loading="lazy"
+                          width="{{ imagecol3.width }}"
+                          height="{{ imagecol3.height }}"
+                          >
+                      </a>
+                      <div class="position-absolute collection-item--info d-flex px-lg-5 px-4 py-4 mb-xl-2 mb-0 align-items-center">
+                        <h4 class="flex-grow-1 mb-0">
+                            <a title="{{ collectionTitle3 | escape }}" class="" href="{{ featured_collection3.url | default : '#' }}">
+                              {{ collectionTitle3 }}
+                            </a>
+                          </h4>
+                          <p class="mb-0 collection-count small">{{ featured_collection3.products_count | default: 0 }} 
+                            {%- if featured_collection3.products_count > 1 -%}
+                               {{ 'collections.general.items' | t }}
+                            {%- else -%}
+                                {{ 'collections.general.item' | t }}
+                            {%- endif -%}
+                            </p>
+                    </div>
+                    </div>
+                  {%- else -%}
+                    <div class="image-content__image">
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                  {%- endif -%}
+              </div>
+              {%- if html2 != blank -%}
+                <div class="collection-html2 mt-xl-5 mt-3" data-aos="{{ section.settings.animation }}" data-aos-duration="1000">{{html2}}</div>
+              {%- endif -%}
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection list Creative",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "e_size",
+      "label": "Background Size",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_repeat",
+      "label": "Background Repeat",
+      "default": "no-repeat",
+      "options": [
+        {
+          "value": "no-repeat",
+          "label": "No-repeat"
+        },
+        {
+          "value": "repeat",
+          "label": "Repeat"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_pos",
+      "label": "Background Position",
+      "default": "center center",
+      "options": [
+        {
+          "value": "center center",
+          "label": "Center"
+        },
+        {
+          "value": "top center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top right",
+          "label": "Top Right"
+        },
+        {
+          "value": "top left",
+          "label": "Top Left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom Center"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Collection list"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "----- Color Banner"
+    },
+    {
+      "type": "color",
+      "id": "colortext",
+      "label": "Color Collection",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "----- Left Column"
+    },
+    {
+      "type": "textarea",
+      "id": "colhtml1",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "-----"
+    },
+    {
+      "id": "collection1",
+      "type": "collection",
+      "label": "Collection 1"
+    },
+    {
+      "type": "text",
+      "id": "collection_title1",
+      "label": "Collection Title 1"
+    },
+    {
+      "id": "image1",
+      "type": "image_picker",
+      "label": "Image Collection 1"
+    },
+    {
+      "type": "header",
+      "content": "-----"
+    },
+    {
+      "id": "collection2",
+      "type": "collection",
+      "label": "Collection 2"
+    },
+    {
+      "type": "text",
+      "id": "collection_title2",
+      "label": "Collection Title 2"
+    },
+    {
+      "id": "image2",
+      "type": "image_picker",
+      "label": "Image Collection 2"
+    },
+    {
+      "type": "header",
+      "content": "----- Right Column"
+    },
+    {
+      "id": "collection3",
+      "type": "collection",
+      "label": "Collection 3"
+    },
+    {
+      "type": "text",
+      "id": "collection_title3",
+      "label": "Collection Title 3"
+    },
+    {
+      "id": "image3",
+      "type": "image_picker",
+      "label": "Image Collection 3"
+    },
+    {
+      "type": "header",
+      "content": "-----"
+    },
+    {
+      "type": "textarea",
+      "id": "colhtml2",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection list Creative",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

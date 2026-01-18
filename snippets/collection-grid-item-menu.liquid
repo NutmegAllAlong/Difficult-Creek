@@ -1,0 +1,53 @@
+
+
+{%- liquid
+    capture current cycle 1, 2, 3, 4, 5, 6
+    endcapture
+    assign collectionTitle = featured_collection.title | default: 'Collection title'
+
+    if featured_collection.image
+        assign featured_image = featured_collection.image | image_url: width: 1200
+    else
+        assign featured_image = featured_collection.products.first | image_url: width: 1200 
+    endif
+-%}
+<div class="collection-card-1 text-center mt-3" {{ block.shopify_attributes }}>
+  <div class="collection-card__image image-content__image-container overflow-hidden">
+    <a class="image-content__image-wrapper hv-image-saturate overflow-hidden {{ image_size }}" href="{{ featured_collection.url | default : '#' }}" 
+    {%- if featured_image != blank -%}
+    style="padding-top:{{ 1 | divided_by: featured_image.aspect_ratio | times: 100 }}%;"
+    {% else %}
+    style=""
+    {%- endif -%}
+    >
+      {%- if featured_image != blank -%}
+      {% assign img_url = featured_image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+      <img class="lazyload transition" 
+      src="{{ featured_image | image_url: width: 1, height: 1 }}"
+      data-src="{{ img_url }}" 
+      data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+      data-aspectratio="{{ featured_image.aspect_ratio }}"
+      data-sizes="auto"
+      loading="lazy"
+      width="{{ featured_image.width }}"
+      height="{{ featured_image.height }}">
+      {%- else -%}
+      {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg position-absolute' }}
+      {%- endif -%}
+    </a>
+  </div>
+  <h5 class="pt-3 m-0">
+    <a class="" href="{{ featured_collection.url | default : '#' }}">
+      {{ collectionTitle }}
+    </a>
+  </h5>
+  {%- if enable_items_count -%}
+    <p class=" txt-body-60">{{ featured_collection.products_count | default: 0 }}
+    {%- if featured_collection.products_count > 1 -%}
+    {{ 'collections.general.items' | t }}
+ {%- else -%}
+     {{ 'collections.general.item' | t }}
+ {%- endif -%}</p>
+  {%- endif -%}
+  
+</div>

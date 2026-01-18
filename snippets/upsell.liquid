@@ -1,0 +1,31 @@
+{%- if product.metafields.info.upsell != blank -%}
+{%- assign upsellHandle = product.metafields.info.upsell | strip -%}
+{%- assign productUpsell = all_products[upsellHandle] -%}
+
+<div class="modal fade" id="jsUpsell" role="dialog" aria-hidden="true" data-delay="{{ section.settings.upsell_time | times: 1000 }}" data-id="{{ productUpsell.selected_or_first_available_variant.id }}">
+  <div class="modal-dialog modal-dialog--upsell modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="modal-body pt-0 pb-4 px-5">
+        <div class="upsell-promotion mb-4 border-bottom pb-4">{{ product.metafields.info.promotion }}</div>
+        <div class="upsell-image d-flex flex-sm-row flex-column align-items-center align-items-sm-start">
+          <img class="lazyload" 
+          loading="lazy" 
+          src="{{ productUpsell.featured_image.src | image_url: width: 1, height: 1 }}" 
+          data-src="{{ productUpsell.featured_image.src | image_url: width: 300 }}"
+          width="{{ productUpsell.featured_image.width }}"
+          height="{{ productUpsell.featured_image.height }}" />
+          <div class="upsell-infor flex-grow-1 pl-4 mt-sm-0 mt-3 text-left">
+              <h4>{{ productUpsell.title }}</h4>
+              {% render 'price', product: productUpsell %} 
+          </div>
+        </div>
+        <button class="btn btn-theme btn-decline mr-md-2 ">{{ section.settings.upsell_decline }}</button>
+        <button class="btn btn-theme gradient-theme mt-2 mt-md-0 js-btn-accept">{{ section.settings.upsell_accept }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}

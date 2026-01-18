@@ -1,0 +1,7 @@
+{%- if settings.enable_compare -%}
+<!-- block-compare.liquid  -->
+<button data-toggle="modal" data-target="#jsCompare" class="btn site-header__compare js-open-compare d-flex align-items-center" title="{{ 'products.product.compare_text' | t }}">
+  <span class="compare-text mr-2">{{ 'products.product.compare_text' | t }}</span>
+  <span class="js-compare-count text-center"></span>
+</button>
+{%- endif -%}

@@ -1,0 +1,114 @@
+{%- liquid
+    assign link_column = ''
+    assign menu_column = block.settings.menu_column
+    assign menu_banner_width = block.settings.menu_banner_width
+    assign menu_width = block.settings.menu_width
+    assign enable_menu_banner = block.settings.enable_menu_banner
+
+    case menu_column
+      when 1
+      assign link_column = 'col-sm-12'
+      when 2
+      assign link_column = 'col-sm-6'
+      when 3
+      assign link_column = 'col-sm-4'
+      when 4
+      assign link_column = 'col-sm-3'
+      when 5
+      assign link_column = 'col-1-5'
+      when 6
+      assign link_column = 'col-sm-2'
+      else 
+      assign link_column = 'col-sm-2'
+    endcase
+  -%}
+  <div class="{{ menu_width }}">
+    <div class="row">
+      {%- if link.links != blank -%}
+      <div class="mega-col mega-link {% if enable_menu_banner == false %} col-12 {% else %} col {% endif %}">
+        <div class="row">
+          {%- if link.links != blank -%}
+          {%- for childlink in link.links -%}
+          <div class="{{ link_column }}">
+            <div class="mega-col-inner ">
+              <div class="menu-title">
+                <a href="{{ childlink.url }}" >
+                  {%- render 'processMenuTitle' , itemName: childlink.title -%}
+                  {%- render 'processMenuLabel' , itemName: childlink.title -%}
+                </a>
+              </div>
+              <div class="widget-inner">
+                <ul class="nav-links">
+                  {%- if childlink.links != blank -%}
+                  {%- for grandchildlink in childlink.links -%}
+                  <li>
+                    <a href="{{ grandchildlink.url }}" >
+                      {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
+                      {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
+                    </a>
+                  </li>
+                  {%- endfor -%}
+                  {%- endif -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+  
+      {% if block.settings.enable_menu_banner %}
+        <div class="mega-col col" style="max-width:{{ menu_banner_width }}%;flex:0 0 {{ menu_banner_width }}%;">    
+          <div class="row">
+            {% for i in (1..6) %}
+                {%- liquid
+                    assign menu_banner_image_var = 'menu_banner_image_' | append: i 
+                    assign menu_banner_html_var = 'menu_banner_html_' | append: i 
+                    assign menu_banner_btn_var = 'menu_banner_btn_' | append: i 
+                    assign menu_banner_link_var = 'menu_banner_link_' | append: i 
+                    
+                    assign menu_banner_image = block.settings[menu_banner_image_var]
+                    assign menu_banner_html = block.settings[menu_banner_html_var]
+                    assign menu_banner_btn = block.settings[menu_banner_btn_var]
+                    assign menu_banner_link = block.settings[menu_banner_link_var]
+                -%}
+                {%- if menu_banner_image != blank -%}
+                    <div class="promotionclassic_menu col mb-2 mt-3">
+                        <div class="image-content__image-container overflow-hidden">
+                            <a href="{{ menu_banner_link }}" class="image-content__image-wrapper promotionclassic__image {{ block.settings.image_size }}" style="padding-top:{{ 1 | divided_by: menu_banner_image.aspect_ratio | times: 100 }}%;">
+                                {% assign img_url = menu_banner_image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                <img class="image-content__image lazyload "
+                                    src="{{ menu_banner_image | image_url: width: 1, height: 1 }}"
+                                    data-src="{{ img_url }}"
+                                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                    data-aspectratio="{{ menu_banner_image.aspect_ratio }}"
+                                    data-sizes="auto"
+                                    alt="{{ menu_banner_image.alt | escape }}"
+                                    loading="lazy"
+                                    width="{{ menu_banner_image.width }}"
+                                    height="{{ menu_banner_image.height }}">
+                            </a>
+                            <div class="promotionclassic_menu--content ">
+                                <div class="promotionclassic_menu--txt">
+                                    {%- if menu_banner_html != blank -%}
+                                        <div class="my-3"> {{ menu_banner_html }}</div>
+                                    {%- endif -%}
+                                    {%- if menu_banner_btn != blank -%}
+                                        <a class="btn btn-underline" href="{{ menu_banner_link }}"> {{ menu_banner_btn }}</a>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                {%- endif -%}
+            {% endfor %}
+          </div>
+         
+          
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  

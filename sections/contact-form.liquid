@@ -1,0 +1,317 @@
+
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}">
+  <div class="contact container">
+    {%- render 'section-heading' -%}
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-12">
+        {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
+            {%- if form.posted_successfully? -%}
+              <p class="form-status form-status-list form__message" tabindex="-1" autofocus> {{ 'contact.form.post_success' | t }}</p>
+            {%- elsif form.errors -%}
+              <div class="form__message">
+                <p class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus> {{ 'contact.form.post_error' | t }}</p>
+              </div>
+              <ul class="form-status-list caption-large" role="list">
+                <li>
+                  <a href="#ContactForm-email" class="link">
+                    {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+                  </a>
+                </li>
+              </ul>
+            {%- endif -%}
+            <div class="contact__fields">
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <div class="field form-group">
+                            <input class="field__input form-control" autocomplete="name" type="text" id="ContactForm-name" name="contact[{{ 'contact.form.name' | t }}]" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="{{ 'contact.form.name' | t }}">
+                            <label class="field__label" for="ContactForm-name">{{ 'contact.form.name' | t }}</label>
+                          </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="field field--with-error form-group">
+                            <input
+                              autocomplete="email"
+                              type="email"
+                              id="ContactForm-email"
+                              class="field__input form-control"
+                              name="contact[email]"
+                              spellcheck="false"
+                              autocapitalize="off"
+                              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                              aria-required="true"
+                              {% if form.errors contains 'email' %}
+                                aria-invalid="true"
+                                aria-describedby="ContactForm-email-error"
+                              {% endif %}
+                              placeholder="{{ 'contact.form.email' | t }}"
+                            >
+                            <label class="field__label" for="ContactForm-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+                            {%- if form.errors contains 'email' -%}
+                              <small class="contact__field-error" id="ContactForm-email-error">
+                                <span class="visually-hidden">{{ form.errors | default_errors }}</span>
+                                <span class="form__message">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+                              </small>
+                            {%- endif -%}
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field form-group">
+              <input type="tel" id="ContactForm-phone" class="field__input form-control" autocomplete="tel" name="contact[{{ 'contact.form.phone' | t }}]" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="{{ 'contact.form.phone' | t }}">
+              <label class="field__label" for="ContactForm-phone">{{ 'contact.form.phone' | t }}</label>
+            </div>
+            <div class="field form-group">
+              <textarea
+                rows="10"
+                id="ContactForm-body"
+                class="text-area field__input form-control form-control-area"
+                name="contact[{{ 'contact.form.message' | t }}]"
+                placeholder="{{ 'contact.form.message' | t }}"
+              >
+                {{- form.body -}}
+              </textarea>
+              <label class="form__label field__label" for="ContactForm-body">{{ 'contact.form.message' | t }}</label>
+            </div>
+            <div class="contact__button text-center">
+              <button type="submit" class="button btn btn-theme">
+                  {{ 'contact.form.send' | t }}  <i class="ml-1 small icon-arrow-right"></i>
+              </button>
+            </div>
+            
+                {%- if section.settings.answer_content != blank -%}
+                    <div class="mt-5 text-center">
+                    {{ section.settings.answer_content }}
+                </div>
+                {%- endif -%}
+            
+          {%- endform -%}
+        </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Questions? Send us an email"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "answer_content",
+      "label": "Description",
+      "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
+{% endschema %}

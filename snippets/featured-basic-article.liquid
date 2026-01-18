@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row justify-content-center text-{{ align }}">
+    <div class="col-md-8">
+        <h1 class="h3 mb-4">{{ article.title }}</h1>
+        <p class="blog__meta mb-5 txt-body-70 d-flex align-items-center {% if align == 'left' %}justify-content-start {% else %} justify-content-center {% endif %}">
+          {%- if enable_date -%}
+            <span class="meta-c pr-3 mr-3 blog_date align-items-center d-inline-flex"> {%- render 'icon-date' -%}{{ article.published_at | time_tag: format: 'month_day_year' }} </span>
+          {%- endif -%}
+          {%- if enable_author -%}
+            <span class="blog_user pr-3 meta-c mr-3 align-items-center d-inline-flex">
+                {%- render 'icon-user' -%}
+                {{ article.author | default: "Author" }}
+            </span> 
+          {%- endif -%}
+          {%- if enable_comment -%}
+            <span class="blog_comment align-items-center d-inline-flex meta-c">
+              {%- render 'icon-comment' -%}
+              {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+            </span>
+          {%- endif -%}
+          
+        </p>
+    </div>
+  </div>
+</div>
+<div class="{% unless enable_full %} container {% endunless %}">
+    <div class="content-block mb-5 text-center">
+      {%- if article.image and enable_image -%}
+        <div class="content-block__full-image--large featured-img">
+          <noscript>
+            {{ article | image_url: width: 1024, height: 1024 | image_tag: article.title | escape }}
+          </noscript>
+          <div class="article__photo-container mb-4">
+            <div class="article__photo-wrapper h{{ image_size }}px" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+              {%- assign img_url = article.image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+              <img class="lazyload"
+                   src="{{ article.image | image_url: width: 1, height: 1 }}"
+                   data-src="{{ img_url }}"
+                   data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                   data-aspectratio="{{ article.image.aspect_ratio }}"
+                   data-sizes="auto"
+                   alt="{{ article.title | escape }}"
+                   loading="lazy"
+                   width="{{ article.image.width }}"
+                   height="{{ article.image.height }}">
+            </div>
+          </div>
+        </div>
+        {%- endif -%}
+    </div>
+  </div>

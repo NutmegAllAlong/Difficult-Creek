@@ -1,0 +1,32 @@
+
+
+ <div class="d-flex toggle-menu-mobile align-items-center">
+  {%- render 'button-toggle-menu-mobile' -%}
+  <span class="modal__toggle-search-mobile  d-lg-none" aria-hidden="true" focusable="false" role="presentation">
+    {% render 'icon-search' %}
+  </span>
+</div>
+  <div class="d-flex align-items-center justify-content-center justify-content-lg-start col-logo ">
+    <div class="pl-lg-0 ml-lg-0">
+    {%- render 'site-logo' -%}
+  </div>
+  </div>
+ 
+  <div class="header-bottom__right col-bottom__right">
+    <div class="d-none d-lg-flex align-items-center">
+      {%- liquid
+        assign enable_image = section.settings.enable_image
+        assign enable_name = section.settings.enable_name 
+        if section.settings.e_hd_currency and localization.available_countries.size > 1
+          render 'localization' id: 'HeaderCountryForm', enable_image: enable_image, enable_name: enable_name
+        endif
+      if section.settings.enable_language_selector and localization.available_languages.size > 1 
+          render 'localization-language', id: 'HeaderLanguageForm', enable_name: enable_name
+        endif
+      -%}
+  </div>
+    {%- render 'header-search', link_list_search: section.settings.link_list_search, e_search: section.settings.sidebar_search -%}
+    {%- render 'header-login' -%}
+    {%- render 'block-wishlist' -%}
+    {%- render 'block-cart' -%}
+  </div>

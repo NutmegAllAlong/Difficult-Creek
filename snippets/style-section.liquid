@@ -1,0 +1,19 @@
+{%- style -%}
+    .customstyle{{ section.id }}{
+      {% if section.settings.bg_section != blank %}
+        background-image:url({{ section.settings.bg_section | image_url: width: 1920 }});
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size:cover;
+      {% endif %}
+      background-color:{{ section.settings.bgsection }};
+      padding: {{ section.settings.paddingsection }};
+      margin: {{ section.settings.marginsection }};
+    }
+    @media (max-width:750px){
+      .customstyle{{ section.id }}{
+        padding: {{ section.settings.paddingmobile }};
+        margin: {{ section.settings.marginmobile }};
+      }
+    }
+{%- endstyle -%}

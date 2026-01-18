@@ -1,0 +1,37 @@
+<div class="d-flex {% if aligntext == 'text-center' %} justify-content-center {% endif %} quote__slide quote__style_1 {{ aligntext }} " data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+    <div class="quote-wrap"  style="background-color:{{ bg_item }}">
+      {%- if rate > 0 -%}
+        <ul class="rating mb-3">
+          {%- for i in (1..5) -%}
+            {%- assign iMax = rate -%}
+            {%- if i <= iMax -%}
+            <li class="rated">
+              <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                {%- else -%}
+            <li>
+              <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <div class=" py-2 "><div class="{{ size_text }}">{{ quote }}</div></div>
+      <div class="d-flex align-items-center {% if aligntext == 'text-center' %} justify-content-center {% endif %}">
+        {%- if avatar != blank -%}
+            <div class="author-avatar mr-3">
+              <img class="lazyload" src="{{ avatar | image_url: width: 1 , height: 1 }}" data-src="{{ avatar | image_url: width: 300 }}" 
+                loading="lazy"
+                width="{{ avatar.width }}"
+                height="{{ avatar.height }}"/>
+            </div>
+        {%- endif -%}
+          <div class="text-left">
+              <div class="mt-4 h6 mb-0">
+                {{ author }}
+                {%- if info != blank -%}
+                  <span class="txt-body-60 capitalize small d-block font-family-2">  {{ info }}</span>
+                {%- endif -%}
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

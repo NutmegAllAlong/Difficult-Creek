@@ -1,0 +1,672 @@
+<!-- product-with-image.liquid  -->
+<style>
+    .product-image{
+        display: grid;
+        grid-template-columns: repeat(1,minmax(0,1fr));
+        column-gap: var(--g-gutter);
+        row-gap:var(--g-gutter) ;
+    }
+    @media (min-width:750px){
+        .product-image{
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+        .product-image.image_left_small{
+          grid-template-columns: 1.5fr repeat(1, 2fr);
+          }
+          .product-image.image_right_small{
+            grid-template-columns: 2fr repeat(1, 1.5fr);
+          }
+    }
+    .product-image__item .image-content__image-wrapper img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    @media (max-width:749px){
+        .product-image__item .image-content__image-container{
+            min-height: 400px;
+        }
+    }
+    .product-image__product .row{
+        row-gap:var(--g-gutter) ;
+    }
+    .product-image__product .product-card__info{
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .product-image__product .product-card--style9 .product-card__info {
+      padding-bottom: 15px; 
+    }
+    .product-image__banner{
+        --bg-overlay-rgba:0,0,0;
+        --bg-opacity:0;
+        width: 100%;
+        top:0;
+        left:0;
+        height: 100%;
+        padding: 2.5rem;
+        background-color: rgba(var( --bg-overlay-rgba),var(--bg-opacity));
+    }
+    .product-video__banner{
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+</style>
+<div class="customstyle{{ section.id }}"  data-aos="{{ section.settings.animation }} ">
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+        {%- render 'section-heading' -%}
+<div class="product-image {% if section.settings.pos_image == 'left_small' %} image_left_small {% elsif section.settings.pos_image == 'right_small' %} image_right_small  {% endif %}">
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when 'banner' -%}
+                    <div class="product-image__item ">
+                         {%- liquid 
+                            assign text_color = block.settings.colortabimage 
+                            assign pos_banner = block.settings.pos_banner
+                            case pos_banner
+                            when 'top-left'
+                            assign positiontxt = 'align-items-start justify-content-start'
+                            when 'top-center'
+                            assign positiontxt = 'align-items-start justify-content-center text-center'
+                            when 'top-right'
+                            assign positiontxt = 'align-items-start justify-content-end text-right'
+                            when 'mid-left'
+                            assign positiontxt = 'align-items-center justify-content-start'
+                            when 'mid-center'
+                            assign positiontxt = 'align-items-center justify-content-center text-center'
+                            when 'mid-right'
+                            assign positiontxt = 'align-items-center justify-content-end text-right'
+                            when 'bot-left'
+                            assign positiontxt = 'align-items-end justify-content-start'
+                            when 'bot-center'
+                            assign positiontxt = 'align-items-end justify-content-center text-center'
+                            when 'bot-right'
+                            assign positiontxt = 'align-items-end justify-content-end text-right'
+                            else 
+                            assign positiontxt = 'align-items-end justify-content-start'
+                        endcase
+                         -%}
+                       
+                      <div class="image-content__image-container h-100 overflow-hidden">
+                        {%- if block.settings.image != blank -%}
+                          <div class="image-content__image-wrapper h-100" >
+                              {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                              <img class="image-content__image lazyload scale-in"
+                                  src="{{ block.settings.image | image_url: width: 720 }}"
+                                  data-src="{{ img_url }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  alt="{{ block.settings.image.alt | escape }}"
+                                  loading="lazy"
+                                  width="{{ block.settings.image.width }}"
+                                  height="{{ block.settings.image.height }}"> 
+                          </div>
+                          {%- else -%}
+                            <div class="image-content__image h-100 ">
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            </div>
+                        {%- endif -%}
+                        {%- if block.settings.video != blank -%}
+                            <video class="product-video__banner  position-absolute" id="Mp4{{ section.id }}"  loop="" muted="" playsinline="" autoplay="" >
+                                <source src="{{ block.settings.video }}" type="video/mp4">
+                            </video>
+                        {%- endif -%}
+                            <div class="product-image__banner position-absolute d-flex {{ positiontxt }}" style="
+                                    --bg-overlay-rgba: {{ block.settings.bg-overlay.red }}, {{ block.settings.bg-overlay.green }}, {{ block.settings.bg-overlay.blue }};
+                                    --bg-opacity: {{ block.settings.bg-opacity }};
+                                    {%- if text_color != 'transparent' -%}
+                                    --g-font-color-subtop: {{ text_color }};
+                                    --g-color-heading :  {{ text_color }};
+                                    --color-body-text : {{ text_color }};
+                                    --color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;
+                                {%- endif -%} ">
+                                    <div  class="product-image__banner_in">
+                                        {%- if block.settings.subtitle != blank -%}
+                                            <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
+                                        {%- endif -%}
+                                        {%- if block.settings.title != blank -%}
+                                        <h3 class="mb-2 {{ block.settings.size_text }}"><a href="{{ block.settings.link }}" >{{ block.settings.title }}</a></h3>
+                                        {%- endif -%}
+                                        {%- if block.settings.subtext != blank -%}
+                                            <div class="rte mb-3 txt-body">
+                                            {{ block.settings.subtext }}
+                                            </div>
+                                        {%- endif -%}
+                                    {%- if block.settings.button != blank and block.settings.link != blank -%}
+                                        <div class="pt-3">
+                                            <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }}">
+                                            {{ block.settings.button | escape }}
+                                            </a>
+                                        </div>
+                                        {%- endif -%}
+                                    </div>
+                            </div>
+                            
+                      </div>
+                      
+                    </div>
+                    {%- when 'product' -%}
+                        {% liquid
+                            assign limit = block.settings.limit
+                            assign product_list = block.settings.product_list
+                        %}
+                        {%- case block.settings.column -%}
+                            {%- when '1' -%}
+                                {%- assign column = 'col-lg-12 col-6' -%}
+                            {%- when '2' -%}
+                                {%- assign column = 'col-lg-6 col-6' -%}
+                            {%- else -%}
+                            {%- assign column = 'col-lg-4 col-6' -%}
+                        {%- endcase -%}
+                        <div class="product-image__product">
+                            <div class="row">
+                                {%- if product_list != blank -%}
+                                {%- for product in product_list limit: limit -%}
+                                    <div class="{{ column }}" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
+                                        <div class="product-image__card" >
+                                            {%- render 'product-card', product: product -%}
+                                        </div>
+                                    </div>
+                                {%- endfor -%}
+                                {%- else -%}
+                                {%- for i in (1..limit) -%}
+                                    <div class="col-6" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                                      {%- render 'product-grid-blank' -%}
+                                    </div>
+                                    {%- endfor -%}
+                                {%- endif -%}
+                            </div>
+                        </div>
+                {%- endcase -%}
+            {%- endfor -%}
+        </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product with Image",
+  "class": "index-section",
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product list"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "pos_image",
+      "label": "Size Image Column",
+      "options": [
+        {
+          "value": "left_small",
+          "label": "Small Left Column"
+        },
+        {
+          "value": "right_small",
+          "label": "Small Right column"
+        },
+        {
+          "value": "normal",
+          "label": "Normal"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product_list",
+          "id": "product_list",
+          "limit": 6,
+          "label": "Product List"
+        },
+        {
+          "type": "select",
+          "id": "column",
+          "label": "Columns",
+          "default": "2",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "limit",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Limit items",
+          "default": 4
+        }
+      ]
+    },
+    {
+      "type": "banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Title",
+          "default": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title Banner"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Subtitle",
+          "default": "Protection from the"
+        },
+        {
+          "type": "select",
+          "id": "pos_banner",
+          "options": [
+            {
+              "value": "top-left",
+              "label": "Top Left"
+            },
+            {
+              "value": "top-center",
+              "label": "Top Center"
+            },
+            {
+              "value": "top-right",
+              "label": "Top Right"
+            },
+            {
+              "value": "mid-left",
+              "label": "Midle Left "
+            },
+            {
+              "value": "mid-center",
+              "label": "Midle Center "
+            },
+            {
+              "value": "mid-right",
+              "label": "Midle Right "
+            },
+            {
+              "value": "bot-left",
+              "label": "Bottom Left "
+            },
+            {
+              "value": "bot-center",
+              "label": "Bottom Center "
+            },
+            {
+              "value": "bot-right",
+              "label": "Bottom Right "
+            }
+          ],
+          "default": "mid-center",
+          "label": "Text Position"
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button text 1",
+          "default": "discover now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link 1"
+        },
+        {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button 1",
+          "default": "btn-underline btn-underline-white",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "textarea",
+          "id": "video",
+          "label": "Link Video"
+        },
+        {
+          "type": "color",
+          "id": "colortabimage",
+          "label": "Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "bg-overlay",
+          "label": "Overlay color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "bg-opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "unit": "op",
+          "label": "Image overlay opacity",
+          "default": 0.2
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product with Image",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "banner"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

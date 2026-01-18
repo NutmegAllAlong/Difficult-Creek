@@ -1,0 +1,369 @@
+<!-- product-list-swiper.liquid -->
+<style>
+    {%- if section.settings.nowrap -%}
+    .productswiper .swiper-container {
+        overflow: visible;
+    }
+    {%- endif -%}
+    .productlist-swiper .product-card{
+        margin-bottom: 0;
+    }
+    @media (min-width:992px) {
+      .customstyle{{ section.id }} .section-title-1{
+        font-size: var(--g-h2-font-size);
+      }
+    }
+    @media (max-width:749px){
+      .productswiper .swiper-container {
+          overflow: visible;
+      }
+      .productswiper .container-p .swiper-slide{
+        width:42% !important;
+        margin-right:20px !important;
+      }
+    }
+    @media (min-width:750px){
+      .productlist-wrapper .swiper-button-prev{
+        left: -58px;
+      } 
+      .productlist-wrapper .swiper-button-next{
+        right: -58px;
+      } 
+    }
+    
+</style>
+<div class="customstyle{{ section.id }} productswiper" data-aos="{{ section.settings.animation }}">
+    {%- render 'style-section' -%}
+  <div >
+    <div class="section-block">
+      <div class="{{ section.settings.setwidth }}">
+        {%- render 'section-heading' -%}
+      </div>
+      <div class="{{ section.settings.setwidth }} container-p">
+      <div class="productlist-wrapper dots-negative swiper-wrapper-{{ section.id }} position-relative">
+        <div class="productlist-swiper swiper-container swipercol-{{ section.id }} {% if section.settings.scrollbar %} pb-5 {% endif %}" id="Productlist-{{ section.id }}"
+          data-section-id="{{ section.id }}"  
+          data-section-type="swipercustom"
+          data-perview-desktop="{{ section.settings.perviewDesktop }}"
+          data-space-between="{{ section.settings.spaceBetween }}"
+          >
+          <div class="swiper-wrapper">
+            {%- assign collection = collections[section.settings.collection] -%}
+            {%- assign limit = section.settings.limit -%}
+            {%- if collection != blank -%}
+            {%- for product in collection.products limit: limit -%}
+            <div class="productlist-item swiper-slide">
+                <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                  {%- render 'product-card', product: product -%}
+                </div>
+            </div>
+            {%- endfor -%}
+            {%- else -%}
+            {%- for i in (1..limit) -%}
+            <div class="productlist-item swiper-slide">
+              <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+                {%- render 'product-grid-blank' -%}
+              </div>
+            </div>
+            {%- endfor -%}
+            {%- endif -%}
+            </div>
+            
+            {%- if section.settings.scrollbar -%}
+            <div class="swiper-scrollbar"></div>
+            {%- endif -%}
+        </div>
+        {%- if section.settings.arrows -%}
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        {%- endif -%}
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+  
+  {% schema %}
+{
+  "name": "Product list Swiper",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product list"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "label": "Collection",
+      "id": "collection",
+      "type": "collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "label": "Limit items",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "perviewDesktop",
+      "label": "Per View Desktop",
+      "max": 6,
+      "min": 1,
+      "step": 1,
+      "unit": " c",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "spaceBetween",
+      "label": "Space Between",
+      "max": 40,
+      "min": 0,
+      "step": 1,
+      "unit": " sp",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "nowrap",
+      "label": "Wrap Box",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "scrollbar",
+      "label": "Scroll Bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product list (Swiper)",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

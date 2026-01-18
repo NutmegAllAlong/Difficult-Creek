@@ -1,0 +1,77 @@
+<style>
+    .page-404--title{
+      font-size: 40px;
+      margin: 0 0 15px 0;
+    }
+    @media (max-width: 767px) {
+      .page-404--title{
+        font-size: 30px;
+      }
+    }
+  </style>
+  <section id="columns" class="columns-container page_404">
+    <div class="container-fluid">
+      <div class=" text-center">
+        <div class="page-404 d-flex flex-column align-items-center justify-content-center">
+          {%- if section.settings.image_404 != blank -%}
+          <img class="lazyload mb-5" src="{{ section.settings.image_404 | image_url: width: 1, height: 1 }}" loading="lazy" width="{{ section.settings.image_404.width }}" 
+            height="{{ section.settings.image_404.height }}"
+             data-src="{{ section.settings.image_404 | image_url: width: 1920 }}" alt="404 Image" />
+          {%- endif -%}
+          {%- if section.settings.found_html != blank -%}
+          <h4 class="page-404--title" style="color:{{ section.settings.found_text_color }}">{{ section.settings.found_html }}</h4>
+          {%- endif -%}
+          {%- if section.settings.sub_404 != blank -%}
+          <p class="page-404--sub">{{ section.settings.sub_404 }}</p>
+          {%- endif -%}
+          <div class="text-center btn_404 mt-4">
+            {%- if section.settings.found_btnleft_text != blank -%}
+            <a href="{{ section.settings.found_btnleft_link }}" class="btn btn-theme gradient-theme btn-404">
+              {{ section.settings.found_btnleft_text }}
+            </a>
+            {%- endif -%}
+          </div>                      	
+        </div>
+      </div>
+    </div>
+  </section>
+  {% schema %}
+    {
+      "name":"404 Page",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_404",
+          "label": "404 image"
+        },
+        {
+          "type": "color",
+          "id": "found_text_color",
+          "label": "Text color",
+          "default": "#ff847b"
+        },
+        {
+          "type": "text",
+          "id": "found_html",
+          "label": "Title 404",
+          "default": "404 Error"
+        },
+        {
+          "type": "textarea",
+          "id": "sub_404",
+          "label": "Description",
+          "default": "Oops, This Page Could Not Be Found!"
+        },
+        {
+          "type": "text",
+          "id": "found_btnleft_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "found_btnleft_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  {% endschema %}

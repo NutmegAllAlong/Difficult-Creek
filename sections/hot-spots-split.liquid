@@ -1,0 +1,775 @@
+{% comment %} hot-spots-split {% endcomment %}
+{%- render 'style-section' -%}
+<div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
+    <div class="section-block" >
+      <div class="{{ section.settings.setwidth }}">
+        <div class="row mx-0">
+            {%- for block in section.blocks -%}
+              {%- liquid
+                case block.settings.width 
+                when '25%' 
+                  assign block_width = 'col-lg-3' 
+                when '33%' 
+                  assign block_width = 'col-lg-4' 
+                when '41%' 
+                  assign block_width = 'col-lg-5' 
+                when '50%' 
+                  assign block_width = 'col-lg-6 ' 
+                when '58%' 
+                  assign block_width = 'col-lg-7' 
+                when '66%' 
+                  assign block_width = 'col-lg-8' 
+                when '75%' 
+                  assign block_width = 'col-lg-9' 
+                when '100%' 
+                  assign block_width = 'col-lg-12' 
+              endcase 
+              -%}
+              {%- case block.type -%}
+                {%- when 'feature' -%}
+                <div class="{{ block_width }} col-12 px-0" data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 100 }}">
+                    <div class="image-content__image-container  {% if block.settings.enable_height %} h-100 {% endif %}">
+                        {%- if block.settings.image != blank -%}
+                        <div class="{% if block.settings.image_mobile != blank %} d-none d-lg-block {% endif %} position-relative image-content__image-wrapper overflow-hidden {% if block.settings.enable_height %} h-100 {% endif %}" 
+                            style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                            {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                            <img class="image-content__image lazyload scale-in"
+                                src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
+                                data-src="{{ img_url }}"
+                                data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                data-sizes="auto"
+                                alt="{{ block.settings.image.alt | escape }}"
+                                loading="lazy"
+                                width="{{ block.settings.image.width }}"
+                                height="{{ block.settings.image.height }}"
+                              style="{% if block.settings.enable_height %} height:100%;object-fit:cover; {% endif %}">
+                        </div>
+                        {%- if block.settings.image_mobile != blank -%} 
+                          <div class="d-lg-none position-relative image-content__image-wrapper overflow-hidden" 
+                              style="padding-top:{{ 1 | divided_by: block.settings.image_mobile.aspect_ratio | times: 100 }}%;">
+                              {% assign img_url = block.settings.image_mobile | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                              <img class="image-content__image lazyload scale-in"
+                                  src="{{ block.settings.image_mobile | image_url: width: 1, height: 1 }}"
+                                  data-src="{{ img_url }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                  data-aspectratio="{{ block.settings.image_mobile.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  alt="{{ block.settings.image_mobile.alt | escape }}"
+                                  loading="lazy"
+                                  width="{{ block.settings.image_mobile.width }}"
+                                  height="{{ block.settings.image_mobile.height }}"
+                                >
+                          </div>
+                        {%- endif -%}
+                        {%- else -%}
+                        <div class="image-content__image">
+                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                          </div>
+                        {%- endif -%}
+                        {%- for i in (1..3) -%}
+                            {%- liquid
+                                assign sProduct = 'product' | append: i 
+                                assign sPos = 'pos' | append: i
+                                assign sLeft = 'left' | append: i 
+                                assign sTop = 'top' | append: i 
+                                assign mLeft = 'mobile_left' | append: i 
+                                assign mTop = 'mobile_top' | append: i 
+                              -%}
+                              {%- if block.settings[sProduct] != blank -%}
+                                {%- assign productLookbook = all_products[block.settings[sProduct]] -%}
+                                <style>
+                                  .hotspot-{{ block.id }}-{{ forloop.index }}{
+                                    --hot-top:{{ block.settings[sTop] }}%;
+                                    --hot-left:{{ block.settings[sLeft] }}%;
+                                    --dot-color: {{ block.settings.dot_color.red }},{{ block.settings.dot_color.green }},{{ block.settings.dot_color.blue }};
+                                    top:var(--hot-top);
+                                    left: var(--hot-left);
+                                  }
+                                  @media (max-width:749px){
+                                    .hotspot-{{ block.id }}-{{ forloop.index }}{
+                                      --hot-top-mobile: {{ block.settings[mTop] }}%;
+                                      --hot-left-mobile: {{ block.settings[mLeft] }}%;
+                                      top:var(--hot-top-mobile);
+                                    left: var(--hot-left-mobile);
+                                    }
+                                  }
+                                </style>
+                                <div class="hotspot-dotwrap position-absolute hotspot-{{ block.settings[sPos] }} hotspot-{{ block.id }}-{{ forloop.index }}" >
+                                    <button class="hotspot-dot"  id="pover-{{ block.id }}" data-hotspot>
+                                        <span class="visually-hidden">{{ productLookbook.title }}</span>
+                                        <div>
+                                        </div>
+                                    </button>
+                                    <div  class="popover-content" > 
+                                        <div id="popover-{{ block.id }}">
+                                            <div class="hotspot-product hotspot-product py-3 pr-4 pl-3">
+                                                {% render 'product-grid-buywith', product: productLookbook, firstimage: false, enablqv: true %}
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            {%- endif -%}
+                        {%- endfor -%} 
+                        
+                    </div>
+                </div>
+                {%- when 'feature-right' -%}
+                  <div class="{{ block_width }} col-12 px-0" data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 100 }}">
+                    {%- assign color = block.settings.color -%}
+                    <div class="customright px-lg-5 px-4 pt-lg-5 pt-4 h-100 " 
+                      style="background:{{ block.settings.bgcolor }};
+                      --g-color-heading:{{ color }};
+                      --g-font-color-subtop:{{ color }};
+                      --color-body-text:{{ color }};
+                      --color-body-text-rgb:{{ color.red }}, {{ color.green }},{{ color.blue }};
+                      ">
+                      <div class="pt-lg-4 px-lg-5 pb-0">
+                        <div class="{% if block.settings.sub_title_block != blank  or block.settings.title_block != blank %} mb-5 {% endif %} d-flex  flex-column text-center justify-content-center">
+                          {%- if block.settings.sub_title_block != blank -%}
+                            <span class="subtop">{{ block.settings.sub_title_block }} </span>
+                          {%- endif -%}
+                          {%- if block.settings.title_block != blank -%}
+                          <h3 class="py-2">{{ block.settings.title_block }}</h3>
+                          {%- endif -%}
+                        </div>
+                        {%- if block.settings.data_countdown != blank -%}
+                        <div class="js-countdown countdown-item-1 text-center mb-5" data-time="{{ block.settings.data_countdown }}"></div>
+                      {%- endif -%}
+                        {%- if block.settings.code != blank -%}
+                          <div>
+                            {{ block.settings.code }}
+                          </div>
+                        {%- endif -%}
+                        {%- if block.settings.button_text != blank -%}
+                          <div class="text-center mb-5">
+                            <a class="btn btn-theme" href="{{ block.settings.button_link | default: "#" }}"> {{ block.settings.button_text }} </a>
+                          </div>
+                          {%- endif -%}
+                        {%- if block.settings.image != blank -%}
+                          <div class="position-relative image-content__image-wrapper overflow-hidden" 
+                              style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                              {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                              <img class="image-content__image lazyload scale-in"
+                                  src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
+                                  data-src="{{ img_url }}"
+                                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                  data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                  data-sizes="auto"
+                                  alt="{{ block.settings.image.alt | escape }}"
+                                  loading="lazy"
+                                  width="{{ block.settings.image.width }}"
+                                  height="{{ block.settings.image.height }}">
+                          </div>
+                        {%- endif -%}
+                        
+                      </div>
+                    </div>
+                  </div>
+              {%- endcase -%}
+            {%- endfor -%}
+        </div>
+      </div>
+    </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Hot Spots Split",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Hotspot",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Column width",
+          "default": "50%",
+          "options": [
+            {
+              "value": "25%",
+              "label": "25%"
+            },
+            {
+              "value": "33%",
+              "label": "33%"
+            },
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "image_mobile",
+          "type": "image_picker",
+          "label": "Image Mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_height",
+          "label": "Column same height",
+          "default": false
+        },
+        {
+          "type": "color",
+          "id": "dot_color",
+          "label": "Color Hot Spots",
+          "default": "#ffffff"
+        },
+        {
+          "type": "header",
+          "content": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product1",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "pos1",
+          "label": "Position Product",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "range",
+          "id": "left1",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "top1",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_left1",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position (mobile)",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_top1",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position (mobile)",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product2",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "pos2",
+          "label": "Position Product",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "range",
+          "id": "left2",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "top2",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_left2",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position (mobile)",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_top2",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position (mobile)",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Product 3"
+        },
+        {
+          "type": "product",
+          "id": "product3",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "pos3",
+          "label": "Position Product",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            }
+          ],
+          "default": "right"
+        },
+        {
+          "type": "range",
+          "id": "left3",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "top3",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_left3",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Horizontal position (mobile)",
+          "default": 25
+        },
+        {
+          "type": "range",
+          "id": "mobile_top3",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Vertical position (mobile)",
+          "default": 25
+        }
+      ]
+    },
+    {
+      "type": "feature-right",
+      "name": "Feature Text Image",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Column width",
+          "default": "50%",
+          "options": [
+            {
+              "value": "25%",
+              "label": "25%"
+            },
+            {
+              "value": "33%",
+              "label": "33%"
+            },
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Title Block"
+        },
+        {
+          "type": "text",
+          "id": "sub_title_block",
+          "label": "Sub Title "
+        },
+        {
+          "type": "text",
+          "id": "title_block",
+          "label": "Title Block"
+        },
+        {
+          "type": "header",
+          "content": "Countdown"
+        },
+        {
+          "type": "text",
+          "id": "data_countdown",
+          "label": "Time count down",
+          "default": "2025-05-11T00:00:00",
+          "info": "2025-05-11T00:00:00"
+        },
+        {
+          "type": "header",
+          "content": "Html"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Html "
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link to"
+        },
+        {
+          "type": "header",
+          "content": "Image"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "type": "header",
+          "content": "Color"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Color Text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "bgcolor",
+          "label": "Color Background",
+          "default": "#DFA069"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hot Spots Split",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature-right"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

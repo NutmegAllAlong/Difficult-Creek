@@ -1,0 +1,575 @@
+<!-- image-content.liquid -->
+<style>
+  .customstyle{{ section.id }}::before{
+    position: absolute;
+    top:0;
+    content: "";
+    {%- if section.settings.bg_pos == 'left' -%}
+      left:0;
+    {%- else -%}
+      right:0;
+    {%- endif -%}
+    width:33%;
+    height: {{ section.settings.rangebg }}%;
+    background-color: {{ section.settings.bgbefore }};
+  }
+  @media(max-width:749px){
+    .customstyle{{ section.id }}::before{
+      {%- if section.settings.bg_pos == 'left' -%}
+        left:0;
+        top:0;
+        right:0;
+        height:33%;
+        width:100%;
+        bottom:auto;
+      {%- else -%}
+        right:0;
+        left:0;
+        top:auto;
+        bottom:0;
+        height:33%;
+        width:100%;
+      {%- endif -%}
+    }
+  }
+</style>
+<div class="customstyle{{ section.id }} position-relative" data-aos="{{ section.settings.animation }}">
+  {%- render 'style-section' -%}
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-block">
+    <div class="row {% unless section.settings.enable_padding %}no-gutters {% endunless %}">
+      {%- liquid
+        case section.blocks.size 
+        when 1 
+          assign flex_size = '' 
+        when 2 
+          assign flex_size = 'col-md-6' 
+        when 3 
+          assign flex_size = 'col-md-4' 
+        else 
+          assign flex_size = 'col-md-6' 
+      endcase 
+      -%}
+      {%- for block in section.blocks -%}
+        <div class="{% unless forloop.last %} mb-5 mb-lg-0 {% endunless %} flex__item flex {% if section.settings.align_center %}flex--center-vertical{% endif %} {{ flex_size }}" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'image_block' -%}
+              <div class="flex__item">
+                {%- if block.settings.image != blank -%}
+                  <noscript>
+                    <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt }}" class="image-content__image"
+                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}">
+                  </noscript>
+                  <div class="image-content__image-container overflow-hidden">
+                    <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                      {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                      <img class="image-content__image scale-in lazyload"
+                        src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                        data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ block.settings.image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ block.settings.image.width }}"
+                        height="{{ block.settings.image.height }}">
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div class="image-content__image">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- when 'text_block' -%}
+              {%- assign text_color = block.settings.title_color -%}
+              <div class=" h-100 flex  w-100 {% if section.settings.align_center %}flex--center-vertical{% endif %} {% if block.settings.enable_padding %} px-3 px-lg-5 {% endif %}" style="background-color:{{ block.settings.bgtext }} ;">
+                <div class="flex__item image-content__text text-{{ block.settings.align }}"  {% if text_color != 'rgba(0,0,0,0)' %}
+                  style="--g-font-color-subtop: {{ text_color }};--g-color-heading :  {{ text_color }};--color-body-text : {{ text_color }};--color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;"
+                {% endif %} >
+                <div class="row justify-content-center">
+                  {%- liquid
+                    case block.settings.width 
+                    when '50%' 
+                      assign block_width = 'col-lg-6 col-12' 
+                    when '58%' 
+                      assign block_width = 'col-lg-7 col-12 ' 
+                    when '66%' 
+                      assign block_width = 'col-lg-8 col-12 ' 
+                    when '75%' 
+                      assign block_width = 'col-lg-9 col-12 ' 
+                    when '100%' 
+                      assign block_width = 'col-12' 
+                  endcase 
+                  -%}
+                  <div class="{{ block_width }}">
+                    {%- if block.settings.subtitle != blank -%}
+                      <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.title != blank -%}
+                    <h3 class="mb-3 {{ block.settings.size_text }} ">{{ block.settings.title }}</h3>
+                    {%- endif -%}
+                    {%- if block.settings.text -%}
+                      <div class="rte-setting">{{ block.settings.text }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.answer_content != blank -%}
+                    {{ block.settings.answer_content }}
+                    {%- endif -%}
+                    {%- if block.settings.button != blank -%}
+                      <div class="mt-5">
+                        <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }} ">
+                          {{ block.settings.button }}
+                        </a>
+                      </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.blocks.size == 0 -%}
+      {%- render 'no-blocks' -%}
+    {%- endif -%}
+  </div>
+</div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Image with text",
+  "class": "index-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "rangebg",
+      "label": "Height sub Background ",
+      "max": 100,
+      "min": 0,
+      "step": 10,
+      "unit": " %",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "bgbefore",
+      "label": "sub Background ",
+      "default": "transparent"
+    },
+    {
+      "type": "select",
+      "id": "bg_pos",
+      "label": "Position sub Background",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_padding",
+      "label": "Enable Padding",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "align_center",
+      "label": "Align Center",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Content Text Column",
+          "default": "100%",
+          "options": [
+            {
+              "value": "50%",
+              "label": "50%"
+            },
+            {
+              "value": "58%",
+              "label": "58%"
+            },
+            {
+              "value": "66%",
+              "label": "66%"
+            },
+            {
+              "value": "75%",
+              "label": "75%"
+            },
+            {
+              "value": "100%",
+              "label": "100%"
+            }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bgtext",
+          "label": "Background Text Block",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Text Color",
+          "default": "rgba(0,0,0,0)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Title",
+          "default": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Image with text"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "HTML / Description",
+          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "answer_content",
+          "label": "Description",
+          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+        },
+        {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button",
+          "default": "btn-underline btn-underline-white",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button text",
+          "default": "discover now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_padding",
+          "label": "Enable Padding",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "align",
+          "label": "Text alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "left"
+        }
+      ]
+    },
+    {
+      "type": "image_block",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "image_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "image_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

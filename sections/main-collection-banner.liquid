@@ -1,0 +1,334 @@
+{%- liquid  
+  assign checkImg = section.settings.show_collection_image
+  assign colorH = section.settings.image_text_color
+  assign colorBg = section.settings.bg_color
+  assign opOverlay = section.settings.image_overlay_opacity | divided_by: 100.0
+  if collection.image != blank 
+  assign collectionImage = collection.image
+  elsif collection.handle == 'all'
+  assign collectionImage = section.settings.img_bannercollection
+  endif
+  assign img_height = section.settings.img_height
+  assign style_banner = section.settings.style_banner
+  
+-%}
+
+<style>
+  
+.main-content{
+  padding: 0;
+}
+.collection-hero{
+  position: relative;
+  overflow: hidden;
+  --section-height:{{ img_height }};
+  --section-overlay: {{ section.settings.image_overlay_color.red }}, {{ section.settings.image_overlay_color.blue }}, {{ section.settings.image_overlay_color.green }};
+  --section-opacity : {{ opOverlay }};
+}
+.collection-list .list-inline-item:not(:last-child){
+  margin-right: 1.5rem;
+}
+.collection-list li a{
+  position: relative;
+}
+.collection-list li a::before{
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  width: 0;
+  border-bottom: 1px solid var(--color-body-text);
+  -webkit-transition: width .3s ease;
+  transition: width .3s ease;
+  z-index: 7;
+}
+.collection-list li a:hover:before,.collection-list li a.active:before{
+  width: 100%;
+  left: 0;
+}
+  .collection-hero-container{
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+{% if checkImg  and collectionImage != blank %}
+  .collection-hero .image-content__image{
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+  }
+  .collection-hero-banner{
+    padding-top: calc(var(--section-height) - 100px) !important;
+  }
+@media screen and (min-width: 750px){
+  .collection-hero-banner{
+    padding-top: var(--section-height) !important;
+  }
+}
+
+.collection-hero__title,.collection-hero__description{
+  color:{{ colorH }};
+}
+.collection-hero::before{
+  content: "";
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--section-overlay), var(--section-opacity));
+  z-index: 1;
+}
+{% endif %}
+
+</style>
+
+{%- if style_banner == 'full' -%}
+  <div class="image-content__image-wrapper d-flex align-items-center collection-hero {% if img_height != 'orginal' %} collection-hero-banner {% endif %} " {% if checkImg  and collectionImage != blank %}style="padding-top:{{ 1 | divided_by: collectionImage.aspect_ratio | times: 100 }}%;" {% endif %}>
+    {%- if checkImg  and collectionImage != blank -%}
+      {% assign img_url = collectionImage | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+      <img class="image-content__image lazyload scale-in"
+        src="{{ collectionImage | image_url: width: 1, height: 1 }}"
+        data-src="{{ img_url }}"
+        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+        data-aspectratio="{{ collectionImage.aspect_ratio }}"
+        data-sizes="auto"
+        alt="{{ collection.title | escape }}"
+        loading="lazy"
+        width="{{ collectionImage.width }}"
+        height="{{ collectionImage.height }}">
+    {%- endif -%}
+    <div class=" py-5 collection-hero-container {% if checkImg  and collectionImage != blank %} position-absolute {% endif %} d-flex align-items-center justify-content-center">
+      <div class="container text-center">
+        <h1 class="collection-hero__title {{ section.settings.heading_size }}">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {{- collection.title | escape -}}
+        </h1>
+        {%- if section.settings.show_collection_description -%}
+            <div class="collection-hero__description rte">{{ collection.description }}</div>
+          {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- else -%}
+<style>
+.mbanner-left{
+  --mbanner-color-left : {{ colorH.red }},  {{ colorH.green }}, {{ colorH.blue }};
+}
+.mbanner-left,.mbanner-right{
+  flex:1;
+}
+.collection-hero__description{
+  color:rgba(var(--mbanner-color-left),0.7);
+}
+.mbanner-left--content{
+  max-width:550px;
+}
+</style>
+<div class="d-flex flex-lg-row flex-column" style="background-color:{{ colorBg }};">
+  <div class="mbanner-left">
+    <div class=" p-lg-5 p-4 collection-hero-container d-flex align-items-center justify-content-center">
+      <div class="text-center mbanner-left--content">
+        <h1 class="collection-hero__title {{ section.settings.heading_size }}">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {{- collection.title | escape -}}
+        </h1>
+        {%- if section.settings.show_collection_description -%}
+            <div class="collection-hero__description rte">{{ collection.description }}</div>
+          {%- endif -%}
+      </div>
+    </div>
+  </div>
+  <div class="mbanner-right">
+    <div class="image-content__image-wrapper d-flex align-items-center collection-hero {% if img_height != 'orginal' %} collection-hero-banner {% endif %} " {% if checkImg  and collectionImage != blank %}style="padding-top:{{ 1 | divided_by: collectionImage.aspect_ratio | times: 100 }}%;" {% endif %}>
+      {%- if checkImg  and collectionImage != blank -%}
+        {% assign img_url = collectionImage | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+        <img class="image-content__image lazyload scale-in"
+          src="{{ collectionImage | image_url: width: 1, height: 1 }}"
+          data-src="{{ img_url }}"
+          data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+          data-aspectratio="{{ collectionImage.aspect_ratio }}"
+          data-sizes="auto"
+          alt="{{ collection.title | escape }}"
+          loading="lazy"
+          width="{{ collectionImage.width }}"
+          height="{{ collectionImage.height }}">
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- endif -%}
+
+{%- if linklists[section.settings.link_list_head].title != blank and section.settings.enable_collection -%}
+  <div class="container">
+    <ul class="site-head__list list-inline text-center py-4 collection-list border-bottom">
+        {%- for link in linklists[section.settings.link_list_head].links -%}
+        {% assign collection_handle = link.url | split: "collections/" | last %}
+        {%- assign current_collection = collections[collection_handle] -%}
+        <li class="site-head__list__list-item list-inline-item">
+          <a href="{{ link.url }}" {% if link.current %} class="active" {% endif %}>{{ link.title }}  
+            {%- if section.settings.enable_count -%}
+            <span class="d-inline-block ml-1 txt-body-50">({{ current_collection.all_products_count }})</span>
+            {%- endif -%}
+          </a>
+        </li>
+        {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Collection Banner",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Add a description or image by editing your collection. [Learn more](https://help.shopify.com/manual/products/collections/collection-layout)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "Show collection description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "Show collection image",
+      "info": "For best results, use an image with a 16:9 aspect ratio. [Learn more](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_bannercollection",
+      "label": "Background All Products"
+    },
+    {
+      "type": "select",
+      "id": "style_banner",
+      "label": "Style Banner",
+      "options": [
+        {
+          "value": "full",
+          "label": "Banner Full"
+        },
+        {
+          "value": "split",
+          "label": "Banner Split"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "select",
+      "id": "img_height",
+      "label": "Image Height",
+      "options": [
+        {
+          "value": "orginal",
+          "label": "Original Image"
+        },
+        {
+          "value": "250px",
+          "label": "250px"
+        },
+        {
+          "value": "350px",
+          "label": "350px"
+        },
+        {
+          "value": "450px",
+          "label": "450px"
+        },
+        {
+          "value": "550px",
+          "label": "550px"
+        },
+        {
+          "value": "750px",
+          "label": "750px"
+        }
+      ],
+      "default": "350px"
+    },
+    {
+      "type": "header",
+      "content": "Color",
+      "info": "Only applicable when collection image is used."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "image_overlay_color",
+      "label": "Overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Link Menu Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_collection",
+      "default": true,
+      "label": "Show Menu Collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_count",
+      "default": true,
+      "label": "Show items number"
+    },
+    {
+      "id": "link_list_head",
+      "type": "link_list",
+      "label": "Menu",
+      "info": "This menu won't show dropdown items"
+    }
+  ]
+}
+{% endschema %}

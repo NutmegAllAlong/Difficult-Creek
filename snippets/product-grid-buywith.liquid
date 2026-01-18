@@ -1,0 +1,72 @@
+<!-- product-grid-buywith.liquid -->
+<div class="product-card js-product-card product-grid-buywith text-left" data-price="{{ product.price }}" style="height:100%;" >
+    <div class="product-card__image-wr overflow-hidden">
+      {%- assign image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+      <a class="product-card__image js image-content__image-wrapper {{ settings.size_image_grid }}" href="{{ product.url | within: collection }}" style="max-width: 680px;padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;" data-image-id="{{ image.id }}">
+        {%- assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+        <img class="lazyload transition first-image"
+              data-src="{{ img_url }}"
+              src="{{ image | image_url: width: 1, height: 1 }}"
+              data-sizes="auto"
+              data-widths="[180, 360, 540, 720]"
+              alt="{{ image.alt | escape }}"
+              loading="lazy"
+              width="{{ image.width }}"
+              height="{{ image.height }}">
+              {%- if firstimage -%}
+                {% render 'second-image' , product: product %}
+              {%- endif -%}
+      </a>
+    </div>
+    <div class="product-card__info  pt-3 {% unless product.available %} disabled{% endunless %}">
+      <a href="{{ product.url | within: collection }}" title="{{ product.title }}" class="product-card__name d-block {% if settings.t_product %} text-uppercase {% endif %}">{{ product.title }}</a>
+      <div class="product-card__price {% if product.compare_at_price > product.price %}product-card__pricesale {% endif %}">
+          {%- if product.compare_at_price > product.price -%}
+          {%- if product.price_varies -%}
+          {%- assign sale_price = product.price | money -%}
+          {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+          {%- else -%}
+          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          {{ product.price | money }}
+          <s class="product-card__regular-price">{{ product.compare_at_price | money }}</s>
+          <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+          
+          {%- endif -%}
+          {%- else -%}
+          {%- if product.price_varies -%}
+          {%- assign price = product.price | money -%}
+          {{ 'products.product.from_text_html' | t: price: price }}
+          {%- else -%}
+          <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+          {{ product.price | money }}
+          {%- endif -%}
+  
+          {%- endif -%}
+      </div>
+      {% unless enablqv %}
+      <span class="position-relative link js-grid-cart small {% unless product.available %} disabled {% endunless %}" title="{% if product.available %} {{ 'products.product.add_to_cart' | t }} {% else %} {{ 'products.product.sold_out' | t }} {% endif %}" data-id="{{ product.selected_or_first_available_variant.id }}">
+        <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
+        {% if product.available %}
+          <span>+ {{ 'products.product.add_to_cart' | t }}</span>
+        {% else %}
+        <span>{{ 'products.product.sold_out' | t }}</span>
+        {% endif %}
+      </span>
+    {% endunless %}
+      {% if enablqv %}
+        <span  class="link js-btn-quickview small mt-1 d-block" data-toggle="modal" 
+          data-target="#jsQuickview" data-handle="{{ product.handle }}"
+          data-pavailable="{% if product.available %}true{% else %}false{% endif %}"
+          >
+          <span class="d-block">
+            {{ 'products.product.quickview_text' | t }}
+            {% if product.metafields.info.shortdesc != blank %}
+              <span class=" txt-short hide" >
+                {{ product.metafields.info.shortdesc | strip_html | truncatewords: 12 }}
+              </span>
+            {%- endif -%}
+          </span>
+        </span>
+      {% endif %}
+    </div>
+  </div>

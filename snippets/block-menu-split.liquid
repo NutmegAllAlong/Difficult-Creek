@@ -1,0 +1,160 @@
+{%- liquid
+    unless limit
+      assign limit = linklists[main_linklist].links.size
+    endunless
+    unless offset
+      assign offset = 0
+    endunless
+  -%}
+
+  <!-- Menu Split -->
+  <nav class="nav-bar d-none d-lg-flex" role="navigation">
+    <ul class="site-nav">
+      {%- for link in linklists[main_linklist].links limit: limit offset: offset -%}
+        {%- liquid
+          assign hasMega = false
+          assign titleCheckMega = link.title | escape | split: '[' | first | downcase
+          
+          for block in blocks
+            assign type = block.type
+            assign block = block
+            assign menu_title = block.settings.menu_title | strip | downcase 
+  
+            if titleCheckMega == menu_title
+              assign hasMega = true
+              assign intMega = forloop.index
+            break 
+            endif 
+          endfor
+         
+        -%}
+        {%- if hasMega -%}
+      <li class="site-nav__item site-nav__item-mega {% if link.active %} site-nav--active{% endif %}">
+        <a href="{{ link.url }}" class="site-nav__link dropdown-toggle" {% if link.active %} aria-current="page"{% endif %}>
+          <span class="site-nav__title">{%- render 'processMenuTitle' , itemName: link.title -%}</span>
+          {%- render 'processMenuLabel' , itemName: link.title -%}
+        </a>
+        <div class="site-nav__dropdown meganav meganav-{{ intMega }}" >
+          {%- capture menuproduct -%}
+            {%- liquid
+              assign link_column = ''
+              assign menu_width = block.settings.menu_width
+              assign menu_column = block.settings.menu_column
+              assign enable_menu_product = block.settings.enable_menu_product
+              assign menu_product_width = block.settings.menu_product_width
+            
+              case menu_column
+                when 1
+                assign link_column = 'col-sm-12'
+                when 2
+                assign link_column = 'col-sm-6'
+                when 3
+                assign link_column = 'col-sm-4'
+                when 4
+                assign link_column = 'col-sm-3'
+                when 5
+                assign link_column = 'col-1-5'
+                when 6
+                assign link_column = 'col-sm-2'
+                else 
+                assign link_column = 'col-sm-2'
+              endcase
+              -%}
+            <div class="{{ menu_width }}">
+              <div class="row">
+                {%- if link.links != blank -%}
+                <div class="mega-col mega-link {% if enable_menu_product == false %} col-12 {% else %} col {% endif %}">
+                  <div class="row">
+                    {%- if link.links != blank -%}
+                    {%- for childlink in link.links -%}
+                    <div class="{{ link_column }}">
+                      <div class="mega-col-inner ">
+                        <div class="menu-title">
+                          <a href="{{ childlink.url }}" >
+                            {%- render 'processMenuTitle' , itemName: childlink.title -%}
+                            {%- render 'processMenuLabel' , itemName: childlink.title -%}
+                          </a>
+                        </div>
+                        <div class="widget-inner">
+                          <ul class="nav-links">
+                            {%- if childlink.links != blank -%}
+                            {%- for grandchildlink in childlink.links -%}
+                            <li>
+                              <a href="{{ grandchildlink.url }}" >
+                                {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
+                                {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
+                              </a>
+                            </li>
+                            {%- endfor -%}
+                            {%- endif -%}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    {%- endfor -%}
+                    {%- endif -%}
+                  </div>
+                </div>
+                {%- endif -%}
+            
+                {% if enable_menu_product %}
+                  <div class="mega-col col" style="max-width:{{ menu_product_width }}%;flex:0 0 {{ menu_product_width }}%;">    
+                    <div class="row">
+                      {% for i in (1..6) %}
+                          {%- liquid
+                            assign menu_product_var = 'menu_product_' | append: i 
+                            assign menu_product = block.settings[menu_product_var]
+                          -%}
+                          {% if menu_product != blank %}
+                            <div class="products_menu col mt-3">
+                              {%- render 'product-card', product: menu_product -%}
+                            </div>
+                          {% endif %}
+                      {% endfor %}
+                    </div>
+                  
+                    
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          
+          {%- endcapture -%}
+          {%- liquid
+            case type
+            when 'menu-product'
+              echo menuproduct
+            when 'menu-collection'
+              render 'megamenu-collection', intMega: intMega, link: link, block: block
+            when 'menu-banner'
+              render 'megamenu-banner', intMega: intMega, link: link, block: block
+            else
+              render 'megamenu-banner-classic', intMega: intMega, link: link, block: block
+          endcase
+          -%}
+          
+        </div>
+      </li>
+      {%- elsif link.links != blank -%}
+      <li class="site-nav__item site-nav__item-normal {% if link.active %} site-nav--active{% endif %}">
+        <a href="{{ link.url }}" class="site-nav__link dropdown-toggle" {% if link.active %} aria-current="page"{% endif %}>
+          <span class="site-nav__title">{%- render 'processMenuTitle' , itemName: link.title -%}</span>
+          {%- render 'processMenuLabel' , itemName: link.title -%}
+        </a>
+        <div class="site-nav__dropdown meganav">
+          <ul class="meganav__nav">
+            {%- render 'site-nav', link: link -%}
+          </ul>
+        </div>
+      </li>
+      {%- else -%}
+      <li class="site-nav__item{% if link.active %} site-nav--active{% endif %}">
+        <a href="{{ link.url }}" class="site-nav__link"{% if link.active %} aria-current="page"{% endif %}>
+          <span class="site-nav__title">{%- render 'processMenuTitle' , itemName: link.title -%}</span>
+          {%- render 'processMenuLabel' , itemName: link.title -%}
+        </a>
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </nav>

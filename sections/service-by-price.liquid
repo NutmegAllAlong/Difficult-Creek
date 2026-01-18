@@ -1,0 +1,423 @@
+{% comment %} service-by-price.liquid {% endcomment %}
+<style>
+    {% if section.settings.bg_section != blank %}
+        .customstyle{{ section.id }} .section-header *{
+            color:#fff;
+        }
+    {% endif %}
+    .customstyle{{ section.id }} .by-price-item{
+        padding: 0px 15px;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+    .customstyle{{ section.id }} .by-price-item-content .by-price-top{
+        background: #fff;
+        padding: 30px;
+    }
+    .customstyle{{ section.id }} .link-base{
+        padding-left: 0;
+        margin-top: 40px;
+    }
+    .customstyle{{ section.id }} .by-price-bottom img{
+        width: 100%;
+    }
+</style>
+<div class="customstyle{{ section.id }}"  data-aos="{{ section.settings.animation }}" >
+    {%- render 'style-section' -%}
+    <div class="{{ section.settings.setwidth }}">
+        <div class="section-block">
+            {%- render 'section-heading' -%}
+            <div class="list-price-slider row" id="collection-list-{{ section.id }}"
+            data-rows="{{ section.settings.rows }}"
+            data-slidesToShow="{{ section.settings.show }}"
+            data-slidestoscroll="{{ section.settings.show }}"
+            data-arrows="{{ section.settings.arrows }}"
+            data-dots="{{ section.settings.dots }}" 
+            data-draggable="{{ section.settings.draggable }}" 
+            data-infinite="{{ section.settings.infinite }}" 
+            data-section-id="{{ section.id }}" 
+            data-slidestoshow-mobile="1"
+            data-section-type="slickCarousels"
+            >
+            {%- for block in section.blocks -%}
+                <div class="by-price-item" id="block-{{ block.id }}">
+                    <div class="by-price-item-content">
+                        <div class="by-price-top">
+                            {% if block.settings.title != blank %}
+                                <h4 class="mb-2 text-capitalize" style="color:{{ block.settings.color_title }}">{{ block.settings.title }}</h4>
+                            {% endif %}
+                            {% if block.settings.des != blank %}
+                                <div style="color:{{ block.settings.color_des }}">{{ block.settings.des }}</div>
+                            {% endif %}
+                            {% if block.settings.link_text != blank %}
+                                <a href="{{ block.settings.link }}" class="btn link-base" style="color:{{ block.settings.color_link }}">{{ block.settings.link_text }}</a>
+                            {% endif %}
+                        </div>
+                        {% if block.settings.image != blank %}
+                            <div class="by-price-bottom">
+                                <img src="{{ block.settings.image | image_url: width: 1920 }}" alt="">
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+      "name": "List by price",
+      "class": "index-section",
+      "settings": [
+        {
+        "type": "select",
+        "id": "animation",
+        "options": [
+            {
+            "value": "",
+            "label": "None"
+            },
+            {
+            "value": "fade",
+            "label": "Fade"
+            },
+            {
+            "value": "fade-up",
+            "label": "Fade Up"
+            },
+            {
+            "value": "fade-down",
+            "label": "Fade Down"
+            },
+            {
+            "value": "fade-left",
+            "label": "Fade Left"
+            },
+            {
+            "value": "fade-right",
+            "label": "Fade Right"
+            },
+            {
+            "value": "fade-up-right",
+            "label": "Fade Up Right"
+            },
+            {
+            "value": "fade-up-left",
+            "label": "Fade Up Left"
+            },
+            {
+            "value": "fade-down-right",
+            "label": "Fade Down Right"
+            },
+            {
+            "value": "fade-down-left",
+            "label": "Fade Down Left"
+            },
+            {
+            "value": "flip-up",
+            "label": "Flip Up"
+            },
+            {
+            "value": "flip-down",
+            "label": "Flip Down"
+            },
+            {
+            "value": "flip-left",
+            "label": "Flip Left"
+            },
+            {
+            "value": "flip-right",
+            "label": "Flip Right"
+            },
+            {
+            "value": "slide-up",
+            "label": "Slide Up"
+            },
+            {
+            "value": "slide-down",
+            "label": "Slide Down"
+            },
+            {
+            "value": "slide-left",
+            "label": "Slide Left"
+            },
+            {
+            "value": "slide-right",
+            "label": "Slide Right"
+            },
+            {
+            "value": "zoom-in",
+            "label": "Zoom In"
+            },
+            {
+            "value": "zoom-in-up",
+            "label": "Zoom In Up"
+            },
+            {
+            "value": "zoom-in-down",
+            "label": "Zoom In Down"
+            },
+            {
+            "value": "zoom-in-left",
+            "label": "Zoom In Left"
+            },
+            {
+            "value": "zoom-in-right",
+            "label": "Zoom In Right"
+            },
+            {
+            "value": "zoom-out",
+            "label": "Zoom Out"
+            },
+            {
+            "value": "zoom-out-up",
+            "label": "Zoom Out Up"
+            },
+            {
+            "value": "zoom-out-down",
+            "label": "Zoom Out Down"
+            },
+            {
+            "value": "zoom-out-left",
+            "label": "Zoom Out Feft"
+            },
+            {
+            "value": "zoom-out-right",
+            "label": "Zoom Out Right"
+            }
+        ],
+        "label": "Select Animation"
+        },
+        {
+        "type": "select",
+        "id": "setwidth",
+        "label": "Full Width",
+        "default": "container",
+        "options": [
+            {
+            "value": "container",
+            "label": "Box"
+            },
+            {
+            "value": "container-fluid",
+            "label": "Container Fluid"
+            },
+            {
+            "value": "full",
+            "label": "Full"
+            }
+        ]
+        },
+        {
+        "type": "image_picker",
+        "id":"bg_section",
+        "label": "Background image"
+        },
+        {
+        "type": "color",
+        "id": "bgsection",
+        "label": "Background Section",
+        "default": "#ffffff"
+        },
+        {
+                "type": "image_picker",
+                "id": "image_header",
+                "label": "Image header"
+            },
+        {
+        "type": "text",
+        "id": "title_top",
+        "label": "Sub Title Top",
+        "default": "Sub Title Top"
+        },
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Collection list"
+        },
+        {
+        "type": "textarea",
+        "id": "des",
+        "label": "HTML / Description"
+        },
+        {
+        "type": "select",
+        "id": "align-heading",
+        "label": "Align Heading",
+        "default": "center",
+        "options": [
+            {
+            "value": "center",
+            "label": "Center"
+            },
+            {
+            "value": "left",
+            "label": "Left"
+            },
+            {
+            "value": "right",
+            "label": "Right"
+            }
+        ]
+        },
+        {
+        "type": "select",
+        "id": "rows",
+        "label": "Rows",
+        "default": "1",
+        "options": [
+            {
+            "value": "1",
+            "label": "1 row"
+            },
+            {
+            "value": "2",
+            "label": "2 rows"
+            }
+        ]
+        },
+        {
+        "type": "range",
+        "id": "show",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "label": "Display items",
+        "default": 3
+        },
+        {
+        "type": "checkbox",
+        "id": "arrows",
+        "label": "Arrows",
+        "default": false
+        },
+        {
+        "type": "checkbox",
+        "id": "draggable",
+        "label": "Draggable",
+        "default": true
+        },
+        {
+        "type": "checkbox",
+        "id": "dots",
+        "label": "Dots",
+        "default": true
+        },
+        {
+        "type": "checkbox",
+        "id": "infinite",
+        "label": "Infinite",
+        "default": true
+        },
+        {
+        "type": "header",
+        "content": "Section Padding "
+        },
+        {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+        },
+        {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "40px 0px 40px 0px",
+        "info": "Padding: Top Right Bottom Left"
+        },
+        {
+        "type": "header",
+        "content": "Section Margin "
+        },
+        {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+        },
+        {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "price_item",
+            "name": "Items",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id":"image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id":"title",
+                    "label": "Title",
+                    "default": "Title content"
+                },
+                {
+                    "type": "color",
+                    "id":"color_title",
+                    "label": "Color title",
+                    "default": "#000"
+                },
+                {
+                    "type": "textarea",
+                    "id":"des",
+                    "label": "Description",
+                    "default": "Description content"
+                },
+                {
+                    "type": "color",
+                    "id":"color_des",
+                    "label": "Color des",
+                    "default": "#000"
+                },
+                {
+                    "type": "text",
+                    "id":"link_text",
+                    "label": "Link text",
+                    "default": "Shop now"
+                },
+                {
+                    "type": "url",
+                    "id":"link",
+                    "label": "Link"
+                },
+                {
+                    "type": "color",
+                    "id":"color_link",
+                    "label": "Color link",
+                    "default": "#000"
+                }
+            ]
+        }
+    ],
+    "presets": [
+    {
+      "name": "List by price",
+      "blocks": [
+        {
+          "type": "price_item"
+        },
+        {
+          "type": "price_item"
+        },
+        {
+          "type": "price_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

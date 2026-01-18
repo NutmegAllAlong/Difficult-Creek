@@ -1,0 +1,459 @@
+{%- render 'style-section' -%}
+{%- assign text_color = section.settings.title_color -%}
+<style>
+    .image-interactive-{{ section.id }}{
+        {% if text_color != 'rgba(0,0,0,0)' %}
+            --g-font-color-subtop: {{ text_color }};
+            --g-color-heading :  {{ text_color }};
+            --color-body-text : {{ text_color }};
+            --color-body-text-rgb: {{ text_color.red }}, {{ text_color.green }},  {{ text_color.blue }} ;
+          {% endif %}
+    }
+    .image-interactive{
+        min-height:500px;
+        overflow:hidden;
+    }
+    @media(min-width:990px){
+        .image-interactive{
+            min-height:100vh;
+        }
+    }
+    .image-interactive img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+    .image-interactive--image{
+        position:absolute;
+    }
+    .image-interactive--image.interactive-1{
+        top:7vw;
+        left:4vw;
+        width: 16vw;
+        height: 20vw;
+        
+    }
+    .image-interactive--image.interactive-2{
+        top:18vw;
+        left:7vw;
+        width: 16vw;
+        height: 20vw;
+        z-index:1;
+    }
+    .image-interactive--image.interactive-3{
+        bottom:-4vw;
+        left:-3vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive--image.interactive-4{
+        bottom:-10vw;
+        left:45vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive--image.interactive-5{
+        top:24vw;
+        right:9vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive--image.interactive-6{
+        top:15vw;
+        right:0vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive--image.interactive-7{
+        top:-10vw;
+        right:22vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive--image.interactive-8{
+        top:-15vw;
+        left:22vw;
+        width: 16vw;
+        height: 20vw;
+    }
+    .image-interactive-text{
+        position:relative;
+        z-index:10;
+    }
+    @media(min-width:990px){
+        .image-interactive-text{
+            max-width:34vw;
+        }
+    }
+    
+</style>
+<div class="customstyle{{ section.id }} image-interactive-{{ section.id }}" 
+    data-aos="{{ section.settings.animation }}"
+    data-section-id="{{ section.id }}" 
+    data-section-type="image-interactive">
+    <div class="section-block">
+        <parallax-container class="image-interactive position-relative d-flex justify-content-center align-items-center" data-parallax="{{ section.settings.enable_animation }}">
+            <div class="image-interactive-text text-center px-3">
+                {%- if section.settings.title_top != blank -%}
+                    <div class="subtop mb-3" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+                  {%- endif -%}
+                  {%- if section.settings.title != blank -%}
+                  <h4 class="mb-3 {{ section.settings.size_text }}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+                    <span>{{ section.settings.title }}</span>
+                  </h4>
+                  {%- endif -%}
+                  {%- if section.settings.des != blank -%}
+                  <div class="font-family-2 txt-body-70 " data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+                  {%- endif -%}
+                  {%- if section.settings.button != blank -%}
+                    <div class="mt-5">
+                      <a href="{{ section.settings.link }}" class="btn {{ section.settings.style_btn }} ">
+                        {{ section.settings.button }}
+                      </a>
+                    </div>
+                {%- endif -%}
+
+            </div>
+            {%- for block in section.blocks -%}
+                <div class="image-interactive--image interactive-{{ forloop.index }} image"  
+                    data-speed="{% if forloop.index == 1%} 0.15 {% else %} {{ 0.1 | times: forloop.index | divided_by : 2 }} {% endif %}">
+                {%- if block.settings.image != blank -%}
+                    {%- capture sizes -%}
+                        (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
+                    {%- endcapture -%}
+                    {{
+                        block.settings.image
+                        | image_url: width: 600
+                        | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500', class: 'lazyload scale-in '
+                    }}
+                    {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+                </div>
+            {%- endfor -%}
+        </parallax-container>
+    </div>
+</div>
+<script>
+    class ParallaxContainer extends HTMLElement {
+        constructor() {
+            super();
+            
+          }
+        connectedCallback() {
+           this.sttparallax = this.getAttribute('data-parallax');
+          this.images = this.querySelectorAll(".image");
+          this.containerRect = this.getBoundingClientRect();
+          this.addEventListener("mousemove", this.onMouseMove.bind(this));
+
+        }
+      
+        onMouseMove(event) {
+            var isTrueSet = (this.sttparallax?.toLowerCase?.() === 'true');
+            if( isTrueSet){
+                var x = event.clientX - this.containerRect.left;
+                var y = event.clientY - this.containerRect.top;
+            
+                for (var i = 0; i < this.images.length; i++) {
+                    var speed = parseFloat(this.images[i].getAttribute("data-speed"));
+                    var xOffset = (this.containerRect.width - this.images[i].offsetWidth) / 2;
+                    var yOffset = (this.containerRect.height - this.images[i].offsetHeight) / 2;
+                    var xMovement = (x - xOffset) * speed / 10;
+                    var yMovement = (y - yOffset) * speed / 10;
+                    this.images[i].style.transform = "translate(" + xMovement + "px, " + yMovement + "px)";
+                }
+                }
+            }
+      }
+      
+      customElements.define("parallax-container", ParallaxContainer);
+      
+      
+</script>
+{% schema %}
+    {
+        "name": "Image Interactive",
+        "class": "index-section",
+        "settings": [
+            {
+                "type": "select",
+                "id": "animation",
+                "options": [
+                  {
+                    "value": "",
+                    "label": "None"
+                  },
+                  {
+                    "value": "fade",
+                    "label": "Fade"
+                  },
+                  {
+                    "value": "fade-up",
+                    "label": "Fade Up"
+                  },
+                  {
+                    "value": "fade-down",
+                    "label": "Fade Down"
+                  },
+                  {
+                    "value": "fade-left",
+                    "label": "Fade Left"
+                  },
+                  {
+                    "value": "fade-right",
+                    "label": "Fade Right"
+                  },
+                  {
+                    "value": "fade-up-right",
+                    "label": "Fade Up Right"
+                  },
+                  {
+                    "value": "fade-up-left",
+                    "label": "Fade Up Left"
+                  },
+                  {
+                    "value": "fade-down-right",
+                    "label": "Fade Down Right"
+                  },
+                  {
+                    "value": "fade-down-left",
+                    "label": "Fade Down Left"
+                  },
+                  {
+                    "value": "flip-up",
+                    "label": "Flip Up"
+                  },
+                  {
+                    "value": "flip-down",
+                    "label": "Flip Down"
+                  },
+                  {
+                    "value": "flip-left",
+                    "label": "Flip Left"
+                  },
+                  {
+                    "value": "flip-right",
+                    "label": "Flip Right"
+                  },
+                  {
+                    "value": "slide-up",
+                    "label": "Slide Up"
+                  },
+                  {
+                    "value": "slide-down",
+                    "label": "Slide Down"
+                  },
+                  {
+                    "value": "slide-left",
+                    "label": "Slide Left"
+                  },
+                  {
+                    "value": "slide-right",
+                    "label": "Slide Right"
+                  },
+                  {
+                    "value": "zoom-in",
+                    "label": "Zoom In"
+                  },
+                  {
+                    "value": "zoom-in-up",
+                    "label": "Zoom In Up"
+                  },
+                  {
+                    "value": "zoom-in-down",
+                    "label": "Zoom In Down"
+                  },
+                  {
+                    "value": "zoom-in-left",
+                    "label": "Zoom In Left"
+                  },
+                  {
+                    "value": "zoom-in-right",
+                    "label": "Zoom In Right"
+                  },
+                  {
+                    "value": "zoom-out",
+                    "label": "Zoom Out"
+                  },
+                  {
+                    "value": "zoom-out-up",
+                    "label": "Zoom Out Up"
+                  },
+                  {
+                    "value": "zoom-out-down",
+                    "label": "Zoom Out Down"
+                  },
+                  {
+                    "value": "zoom-out-left",
+                    "label": "Zoom Out Feft"
+                  },
+                  {
+                    "value": "zoom-out-right",
+                    "label": "Zoom Out Right"
+                  }
+                ],
+                "label": "Select Animation"
+              },
+              {
+                "type": "color",
+                "id": "bgsection",
+                "label": "Background Section",
+                "default": "#ffffff"
+              },
+              {
+                "type": "color",
+                "id": "title_color",
+                "label": "Text Color",
+                "default": "rgba(0,0,0,0)"
+              },
+              {
+                "type": "text",
+                "id": "title_top",
+                "label": "Sub Title Top",
+                "default": "Sub Heading"
+              },
+              {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "Image Interactive"
+              },
+              {
+                "type": "select",
+                "id": "size_text",
+                "default": "h2",
+                "options": [
+                  {
+                    "value": "h1",
+                    "label": "H1"
+                  },
+                  {
+                    "value": "h2",
+                    "label": "H2"
+                  },
+                  {
+                    "value": "h3",
+                    "label": "H3"
+                  },
+                  {
+                    "value": "h4",
+                    "label": "H4"
+                  },
+                  {
+                    "value": "h5",
+                    "label": "H5"
+                  },
+                  {
+                    "value": "h6",
+                    "label": "H6"
+                  }
+                ],
+                "label": "Heading Size"
+              },
+              {
+                "type": "textarea",
+                "id": "des",
+                "label": "HTML / Description",
+                "default": "HTML / Description"
+              },
+              {
+                "type": "select",
+                "id": "style_btn",
+                "label": "Style Button",
+                "default": "btn-theme",
+                "options": [
+                  {
+                    "value": "btn-theme",
+                    "label": "Button Box"
+                  },
+                  {
+                    "value": "btn-theme btn-white",
+                    "label": "Button Box White"
+                  },
+                  {
+                    "value": "btn-underline",
+                    "label": "Button Line"
+                  },
+                  {
+                    "value": "btn-underline btn-underline-white",
+                    "label": "Button Line White"
+                  },
+                  {
+                    "value": "btn-outline",
+                    "label": "Button Outline"
+                  },
+                  {
+                    "value": "btn-outline btn-outline-white",
+                    "label": "Button Outline White"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "id": "button",
+                "label": "Button text",
+                "default": "discover now"
+              },
+              {
+                "type": "url",
+                "id": "link",
+                "label": "Link",
+                "info": "Optional"
+              },
+              {
+                "type": "checkbox",
+                "id": "enable_animation",
+                "label": "Enable Parallax",
+                "default": true
+              },
+              {
+                "type": "header",
+                "content": "Section Margin "
+              },
+              {
+                "type": "text",
+                "id": "marginsection",
+                "label": "Margin Section",
+                "default": "0px 0px 0px 0px",
+                "info": "Margin: Top Right Bottom Left"
+              },
+              {
+                "type": "text",
+                "id": "marginmobile",
+                "label": "Margin Mobile",
+                "default": "0px 0px 0px 0px",
+                "info": "Margin: Top Right Bottom Left"
+              }
+        ],
+        "blocks": [
+            {
+              "type": "image",
+              "name": "Image",
+              "settings": [
+                {
+                  "id": "image",
+                  "type": "image_picker",
+                  "label": "Image"
+                }
+              ]
+            }
+          ],
+        "presets": [
+            {
+              "name": "Image Interactive",
+              "blocks": [
+                {
+                  "type": "image"
+                },
+                {
+                  "type": "image"
+                },
+                {
+                  "type": "image"
+                }
+              ]
+            }
+          ]
+    }
+{% endschema %}

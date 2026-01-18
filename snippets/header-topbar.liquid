@@ -1,0 +1,54 @@
+<section id="topbar">
+    <div class="container-fluid">
+      <div class="row">
+        {%- if text_topbar != blank -%}
+        <div class="col col-left justify-content-center justify-content-lg-start">
+          {{ text_topbar }}
+        </div>
+        {%- endif -%}
+        <div class="col-8 col-right text-right d-none d-lg-flex">
+            {% if enable_login_topbar %}
+              {% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+              {% if customer %}
+              <div class="header--acount d-none d-lg-inline-block topbar-block">
+                <a href="/account"  title="{{ 'customer.account.title' | t }}"  class="site-header__link site-account ">
+                  <span class="account-text">{{ 'customer.account.title' | t }}</span>
+                </a> | 
+                <a href="/account/logout" title="{{ 'layout.customer.log_out' | t }}"  class="site-header__link site-logout ">
+                  <span class="logout-text">{{ 'layout.customer.log_out' | t }}</span>
+                </a>
+              </div>
+              {% else %}
+              {% if template != 'customers/login' %} {% comment DOES NOT APPEAR ON LOGIN PAGE - AVOID CONFLICT %} {% endcomment %}
+              <div class="header--acount d-none d-lg-inline-block topbar-block" >
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#jsLogin" class="site-header__link site-account js-open-login mr-1">
+                  
+                  <span class="account-text">{{ 'customer.login.sign_in' | t }}</span>
+                </a>  / 
+                <a href="/account/register" class="site-header__link site-register ml-1">
+                  <span class="register-text">{{ 'customer.register.title' | t }}</span>
+                </a>
+              </div>
+              {% endif %}
+              {% endif %}
+              {% endif %}  
+            {% endif %}
+          {%- if enable_money_topbar and localization.available_countries.size > 1 -%}
+            <div class="d-none d-sm-flex topbar-block text-left align-items-center">
+              {% render 'localization', id: 'HeaderCountryForm', margin: 'topbar' , enable_image: enable_image, enable_name : enable_name %}
+            </div>
+          {%- endif -%}
+          {%- if enable_language_topbar and localization.available_languages.size > 1 -%}
+            <div class="d-none d-sm-flex topbar-block text-left align-items-center">
+            {% render 'localization-language', id: 'HeaderLanguageForm', margin: 'topbar' , enable_name: enable_name %}
+          </div>
+        {%- endif -%}
+          {%- if enable_social_topbar -%}
+            <div class="topbar-block">
+              {%- render 'block-social' -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>

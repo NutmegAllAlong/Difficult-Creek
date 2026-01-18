@@ -1,0 +1,59 @@
+<style>
+    
+        {%- for block in section.blocks -%}
+            {%- liquid 
+                assign name_color = block.settings.name_color | handle
+                assign name_color_hex = block.settings.name_color_hex
+                assign image_color = block.settings.image_color
+                -%}
+            {%- if name_color != blank -%}
+                .st-color-{{ name_color }}{
+                    {%- if image_color != blank -%}
+                    background-image:{%- if image_color != blank -%} url({{ image_color | image_url: width: 64 }}) {%- else -%} inherit !important {%- endif -%};
+                    {%- else -%}
+                    background-color: {{ name_color_hex }} !important;
+                    {%- endif -%}
+                }
+            {%- endif -%}
+        {%- endfor -%}   
+
+</style>
+
+{% schema %}
+{
+  "name": "Custom color Filter",
+  "class": "custom_color",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Customize color ",
+      "info": "This color help you customize color for filter and variant swatch product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "color",
+      "name": "Color & Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name_color",
+          "label": "Name Color Variant",
+          "info": "This Name color variant"
+        },
+        {
+          "type": "color",
+          "id": "name_color_hex",
+          "label": "Color",
+          "default": "#000000"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_color",
+          "label": "Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

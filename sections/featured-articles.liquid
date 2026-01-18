@@ -1,0 +1,521 @@
+<!-- featured-articles.liquid -->
+<style>
+  .blog-section{{ section.id }}{
+    position: relative;
+    z-index: {{ section.settings.zindex }};
+  }
+  .article__photo-wrapper.portrait{
+    padding-top: 120% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.square{
+    padding-top: 100% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.landscape{
+    padding-top: 75% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.wide{
+    padding-top: 56% !important;
+    overflow: hidden;
+  }
+  .article__photo-wrapper.portrait img,.article__photo-wrapper.square img, .article__photo-wrapper.landscape img,.article__photo-wrapper.wide img{
+    height: 100%;
+    object-fit: cover;
+  }
+  .bloglist-wrapper .blog__item{
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  @media(max-width:749px){
+    .blog__item--3 .article__photo-wrapper{
+      padding-top: 100% !important;
+    }
+  }
+</style>
+{%- liquid
+
+  assign image_size = section.settings.image_size
+  assign enable_btn_blog = section.settings.enable_btn_blog
+  assign enable_btn_line = section.settings.enable_btn_line
+  assign enable_date = section.settings.enable_date
+  assign enable_tag = section.settings.enable_tag
+  assign enable_author = section.settings.enable_author
+  assign enable_comment = section.settings.enable_comment
+  assign enable_short = section.settings.enable_short
+  
+-%}
+<div class="customstyle{{ section.id }} blog-section{{section.id}}" data-aos="{{ section.settings.animation }}">
+  {%- render 'style-section' -%}
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-block">
+    {%- render 'section-heading' -%}
+    <div class="bloglist-wrapper dots-negative " data-aos="{{ section.settings.animation }}">
+      <div class="bloglist-slider row" id="Bloglist-{{ section.id }}"
+           data-rows="{{ section.settings.rows }}"
+           data-slidesToShow="{{ section.settings.show }}"
+           data-arrows="{{ section.settings.arrows }}"
+           data-dots="{{ section.settings.dots }}" 
+           data-draggable="{{ section.settings.draggable }}" 
+           data-infinite="{{ section.settings.infinite }}" 
+           data-section-id="{{ section.id }}" 
+           data-section-type="slickCarousels">
+        {%- assign blog = blogs[section.settings.blog] -%}
+        {%- assign limit = section.settings.limit -%}
+        {%- if blog != blank -%}
+        {%- for article in blog.articles limit: limit -%}
+        <div class="bloglist-item col">
+          <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+            {%- liquid
+              case section.settings.item_style
+              when 'blog-1'
+                render 'blog-grid-1', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-2'
+                render 'blog-grid-2', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-3'
+                render 'blog-grid-3', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-4'
+                render 'blog-grid-4', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-5'
+                render 'blog-grid-5', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-6'
+                render 'blog-grid-6', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              when 'blog-7'
+                render 'blog-grid-7', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag,enable_author : enable_author, enable_comment: enable_comment, enable_short : enable_short
+              else
+                render 'blog-grid-blank'
+              endcase
+            -%}
+          </div>
+        </div>
+        {%- endfor -%}
+        {%- else -%}
+        {%- for i in (1..limit) -%}
+        <div class="bloglist-item col">
+          <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
+          {%- render 'blog-grid-blank' -%}
+        </div>
+        </div>
+        {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog posts",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_header",
+      "label": "Image header"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Blog posts"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "label": "Blog",
+      "id": "blog",
+      "type": "blog"
+    },
+    {
+      "type": "header",
+      "content": "Style Item "
+    },
+    {
+      "type": "select",
+      "id": "item_style",
+      "label": "Style Item ",
+      "default": "blog-1",
+      "options": [
+        {
+          "value": "blog-1",
+          "label": "Item Basic"
+        },
+        {
+          "value": "blog-2",
+          "label": "Item Row"
+        },
+        {
+          "value": "blog-3",
+          "label": "Item Overlay"
+        },
+        {
+          "value": "blog-4",
+          "label": "Item Normal"
+        },
+        {
+          "value": "blog-5",
+          "label": "Item Box"
+        },
+        {
+          "value": "blog-6",
+          "label": "Item Classic"
+        },
+        {
+          "value": "blog-7",
+          "label": "Item Classic Box"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_btn_blog",
+      "label": "Enable Button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_btn_line",
+      "label": "Enable Button Line",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_date",
+      "label": "Enable Date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_tag",
+      "label": "Enable Tag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_author",
+      "label": "Enable Author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_comment",
+      "label": "Enable comment",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_short",
+      "label": "Enable Excerpt",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        }
+      ],
+      "default": "auto",
+      "label": "Image ratio"
+    },
+    {
+      "type": "header",
+      "content": "Config Carousel "
+    },
+    {
+      "type": "checkbox",
+      "id": "arrows",
+      "label": "Arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "draggable",
+      "label": "Draggable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dots",
+      "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "rows",
+      "label": "Rows",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 row"
+        },
+        {
+          "value": "2",
+          "label": "2 rows"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 30,
+      "step": 1,
+      "label": "Limit items",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "show",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Display items",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

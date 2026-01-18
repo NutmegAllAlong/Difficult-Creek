@@ -1,0 +1,36 @@
+<div class="modal-body p-0">
+    <div class="row m-0  {% if image_right %}flex-lg-row-reverse {% endif %}">
+      <div class="col-lg-6 col-12 p-0 bg-newsletter"></div>
+      <div class="popup-newsletter--content d-flex  flex-column col p-4 p-lg-5 justify-content-center"> 
+        {% if pnewletter_title != blank %}
+        <h3 class="modal-title popup-newsletter--title mb-3 {{ pnew_size_heading }}">
+          {{ pnewletter_title | escape }}
+        </h3>
+        {% endif %}
+        {% if pnewletter_description != blank %}
+        <div class="popup-newsletter--description pb-4 pb-lg-5">
+          {{ pnewletter_description }}
+        </div>
+        {% endif %}
+
+        {% form 'customer' %}
+        {{ form.errors | default_errors }}
+        {% if form.posted_successfully? %}
+        <p class="form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+        {% else %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="input-group form-group flex-column mb-0">
+          <input id="popupNewsletter" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" class="form-control pr-3 w-100 mb-3" autocapitalize="off">
+          <label for="popupNewsletter" class="label--hidden">{{ 'general.newsletter_form.newsletter_placeholder' | t }}</label>
+          <div>
+            <button type="submit" class="btn btn-theme js-btnPopupNewsletter" name="commit">
+              <span class="d-sm-inline">{{ 'general.newsletter_form.submit' | t }}</span>
+            </button>
+          </div>
+          
+        </div> 
+        {% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>

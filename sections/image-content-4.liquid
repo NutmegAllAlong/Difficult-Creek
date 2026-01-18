@@ -1,0 +1,405 @@
+<!-- image-content-4.liquid -->
+<div class="customstyle{{ section.id }} img-section" data-aos="{{ section.settings.animation }}">
+    {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      <div class="row align-items-center">
+        <div class="col-md-3 offset-md-1" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+            <div class="img-sectionleft">
+                {%- if section.settings.image != blank -%}
+                    <noscript>
+                        <img src="{{ section.settings.image | image_url: width: 600 }}" alt="{{ section.settings.image.alt }}" class="image-content__image"
+                          loading="lazy"
+                          width="{{ section.settings.image.width }}"
+                          height="{{ section.settings.image.height }}">
+                    </noscript>
+                    <div class="image-content__image-container">
+                        <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;">
+                        {% assign img_url = section.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                        <img class="image-content__image lazyload"
+                            src="{{ section.settings.image | image_url: width: 1, height: 1 }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                            data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ section.settings.image.alt | escape }}"
+                            loading="lazy"
+                            width="{{ section.settings.image.width }}"
+                            height="{{ section.settings.image.height }}">
+                        </div>
+                    </div>
+                {%- else -%}
+                    <div class="image-content__image">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+            <div class="p-5 h-100 flex  w-100 {% if section.settings.align_center %}flex--center-vertical{% endif %}" style="background-color:{{ section.settings.bgtext }} ;">
+                <div class="p-4 flex__item image-content__text text-{{ section.settings.align }}">
+                  {% if section.settings.subtitle != blank %}
+                  <div class="mb-2 subtop" >{{ section.settings.subtitle }}</div>
+                  {% endif %}
+                  {% if  section.settings.title != blank %}
+                  <div class="mb-3 {{ section.settings.size_text }}">{{ section.settings.title }}</div>
+                  {% endif %}
+                  {% if section.settings.text != blank  %}
+                    <div class="rte-setting " >{{ section.settings.text }}</div>
+                  {% endif %}
+                  {%- if section.settings.button != blank -%}
+                    <div class="mt-5">
+                      <a href="{{ section.settings.link }}" class="btn {{ section.settings.style_btn }}">
+                        {{ section.settings.button }}
+                      </a>
+                    </div>
+                {%- endif -%}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="{{ section.settings.animation }}" data-aos-duration="700">
+            <div class="img-sectionright">
+                {%- if section.settings.imageright != blank -%}
+                    <div class="image-content__image-container">
+                        <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.imageright.aspect_ratio | times: 100 }}%;">
+                        {% assign img_url = section.settings.imageright | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                        <img class="image-content__image lazyload"
+                            src="{{ section.settings.imageright | image_url: width: 650 }}"
+                            data-src="{{ img_url }}"
+                            data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                            data-aspectratio="{{ section.settings.imageright.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ section.settings.imageright.alt | escape }}"
+                            loading="lazy"
+                            width="{{ section.settings.imageright.width }}"
+                            height="{{ section.settings.imageright.height }}">
+                        </div>
+                    </div>
+                {%- else -%}
+                    <div class="image-content__image">
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    </div>
+                {%- endif -%}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  {% schema %}
+{
+  "name": "Image with text style 4",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    
+    {
+      "type": "checkbox",
+      "id": "align_center",
+      "label": "Align Center",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Block Left"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Block Center"
+    },
+    {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub Heading",
+          "default": "Image with text"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "size_text",
+          "default": "h2",
+          "options": [
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            }
+          ],
+          "label": "Heading Size"
+        },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "HTML / Description",
+      "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+    },
+    {
+          "type": "text",
+          "id": "button",
+          "label": "Button text",
+          "default": "discover now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional"
+        },
+        {
+          "type": "select",
+          "id": "style_btn",
+          "label": "Style Button",
+          "default": "btn-theme",
+          "options": [
+            {
+              "value": "btn-theme",
+              "label": "Button Box"
+            },
+            {
+              "value": "btn-theme btn-white",
+              "label": "Button Box White"
+            },
+            {
+              "value": "btn-underline",
+              "label": "Button Line"
+            },
+            {
+              "value": "btn-underline btn-underline-white",
+              "label": "Button Line White"
+            },
+            {
+              "value": "btn-outline",
+              "label": "Button Outline"
+            },
+            {
+              "value": "btn-outline btn-outline-white",
+              "label": "Button Outline White"
+            }
+          ]
+        },
+    {
+      "type": "header",
+      "content": "Block Right"
+    },
+    {
+      "type": "image_picker",
+      "id": "imageright",
+      "label": "Image Right"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with text style 4",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}
+  

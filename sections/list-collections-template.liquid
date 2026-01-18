@@ -1,0 +1,291 @@
+<!-- list-collections-template.liquid -->
+<style>
+   .main-content {
+    padding:0;
+   }
+  @media only screen and (min-width: 750px){
+    .main-content {
+        padding-bottom: 00px;
+        padding-top: 40px;
+    }
+}
+  .collection-card__image .hv-image-saturate{
+    position: relative;
+    overflow:hidden;
+    display: block;
+    padding-top: 100% !important;
+  }
+  .collection-card__image img{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .collection-card__image .placeholder-svg{
+    top:0;
+    left:0;
+  }
+</style>
+{%- liquid
+  if section.settings.layout == 'grid' 
+  if section.settings.display_type == 'all' 
+    assign collection_count = 0 
+    for collection in collections 
+      unless collection.handle == 'frontpage' 
+       assign collection_count = collection_count | plus: 1 
+      endunless 
+    endfor 
+  else 
+    assign collection_count = section.blocks.size 
+  endif 
+
+  assign number_rows = 1 
+
+  case collection_count 
+    when 1 
+      assign height = 450 
+    when 2 
+      assign height = 450 
+    when 3 
+      assign height = 330 
+    when 4 
+      assign height = 235 
+    else 
+      assign height = 330 
+      assign number_rows = collection_count | divided_by: 3.0 | ceil 
+  endcase 
+endif 
+-%}
+
+<div class="container" data-section-id="{{ section.id }}" data-section-type="collections-list">
+  {% if section.settings.display_type == 'all' %}
+    {%- liquid
+      case section.settings.sort 
+      when 'products_high' or 'products_low' 
+       assign list_collections = collections | sort: 'all_products_count' 
+      when 'date' or 'date_reversed' 
+       assign list_collections = collections | sort: 'published_at' 
+      else 
+       assign list_collections = collections 
+    endcase 
+    -%}
+    {% if section.settings.sort == 'products_low' or section.settings.sort == 'date' or section.settings.sort == 'alphabetical' %}
+      <div class="row grid--uniform collection" data-number-rows="{{ number_rows }}">
+        {% assign row_number = 1 %}
+        {% for collection in list_collections %}
+          {%- assign featured_collection = collection -%}
+          {%- capture listitem -%}
+          <div class="col-12  mb-5">
+            <div class="row collection collection-1">
+              <div class="col-lg-3 col-12">
+                {% if featured_collection.image %}
+                {% assign collection_image = featured_collection | image_url: width: 1200 %}
+                {% else %}
+                {% assign collection_image = featured_collection.products.first | image_url: width: 500 %}
+                {% endif %}
+                <a href="{{ featured_collection.url }}" class="collection-card" style="background-image: url({{ collection_image }});">
+                  <div class="collection-card__meta">
+                    <p class="h1 collection-card__title">{{ featured_collection.title }}</p>
+                    <p class="collection-card__subtext">{{ 'collections.general.view_all' | t }}</p>
+                  </div>
+                </a>
+              </div>
+              {% for product in featured_collection.products limit: 3 %}
+              <div class="col-lg-3 col-12 {% if forloop.index == 3 %} d-none d-lg-block{% endif %}">
+                {% render 'product-card', product: product %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {%- endcapture -%}
+
+          {%- liquid
+            unless collection.handle == 'frontpage' 
+              if section.settings.layout == 'list' 
+                  echo listitem
+              elsif section.settings.layout == 'grid'
+                render 'collection-grid-item', height: height, featured_collection: featured_collection 
+              endif 
+            endunless 
+          -%}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="row grid--uniform collection" data-number-rows="{{ number_rows }}">
+        {% for collection in list_collections reversed %}
+          {%- assign featured_collection = collection -%}
+          {%- capture listitem -%}
+          <div class="col-12  mb-5">
+            <div class="row collection collection-1">
+              <div class="col-lg-3 col-12">
+                {% if featured_collection.image %}
+                {% assign collection_image = featured_collection | image_url: width: 1200 %}
+                {% else %}
+                {% assign collection_image = featured_collection.products.first | image_url: width: 500 %}
+                {% endif %}
+                <a href="{{ featured_collection.url }}" class="collection-card" style="background-image: url({{ collection_image }});">
+                  <div class="collection-card__meta">
+                    <p class="h1 collection-card__title">{{ featured_collection.title }}</p>
+                    <p class="collection-card__subtext">{{ 'collections.general.view_all' | t }}</p>
+                  </div>
+                </a>
+              </div>
+              {% for product in featured_collection.products limit: 3 %}
+              <div class="col-lg-3 col-12 {% if forloop.index == 3 %} d-none d-lg-block{% endif %}">
+                {% render 'product-card', product: product %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        {%- endcapture -%}
+          {%- liquid
+            unless collection.handle == 'frontpage' 
+              if section.settings.layout == 'list' 
+                echo listitem
+              elsif section.settings.layout == 'grid'
+                if collection_count > 4 and forloop.index > 3  
+                endif 
+                render 'collection-grid-item' , height: height , featured_collection: featured_collection  
+              endif 
+            endunless 
+          -%}
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    <div class="row grid--uniform collection" data-number-rows="{{ number_rows }}">
+      
+      {% for block in section.blocks %}
+        {%- assign featured_collection = collections[block.settings.collection] -%}
+        {%- capture listitem -%}
+          <div class="col-12  mb-5">
+            <div class="row collection collection-1">
+              <div class="col-lg-3 col-12">
+                {% if featured_collection.image %}
+                {% assign collection_image = featured_collection | image_url: width: 1200 %}
+                {% else %}
+                {% assign collection_image = featured_collection.products.first | image_url: width: 500 %}
+                {% endif %}
+                <a href="{{ featured_collection.url }}" class="collection-card" style="background-image: url({{ collection_image }});">
+                  <div class="collection-card__meta">
+                    <p class="h1 collection-card__title">{{ featured_collection.title }}</p>
+                    <p class="collection-card__subtext">{{ 'collections.general.view_all' | t }}</p>
+                  </div>
+                </a>
+              </div>
+              {% for product in featured_collection.products limit: 3 %}
+              <div class="col-lg-3 col-12 {% if forloop.index == 3 %} d-none d-lg-block{% endif %}">
+                {% render 'product-card', product: product %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        {%- endcapture -%}
+
+       {%- liquid
+        if section.settings.layout == 'list' 
+          echo listitem
+        elsif section.settings.layout == 'grid'
+          if collection_count > 4 and forloop.index > 3 
+          endif 
+          render 'collection-grid-item' , height: height, featured_collection: featured_collection  
+        endif 
+       -%}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Collections list page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "All of your collections are listed by default. To customize your list, choose 'Selected' and add collections."
+    },
+    {
+      "type": "radio",
+      "id": "display_type",
+      "label": "Select collections to show",
+      "default": "all",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "selected",
+          "label": "Selected"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Select layout",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Style Grid"
+        },
+        {
+          "value": "list",
+          "label": "Style List"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "sort",
+      "label": "Sort collections by:",
+      "info": "Sorting only applies when 'All' is selected",
+      "default": "alphabetical",
+      "options": [
+        {
+          "value": "products_high",
+          "label": "Product count, high to low"
+        },
+        {
+          "value": "products_low",
+          "label": "Product count, low to high"
+        },
+        {
+          "value": "alphabetical",
+          "label": "Alphabetically, A-Z"
+        },
+        {
+          "value": "alphabetical_reversed",
+          "label": "Alphabetically, Z-A"
+        },
+        {
+          "value": "date",
+          "label": "Date, old to new"
+        },
+        {
+          "value": "date_reversed",
+          "label": "Date, new to old"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "label": "Collection",
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

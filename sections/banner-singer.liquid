@@ -1,0 +1,447 @@
+<!-- banner-singer.liquid -->
+<style>
+    .banner-singer-countdown ul{
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .banner-singer-countdown ul li{
+        padding: 15px;
+        background-color: var(--g-main);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        flex-direction: column;
+        min-width: 90px;
+    }
+    .banner-singer-countdown ul li .countdown-time{
+        font-size: 40px;
+        line-height: 1;
+        font-family: var(--g-font-3);
+        font-weight: 400;
+        color: #fff;
+    }
+    .countdown-text{
+        font-family: var(--g-font-2);
+        color: #fff;
+    }
+    @media (max-width:575px) {
+      .banner-singer-countdown ul li .countdown-time{
+        font-size: 25px;
+      }
+      .banner-singer-countdown ul li{
+        min-width: 60px;
+      }
+    }
+</style>
+<div class="customstyle{{ section.id }} banner-singer position-relative" {% if section.settings.bg_section != blank %} style="background: url({{  section.settings.bg_section | img_url:'master' }}) center center no-repeat;background-size:cover;" {%endif %}>
+    {%- include 'style-section' -%}
+    <div class="{{ section.settings.setwidth }}">
+        <div class="banner-singer-text d-flex flex-column {%- if section.settings.item_align == 'top' -%}{{ 'justify-content-start' | prepend: ' ' }}{%- elsif section.settings.item_align == 'center' -%}{{ 'justify-content-center' | prepend: ' ' }}{%- elsif section.settings.item_align == 'bottom' -%}{{ 'justify-content-end' | prepend: ' ' }}{%- endif -%}
+            {%- if section.settings.text_align == 'left' -%}{{ 'text-start' | prepend: ' ' }}{%- elsif section.settings.text_align == 'center' -%}{{ 'text-center' | prepend: ' ' }}{%- elsif section.settings.text_align == 'right' -%}{{ 'text-end' | prepend: ' ' }}{%- endif -%}">
+            {% if section.settings.banner_title != blank %}
+            <div class="banner-singer-title section-title-1" style="color: {{ section.settings.color_title }};">{{ section.settings.banner_title }}</div>
+            {% endif %}
+
+            {% if section.settings.subtop != blank %}
+                <div class="subtop">{{ section.settings.subtop }}</div>
+            {% endif %}
+
+            {% if section.settings.des_banner != blank %}
+                <div class="des_bannersinger" style="color: {{ section.settings.color_des }};">{{ section.settings.des_banner }}</div>
+            {% endif %}
+
+
+            {%- if section.settings.countdown != blank -%}
+                <div class="banner-singer-countdown mt-4">
+                    <div class="js-countdown" data-time="{{ section.settings.countdown }}"></div>
+                </div>
+            {%- endif -%}
+
+            {% if section.settings.text_link != blank %}
+                <a class='mt-3 btn-theme {%- if section.settings.text_align == 'left' -%}{{ 'mr-auto' | prepend: ' ' }}{%- elsif section.settings.text_align == 'center' -%}{{ 'mx-auto' | prepend: ' ' }}{%- elsif section.settings.text_align == 'right' -%}{{ 'ml-auto' | prepend: ' ' }}{%- endif -%}' style="color: {{ section.settings.color_btn }};border-color: {{ section.settings.border_btn }};background:{{ section.settings.bg_btn }};width:max-content;" href="{{ section.settings.link }}"><span>{{ section.settings.text_link }} </span></a>
+            {% endif %}
+        </div>
+
+        {%- for block in section.blocks -%}
+        {%- case block.type -%}
+        {%- when 'product' -%}
+        <style>
+          #block-{{ block.id }}{
+            position:absolute;
+            top:{{ block.settings.top }}%;
+            left:{{ block.settings.left }}%;
+          }
+          #block-{{ block.id }} .banner-singer-icon{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+          }
+          #block-{{ block.id }}.banner-singer-product .icon-open{
+            display: block;
+          }
+          #block-{{ block.id }}.banner-singer-product.active .icon-open{
+            display: none;
+          }
+          #block-{{ block.id }}.banner-singer-product .icon-close{
+            display: none;
+          }
+          #block-{{ block.id }}.banner-singer-product.active .icon-close{
+            display: block;
+          }
+          #block-{{ block.id }}.banner-singer-product .banner-singer-product-content{
+            transform: scale(0) translate(-10%, 10px);
+          }
+          #block-{{ block.id }}.banner-singer-product.active .banner-singer-product-content{
+            transform: scale(1) translate(-10%, 10px);
+          }
+          #block-{{ block.id }} .banner-singer-icon::after{
+            box-shadow: 0 0 0 5px rgba(255,255,255,.4);
+            border-radius: 200%;
+            content: "";
+            position: absolute;
+            z-index: 1;
+            transform: scale(1);
+            pointer-events: none;
+            animation: lexus-scale 2s infinite;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+          }
+          #block-{{ block.id }} .banner-singer-product-content .product-card{
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            width: 330px;
+            background-color: #fff;
+          }
+          #block-{{ block.id }} .banner-singer-product-content .product-card:hover{
+            transform: unset !important;
+          }
+          #block-{{ block.id }} .banner-singer-product-content .product-card__image-wr{
+            width: 100%;
+            max-width: 30%;
+          }
+          #block-{{ block.id }} .banner-singer-product-content .product-card__info{
+            padding: 0;
+            padding-left: 15px;
+            flex: 1;
+          }
+          #block-{{ block.id }} .product-card--style2 .product-form__item--submit{
+            position: relative;
+            margin: 0;
+            transform: translate(0);
+            border: none;
+          }
+          #block-{{ block.id }} .product-card--style2 .product-form__item--submit .service-product-2{
+            display: none !important;
+          }
+          #block-{{ block.id }} .product-card--style2 .product-form__item--submit .js-grid-cart{
+            padding: 5px 0px 0px 0px !important;
+          }
+          #block-{{ block.id }} .banner-singer-product-content{
+            position: absolute;
+            transition: transform .3s ease;
+            bottom: 100%;
+            transform-origin: left;
+          }
+          #block-{{ block.id }} .product-card--style2:hover .product-card__info{
+            transform: unset !important;
+          }
+          @keyframes lexus-scale {
+            0% {
+                transform: scale(1);
+                opacity: 1
+            }
+            100% {
+                transform: scale(1.3);
+                opacity: 0
+            }
+        }
+        </style>
+        <div class="banner-singer-product d-none d-lg-block" id="block-{{ block.id }}">
+          <div class="banner-singer-icon">
+            <svg class="icon-open" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+              <path d="M6 7V13H7V7H13V6H7V0H6V6H0V7H6Z" fill="black"/>
+            </svg>
+            <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="20" height="2" viewBox="0 0 20 2" fill="none">
+              <path d="M8.74229e-08 2L0 9.53674e-07L20 0V2L8.74229e-08 2Z" fill="black"/>
+              </svg>
+          </div>
+          <div class="banner-singer-product-content">
+            {%- render 'product-card', product: block.settings.product -%}
+          </div>
+        </div>
+        {% endcase %}
+        {% endfor %}
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Banner singer",
+    "class": "index-section",
+    "settings": [
+    {
+        "type": "select",
+        "id": "animation",
+        "options": [
+          { "value": "", "label": "None"},
+          { "value": "fade", "label": "Fade"},
+          { "value": "fade-up", "label": "Fade Up"},
+          { "value": "fade-down", "label": "Fade Down"},
+          { "value": "fade-left", "label": "Fade Left"},
+          { "value": "fade-right", "label": "Fade Right"},
+          { "value": "fade-up-right", "label": "Fade Up Right"},
+          { "value": "fade-up-left", "label": "Fade Up Left"},
+          { "value": "fade-down-right", "label": "Fade Down Right"},
+          { "value": "fade-down-left", "label": "Fade Down Left"},
+          { "value": "flip-up", "label": "Flip Up"},
+          { "value": "flip-down", "label": "Flip Down"},
+          { "value": "flip-left", "label": "Flip Left"},
+          { "value": "flip-right", "label": "Flip Right"},
+          { "value": "slide-up", "label": "Slide Up"},
+          { "value": "slide-down", "label": "Slide Down"},
+          { "value": "slide-left", "label": "Slide Left"},
+          { "value": "slide-right", "label": "Slide Right"},
+          { "value": "zoom-in", "label": "Zoom In"},
+          { "value": "zoom-in-up", "label": "Zoom In Up"},
+          { "value": "zoom-in-down", "label": "Zoom In Down"},
+          { "value": "zoom-in-left", "label": "Zoom In Left"},
+          { "value": "zoom-in-right", "label": "Zoom In Right"},
+          { "value": "zoom-out", "label": "Zoom Out"},
+          { "value": "zoom-out-up", "label": "Zoom Out Up"},
+          { "value": "zoom-out-down", "label": "Zoom Out Down"},
+          { "value": "zoom-out-left", "label": "Zoom Out Feft"},
+          { "value": "zoom-out-right", "label": "Zoom Out Right"}
+        ],
+        "label": "Select Animation"
+      },
+      {
+        "type": "select",
+        "id": "setwidth",
+        "label": "Full Width",
+        "default": "container",
+        "options": [
+          {
+            "value": "container",
+            "label": "Box"
+          },
+          {
+            "value": "container-fluid",
+            "label": "Container Fluid"
+          },
+          {
+            "value": "full",
+            "label": "Full"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "paddingsection",
+        "label": "Padding Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "paddingmobile",
+        "label": "Padding Section Mobile",
+        "default": "60px 0px 60px 0px",
+        "info": "Padding: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginsection",
+        "label": "Margin Section",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "marginmobile",
+        "label": "Margin Mobile",
+        "default": "0px 0px 0px 0px",
+        "info": "Margin: Top Right Bottom Left"
+      },
+      {
+        "type": "text",
+        "id": "zindex",
+        "label": "Z Index Section",
+        "default": "0"
+      },
+      {
+        "type": "color",
+        "id": "bgsection",
+          "label": "Background Section",
+          "default": "#ffffff"
+      },
+      {
+        "type": "image_picker",
+        "id": "bg_section",
+          "label": "Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+          "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "subtop",
+              "label": "Sub top",
+              "default":"Sub top"
+            },
+        {
+          "type": "text",
+          "id": "banner_title",
+            "label": "Title banner",
+            "default":"Title"
+          },
+          {
+            "type": "color",
+            "id": "color_title",
+              "label": "Color title",
+              "default":"#000"
+            },
+            {
+                "type": "textarea",
+                "id":"des_banner",
+                "label": "Description banner",
+                "default":"Description"
+            },
+            {
+                "type": "color",
+                "id": "color_des",
+                  "label": "Color des",
+                  "default":"#000"
+            },
+            {
+                "type": "text",
+                "id": "countdown",
+                "label": "Countdown"
+            },
+          {
+            "type": "text",
+            "id": "text_link",
+              "label": "Text link",
+              "default":"Show more"
+            },
+            {
+              "type": "url",
+              "id": "link",
+                "label": "Link"
+              },
+              {
+                "type": "color",
+                "id": "color_link",
+                  "label": "Color link",
+                  "default":"#000"
+                },
+                {
+                    "type": "color",
+                    "id":"color_btn",
+                    "label":"Color text button",
+                    "default":"#000"
+                   },
+                   {
+                     "type": "color",
+                     "id":"border_btn",
+                     "label":"Color border button",
+                     "default":"#000"
+                    },
+                    {
+                     "type": "color",
+                     "id":"bg_btn",
+                     "label":"Background button",
+                     "default":"transparent"
+                    },
+              {
+                "type": "select",
+                "id": "text_align",
+                "label": "Text align",
+                "default": "center",
+                "options": [
+                  {
+                    "value": "left",
+                    "label": "Left"
+                  },
+                  {
+                    "value": "center",
+                    "label": "Center"
+                  },
+                  {
+                    "value": "right",
+                    "label": "Right"
+                  }
+                ]
+               },
+               {
+                "type": "select",
+                "id": "item_align",
+                "label": "Items align",
+                "default": "center",
+                "options": [
+                  {
+                    "value": "top",
+                    "label": "Top"
+                  },
+                  {
+                    "value": "center",
+                    "label": "Center"
+                  },
+                  {
+                    "value": "bottom",
+                    "label": "Bottom"
+                  }
+                ]
+               }
+    ],
+    "blocks":[
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type":"product",
+            "id":"product",
+            "label":"Product"
+          },
+          {
+            "type": "range",
+            "id": "top",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Top",
+            "default": 30
+          },
+          {
+            "type": "range",
+            "id": "left",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "unit": "%",
+            "label": "Left",
+            "default": 60
+          }
+        ]
+      }
+    ],
+    "presets": [
+    {
+      "name": "Banner singer"
+    }
+  ]
+}
+{% endschema %}

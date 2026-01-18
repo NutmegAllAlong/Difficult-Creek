@@ -1,0 +1,507 @@
+{% doc %}
+  @prompt
+    Create a product variant selector block that displays fabric/color variant options as clickable image swatches instead of text buttons. The block should pull variant images from the product variants and display them as small square or circular image thumbnails that customers can click to select different fabric options. Include hover effects and a selected state indicator. The swatches should work with Shopify's standard variant selection functionality
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-variant-swatches-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+  }
+
+  .ai-variant-swatches__container-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-variant-swatches__option-group-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-variant-swatches__label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.label_font_size }}px;
+    font-weight: {{ block.settings.label_font_weight }};
+    color: {{ block.settings.label_color }};
+    margin: 0;
+  }
+
+  .ai-variant-swatches__selected-value-{{ ai_gen_id }} {
+    color: {{ block.settings.selected_value_color }};
+    font-weight: 500;
+  }
+
+  .ai-variant-swatches__grid-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: {{ block.settings.swatch_spacing }}px;
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }} {
+    position: relative;
+    cursor: pointer;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    {% if block.settings.swatch_shape == 'circle' %}
+      border-radius: 50%;
+    {% else %}
+      border-radius: {{ block.settings.border_radius }}px;
+    {% endif %}
+    overflow: hidden;
+    transition: all 0.3s ease;
+    width: {{ block.settings.swatch_size }}px;
+    height: {{ block.settings.swatch_size }}px;
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.hover_border_color }};
+    transform: scale({{ block.settings.hover_scale }});
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }}.selected {
+    border-color: {{ block.settings.selected_border_color }};
+    border-width: {{ block.settings.selected_border_width }}px;
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }}.unavailable {
+    opacity: 0.4;
+    cursor: not-allowed;
+    position: relative;
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }}.unavailable::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10%;
+    right: -10%;
+    height: 2px;
+    background-color: {{ block.settings.unavailable_line_color }};
+    transform: rotate(-45deg);
+  }
+
+  .ai-variant-swatches__swatch-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ai-variant-swatches__swatch-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f4;
+    font-size: 10px;
+    color: #999;
+    text-align: center;
+    padding: 4px;
+  }
+
+  .ai-variant-swatches__checkmark-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: {{ block.settings.checkmark_bg_color }};
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-variant-swatches__swatch-{{ ai_gen_id }}.selected .ai-variant-swatches__checkmark-{{ ai_gen_id }} {
+    display: flex;
+  }
+
+  .ai-variant-swatches__checkmark-icon-{{ ai_gen_id }} {
+    width: 12px;
+    height: 12px;
+    stroke: {{ block.settings.checkmark_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-variant-swatches__swatch-{{ ai_gen_id }} {
+      width: {{ block.settings.swatch_size | times: 0.85 }}px;
+      height: {{ block.settings.swatch_size | times: 0.85 }}px;
+    }
+  }
+{% endstyle %}
+
+<variant-swatches-{{ ai_gen_id }}
+  class="ai-variant-swatches-{{ ai_gen_id }}"
+  data-product-id="{{ product.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-variant-swatches__container-{{ ai_gen_id }}">
+    {% for option in product.options_with_values %}
+      {% assign option_index = forloop.index0 %}
+      {% assign option_name = option.name | downcase %}
+      
+      {% if option_name contains 'color' or option_name contains 'fabric' or option_name contains 'material' or option_name contains 'pattern' %}
+        <div class="ai-variant-swatches__option-group-{{ ai_gen_id }}" data-option-index="{{ option_index }}">
+          <label class="ai-variant-swatches__label-{{ ai_gen_id }}">
+            {{ option.name }}:
+            <span class="ai-variant-swatches__selected-value-{{ ai_gen_id }}" data-selected-value>
+              {{ option.selected_value }}
+            </span>
+          </label>
+          
+          <div class="ai-variant-swatches__grid-{{ ai_gen_id }}">
+            {% for value in option.values %}
+              {% assign value_handle = value | handleize %}
+              {% assign variant_for_value = null %}
+              {% assign is_available = false %}
+              
+              {% for variant in product.variants %}
+                {% if variant.options[option_index] == value %}
+                  {% assign variant_for_value = variant %}
+                  {% if variant.available %}
+                    {% assign is_available = true %}
+                  {% endif %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+              
+              <div
+                class="ai-variant-swatches__swatch-{{ ai_gen_id }} {% if option.selected_value == value %}selected{% endif %} {% unless is_available %}unavailable{% endunless %}"
+                data-option-value="{{ value | escape }}"
+                data-variant-id="{% if variant_for_value %}{{ variant_for_value.id }}{% endif %}"
+                data-available="{{ is_available }}"
+                role="button"
+                tabindex="0"
+                aria-label="{{ option.name }}: {{ value }}"
+              >
+                {% if variant_for_value and variant_for_value.featured_image %}
+                  <img
+                    src="{{ variant_for_value.featured_image | image_url: width: 200 }}"
+                    alt="{{ value | escape }}"
+                    class="ai-variant-swatches__swatch-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="200"
+                    height="200"
+                  >
+                {% else %}
+                  <div class="ai-variant-swatches__swatch-placeholder-{{ ai_gen_id }}">
+                    {{ value }}
+                  </div>
+                {% endif %}
+                
+                {% if block.settings.show_checkmark %}
+                  <div class="ai-variant-swatches__checkmark-{{ ai_gen_id }}">
+                    <svg class="ai-variant-swatches__checkmark-icon-{{ ai_gen_id }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 6L9 17L4 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</variant-swatches-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class VariantSwatches{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.productId = this.dataset.productId;
+      }
+
+      connectedCallback() {
+        this.swatches = this.querySelectorAll('.ai-variant-swatches__swatch-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.swatches.forEach((swatch) => {
+          swatch.addEventListener('click', this.handleSwatchClick.bind(this));
+          swatch.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              this.handleSwatchClick.call(this, e);
+            }
+          });
+        });
+      }
+
+      handleSwatchClick(event) {
+        const swatch = event.currentTarget;
+        const isAvailable = swatch.dataset.available === 'true';
+        
+        if (!isAvailable) {
+          return;
+        }
+
+        const optionValue = swatch.dataset.optionValue;
+        const optionGroup = swatch.closest('.ai-variant-swatches__option-group-{{ ai_gen_id }}');
+        const optionIndex = optionGroup.dataset.optionIndex;
+        
+        optionGroup.querySelectorAll('.ai-variant-swatches__swatch-{{ ai_gen_id }}').forEach((s) => {
+          s.classList.remove('selected');
+        });
+        
+        swatch.classList.add('selected');
+        
+        const selectedValueSpan = optionGroup.querySelector('[data-selected-value]');
+        if (selectedValueSpan) {
+          selectedValueSpan.textContent = optionValue;
+        }
+        
+        const productForm = document.querySelector(`form[data-product-id="${this.productId}"]`) || 
+                           document.querySelector('form[action*="/cart/add"]');
+        
+        if (productForm) {
+          const optionSelect = productForm.querySelector(`select[name="options[${optionIndex}]"], input[name="options[${optionIndex}]"]`);
+          
+          if (optionSelect) {
+            if (optionSelect.tagName === 'SELECT') {
+              optionSelect.value = optionValue;
+            } else {
+              optionSelect.value = optionValue;
+              optionSelect.checked = true;
+            }
+            
+            const changeEvent = new Event('change', { bubbles: true });
+            optionSelect.dispatchEvent(changeEvent);
+          }
+        }
+        
+        this.updateVariantAvailability();
+      }
+
+      updateVariantAvailability() {
+        const selectedOptions = [];
+        this.querySelectorAll('.ai-variant-swatches__option-group-{{ ai_gen_id }}').forEach((group) => {
+          const selected = group.querySelector('.ai-variant-swatches__swatch-{{ ai_gen_id }}.selected');
+          if (selected) {
+            selectedOptions.push(selected.dataset.optionValue);
+          }
+        });
+      }
+    }
+
+    customElements.define('variant-swatches-{{ ai_gen_id }}', VariantSwatches{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Variant image swatches",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Swatch style"
+    },
+    {
+      "type": "select",
+      "id": "swatch_shape",
+      "label": "Shape",
+      "options": [
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "range",
+      "id": "swatch_size",
+      "label": "Size",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "swatch_spacing",
+      "label": "Spacing",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "header",
+      "content": "Hover state"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover border color",
+      "default": "#7f4a88"
+    },
+    {
+      "type": "range",
+      "id": "hover_scale",
+      "label": "Hover scale",
+      "min": 1,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Selected state"
+    },
+    {
+      "type": "color",
+      "id": "selected_border_color",
+      "label": "Selected border color",
+      "default": "#7f4a88"
+    },
+    {
+      "type": "range",
+      "id": "selected_border_width",
+      "label": "Selected border width",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_checkmark",
+      "label": "Show checkmark on selected",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "checkmark_bg_color",
+      "label": "Checkmark background",
+      "default": "#7f4a88"
+    },
+    {
+      "type": "color",
+      "id": "checkmark_color",
+      "label": "Checkmark color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Unavailable state"
+    },
+    {
+      "type": "color",
+      "id": "unavailable_line_color",
+      "label": "Strike-through color",
+      "default": "#d32f2f"
+    },
+    {
+      "type": "header",
+      "content": "Label"
+    },
+    {
+      "type": "range",
+      "id": "label_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "label_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi-bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#231f20"
+    },
+    {
+      "type": "color",
+      "id": "selected_value_color",
+      "label": "Selected value color",
+      "default": "#7f4a88"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Variant image swatches"
+    }
+  ]
+}
+{% endschema %}

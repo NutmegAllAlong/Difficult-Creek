@@ -1,0 +1,55 @@
+<div id="nav-tab-info" class="nav-tab-info">
+  <div class="nav nav-tabs " role="tablist">
+    <a class="nav-item nav-link active" href="#gtab1" data-toggle="tab" role="tab" aria-selected="true">{{ gtab_des | default: 'Description' }}</a>
+    {% if stab_title1 != blank %}
+    <a class="nav-item nav-link" href="#stab1" data-toggle="tab" role="tab" aria-selected="false">{{ stab_title1 }}</a>
+    {% endif %}
+    {% if stab_title2 != blank %}
+    <a class="nav-item nav-link" href="#stab2" data-toggle="tab" role="tab" aria-selected="false">{{ stab_title2 }}</a>
+    {% endif %}
+    {% if stab_title3 != blank %}
+    <a class="nav-item nav-link" href="#stab3" data-toggle="tab" role="tab" aria-selected="false">{{ stab_title3 }}</a>
+    {% endif %}
+    {% if stab_title4 != blank %}
+    <a class="nav-item nav-link" href="#stab4" data-toggle="tab" role="tab" aria-selected="false">{{ stab_title4 }}</a>
+    {% endif %}
+    {% if gtab_review_enable %}
+    <a class="nav-item nav-link" href="#gtab2" data-toggle="tab" role="tab" aria-selected="false">
+      {{ gtab_review }}
+      <div class="review">
+        <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+      </div>
+    </a>
+    {% endif %}
+  </div>
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="gtab1" role="tabpanel" >
+      {{ product.description }}
+    </div>
+    {% if stab_title1 != blank %}
+    <div class="tab-pane fade" id="stab1" role="tabpanel">
+      {{ stab_content1 }}
+    </div>
+    {% endif %}
+    {% if stab_title2 != blank %}
+    <div class="tab-pane fade" id="stab2" role="tabpanel">
+      {{ stab_content2 }}
+    </div>
+    {% endif %}
+    {% if stab_title3 != blank %}
+    <div class="tab-pane fade" id="stab3" role="tabpanel">
+      {{ stab_content3 }}
+    </div>
+    {% endif %}
+    {% if stab_title4 != blank %}
+    <div class="tab-pane fade" id="stab4" role="tabpanel">
+      {{ stab_content4 }}
+    </div>
+    {% endif %}
+    {% if gtab_review_enable %}
+    <div class="tab-pane fade" id="gtab2" role="tabpanel">
+      <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
+    </div>
+    {% endif %}
+  </div>
+</div>

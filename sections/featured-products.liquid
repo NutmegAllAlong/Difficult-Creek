@@ -1,0 +1,332 @@
+<!-- featured-products.liquid -->
+<div class="customstyle{{ section.id }} " >
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      {%- liquid
+        render 'section-heading' 
+        assign collection = collections[section.settings.collection] 
+        assign rows = section.settings.rows 
+      -%}
+      {%- if collection != blank -%}
+      {%- assign product_limit = rows -%}
+      <div class="row {% if section.settings.enable_creative %} psection-creative {% endif %} {% unless section.settings.padding %} m-0 {% endunless %}" data-aos="{{ section.settings.animation }}">
+        {%- for product in collection.products limit: product_limit -%}
+        <div class="{{ section.settings.colgrid }} col-md-6 col-sm-6 col-xs-6 col-6 {% unless section.settings.padding %} p-0 {% endunless %} col-item " 
+          data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 50 }}" >
+          {%- render 'product-card', product: product, collection: collection -%}
+        </div>
+        {%- endfor -%}
+        {% if section.settings.txtbutton != blank %}
+        <div class="text-center col-12">
+          <a class="btn btn-underline" href="{{ section.settings.urlbtn }}">{{ section.settings.txtbutton }}</a>
+        </div>
+        {% endif %}
+      </div>
+      {%- else -%}
+      <div class="row {% if section.settings.enable_creative %} psection-creative {% endif %} ">
+        {%- assign product_limit = rows -%}
+        {%- for i in (1..product_limit) -%}
+        <div class="{{ section.settings.colgrid }} col-sm-6 col-xs-6 col-item"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 50 }}">
+          {%- render 'product-grid-blank' -%}
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Product Grid",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product list"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_creative",
+      "label": "Enable Creative",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding",
+      "label": "Padding",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "colgrid",
+      "label": "Columns",
+      "default": "col-lg-3",
+      "options": [
+        {
+          "value": "col-1-5",
+          "label": "5"
+        },
+        {
+          "value": "col-lg-3",
+          "label": "4"
+        },
+        {
+          "value": "col-lg-4",
+          "label": "3"
+        },
+        {
+          "value": "col-lg-6",
+          "label": "2"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "rows",
+      "label": "Limit",
+      "min": 1,
+      "max": 16,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "txtbutton",
+      "label": "Text Button",
+      "default": "show all",
+      "info": "Input is blank it disable"
+    },
+    {
+      "type": "url",
+      "id": "urlbtn",
+      "label": "Link Button"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

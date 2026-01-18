@@ -1,0 +1,531 @@
+<!-- newsletter.liquid -->
+{%- liquid
+  assign bg_image = section.settings.image_bg
+  assign newletter_color = section.settings.newletter_color
+-%}
+<style>
+  .customstyle{{ section.id }}{
+    {%- if newletter_color != 'rgba(0,0,0,0)' -%}
+      --g-color-heading : {{ newletter_color }};
+      --color-body-text : {{ newletter_color }};
+      --color-body-text-rgb : {{ newletter_color.red }}, {{ newletter_color.green }}, {{ newletter_color.blue }};
+      {%- endif -%}
+    position: relative;
+    z-index: {{ section.settings.zindex }};
+    background-position: {{ section.settings.e_position }} !important;
+    background-repeat:{{ section.settings.e_repeat }} !important;
+    background-size:{{ section.settings.e_size }} !important;
+  }
+  .newsletter-section-{{ section.id }}::before{
+      content:"";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        background-color: {{ section.settings.bg_overlay }};
+      opacity: {{ section.settings.opacity_bg_overlay }};
+  }
+  .mail-section .form-group {
+    background-color: {{ section.settings.bg_input }};
+    border:1px solid {{ section.settings.colorborder }};
+    border-radius:var(--g-input-radius) !important;
+  }
+  .mail-section .form-group input::placeholder{
+      color: rgba(var(--color-body-text-rgb),0.6) !important;
+  }
+  .mail-section .form-group .form-control{
+    border:none;
+    box-shadow: none;
+  }
+  .mail-section .form-group .svg-email{
+    width: 24px;
+    height: 24px;
+    fill: var(--g-color-heading);
+  }
+  .mail-section .form-group .btn{
+    align-self: stretch;
+  }
+  .mail-section .form-group .btn .svg-submit{
+    width: 24px;
+    height: 24px;
+    transition: all .3s ease;
+    fill: var(--g-color-heading);
+  }
+  .mail-section .form-group .btn .svg-submit path{
+    fill: currentColor;
+  }
+  .mail-section .form-group .btn:hover .svg-submit{
+    color: var(--g-main);
+    transform: scale(1.05);
+  }
+  .customstyle{{ section.id }} .newletter-padding{
+      padding: 75px 15px;
+  }
+  .customstyle{{ section.id }} .newsletter-bg-section{
+    border-radius: 5px;
+    background-image: url({{ bg_image | image_url: width: 1920 }});
+    background-position: {{ section.settings.e_position }} !important;
+    background-repeat:{{ section.settings.e_repeat }} !important;
+    background-size:{{ section.settings.e_size }} !important;
+  }
+  @media (min-width:576px) {
+    .customstyle{{ section.id }} .newletter-padding{
+      padding: 75px 50px;
+    } 
+  }
+</style>
+
+<section class="customstyle{{ section.id }} lazyload newsletter-section-{{ section.id }}" 
+  data-sizes="auto"
+  data-parent-fit="cover" 
+  data-section-id="{{ section.id }}"  
+  data-aos="{{ section.settings.animation }}"
+  data-section-type="newletter-section"  >
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }} text-center">
+    {%- assign e_left = section.settings.html_left -%}
+    <div class="row d-flex {% if section.settings.bgsection != blank %}justify-content-center justify-content-lg-end{% else %}justify-content-center{% endif %} newsletter-bg-section">
+      <div class="{% if e_left %} col-lg-8 {% else %} col-lg-5 {% endif %}">
+        <div class="{% if section.settings.bg_inner %}bg-white {% endif %} newletter-padding">
+          {% comment %}  {% endcomment %}
+          <div class="section-header text-{{ section.settings.align-heading }}">
+            {% if section.settings.countdown_header != blank %}
+              <div class="countdown-header mb-3">
+                <div class="js-countdown" data-time="{{ section.settings.countdown_header }}"></div>
+              </div>
+            {% endif %}
+            {%- if section.settings.image_header != blank -%}
+            <div class="image-header mb-2" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+             <img src="{{ section.settings.image_header | image_url: width: 1920 }}" width="auto" height="auto" loading="lazy" alt="">
+            </div>
+            {%- endif -%}
+            {%- if section.settings.title_top != blank -%}
+              <div class="subtop text-top mb-2" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+            {%- endif -%}
+            {%- if section.settings.title != blank -%}
+            <h3 class=" {% if section.settings.des != blank %} mb-3 {% else %} mb-4 {% endif %} " data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+              <span>{{ section.settings.title }}</span>
+            </h3>
+            {%- endif -%}
+            
+            {%- if section.settings.des != blank -%}
+            <div class="font-family-2 des-header txt-body-70 {% if section.settings.button_header_text != blank %} mb-4{% else %} mb-5{% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+            {%- endif -%}
+            {%- if section.settings.button_header_text != blank -%}
+            <div class="button-header mb-5">
+              <a href="{{ section.settings.button_header_link }}" class="btn btn-theme">{{ section.settings.button_header_text }}</a>
+            </div>
+            {%- endif -%}
+          </div>
+          {% comment %}  {% endcomment %}
+          {%- if e_left -%}
+          <div class="row">
+          {%- endif -%}
+            {%- if e_left -%}
+              <div class="left_newlleters text-left col-lg-6 col-12">
+                {{ section.settings.html_left_block }}
+              </div>
+            {%- endif -%}
+            <div class="form-vertical mail-section  {% if e_left %} col-lg-6 col-12  pt-2 {% else %}  {% endif %}">
+              {%- form 'customer', id: 'newletter-section' -%}
+                {{ form.errors | default_errors }}
+                {%- if form.posted_successfully? -%}
+                  <p class="form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                {%- else -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <label for="NewsletterEmail-{{ section.id }}" class="label--hidden">{{ 'general.newsletter_form.newsletter_label' | t }}</label>
+                  <div class=" form-group text-center input-group mb-0 align-items-center pl-2 pr-2 py-1">
+                    
+                    <input class="form-control" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" id="NewsletterEmail-{{ block.id }}" autocorrect="off" autocapitalize="off">
+                    <button type="submit" class="btn" name="commit">
+                      <span class="icon__fallback-text" >{{ 'general.newsletter_form.submit' | t }}</span>
+                      {%- render 'icon-email' -%}
+                    </button>
+                  </div>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+            {%- if e_left -%}
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Newsletter",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay",
+      "label": "Background Overlay",
+      "default": "#000"
+    },
+    {
+      "type": "range",
+      "id": "opacity_bg_overlay",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity Overlay",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "newletter_color",
+      "label": "Color",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "bg_input",
+      "label": "Background Input",
+      "default": "#fff"
+    },
+    {
+      "type": "color",
+      "id": "colorborder",
+      "label": "Border Color Input",
+      "default": "#222222"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "e_size",
+      "label": "Background Size",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_repeat",
+      "label": "Background Repeat",
+      "default": "no-repeat",
+      "options": [
+        {
+          "value": "no-repeat",
+          "label": "No-repeat"
+        },
+        {
+          "value": "repeat",
+          "label": "Repeat"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_position",
+      "label": "Background Position",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top right",
+          "label": "Top Right"
+        },
+        {
+          "value": "left center",
+          "label": "Left Center"
+        },
+        {
+          "value": "center center",
+          "label": "Center Center"
+        },
+        {
+          "value": "center right",
+          "label": "Center Right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "checkbox",
+      "id": "bg_inner",
+      "label": "Background inner",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image_header",
+      "label": "Image header"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Title Newletters"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "html_left",
+      "label": "Enable left Block HTML",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "html_left_block",
+      "label": "Left HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

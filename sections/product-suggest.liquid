@@ -1,0 +1,112 @@
+{%- if section.settings.enable -%}
+<section class="product-notification" data-time="{{ section.settings.duration | times: 1000 }}">
+  <span  title="Close" class="close-notifi">{% render 'icon-close-solid' %}</span>
+  <div class="product-suggest pl-3">
+    <a class="product-image" href="/" title=""><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" loading="lazy" width="100" height=""></a>
+    <div class="column-right">
+      <label>{{ section.settings.text }} </label>
+      <a class="product-name" href="/"></a>
+      <div class="from-ago"></div>
+      <div class="time-ago small txt-body-70"></div>
+    </div>
+  </div>
+  <div class="hide">
+    {%- for block in section.blocks -%}
+    {%- assign product = all_products[block.settings.product] -%}
+    <div class="data-product" 
+         data-id="{{ product.id }}" 
+         data-image="{{ product.featured_image | image_url: width: 100 }}" 
+         data-wimage = "{{ product.featured_image.width }}"
+         data-himage = "{{ product.featured_image.height }}"
+         data-url="{{ product.url | within: collection }}" 
+         data-title="{{ product.title }}" 
+         data-alt="{{ product.featured_image.alt }}" 
+         data-local="{{ block.settings.local }}" 
+         data-time="{{ block.settings.time }}"></div>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Product Suggest",
+  "max_blocks": 100,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable"
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "label": "Duration Time",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "unit": "s",
+      "default": 7
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Pretext",
+      "default": "Someone recently bought "
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "local",
+          "label": "Local",
+          "default": "in Blackburn, UK"
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Time",
+          "default": "about 21 minutes ago"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% style %}
+@keyframes progressbar-countdown {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+.product-notification{position:fixed;bottom:10vh;left:6vh;background:#fff;width:350px;opacity:0;z-index:999;border:1px solid #eee;border-radius:0px;visibility:hidden;transition:all ease 1s}.product-notification.active{opacity:1;bottom:6vh;visibility:visible}.product-notification .close-notifi{border-radius: 50%;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center;-webkit-justify-content:center;-moz-justify-content:center;-ms-justify-content:center;justify-content:center;width:27px;height:27px;position:absolute;right:4px;top:4px}.product-notification .product-suggest{background:white;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center}.product-notification .product-name{font-weight:700}.product-notification .product-image{width:90px;display:block}.product-notification .column-right{padding:8px 32px 8px 16px;line-height:24px;font-size:14px}.product-notification label{display:inline}@media (max-width:480px){.product-notification{display:none}}@media (max-width:767px){ .product-notification{left:20px;}}
+.product-notification:before{
+  content:"";
+  height:2px;
+  left:0;
+  bottom:-1px;
+  background:var(--g-color-heading);
+  position:absolute;
+  width:0%;
+}
+.product-notification.active:before{
+  animation: progressbar-countdown;
+  animation-duration: {{ section.settings.duration | times: 1000 }}ms;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+}
+
+{% endstyle %}

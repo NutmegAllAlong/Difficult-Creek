@@ -1,0 +1,155 @@
+{%- if section.settings.enable -%}
+<style>
+  .store-messager-bar {
+    background:{%- if section.settings.gradient_bg != blank -%} {{ section.settings.gradient_bg }} {%- else -%} {{ section.settings.background }} {%- endif -%};
+    color:{{ section.settings.text }};
+    --color-body-text-rgb: {{ section.settings.text.red }}, {{ section.settings.text.green }}, {{ section.settings.text.blue }};
+    --g-color-heading: {{ section.settings.text }};
+    --color-body-text : {{ section.settings.text }};
+  }
+  .store-messager-item{
+    position: relative;
+  }
+  @media (min-width:576px) {
+    .store-messager-item:not(:first-child)::before{
+      background-color: {{ section.settings.text }};
+      content: "";
+      width: 1px;
+      position: absolute;
+      left: 0;
+      top: 15%;
+      bottom: 15%;
+      opacity: 0.15;
+    }
+  }
+  
+</style>
+<!-- store-messages.liquid -->
+{% capture messager %}
+{%- render 'style-section' -%}
+<div class="store-messager-bar customstyle{{ section.id }}" >
+<div class="container">
+ <div class="row d-flex align-items-center justify-content-center">
+   {%- for block in section.blocks -%}
+     <div class="col-sm col-12 text-center store-messager-item">
+     {%- if  block.settings.button_link != blank -%}
+     <a  href="{{ block.settings.button_link }}">
+     {%- endif -%}
+     {{ block.settings.code }} 
+     {%- if  block.settings.button_link != blank -%}
+       </a>
+     {%- endif -%}
+   </div>
+ {%- endfor -%}
+ </div>
+</div>
+</div>
+{% endcapture %}
+
+{%- if section.settings.enable_homepage -%}
+  {% if template == 'index' %}
+    {{ messager }}
+  {% endif %}
+{% else %}
+  {{ messager }}
+{%- endif -%}
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Store messages",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Store Messages",
+      "info": "These are displayed under the main menu - great for promotions and notices.They are hidden on the home page if the header is transparent."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_homepage",
+      "label": "Enable only home page",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#000000"
+    },
+    {
+      "id": "gradient_bg",
+      "type": "color_background",
+      "label": "Background Gradient"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "8px 0px 8px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "8px 0px 8px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "code",
+          "label": "HTML and Text",
+          "default": "Add important information here"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link to"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

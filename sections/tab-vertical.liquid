@@ -1,0 +1,704 @@
+<!-- tab-vertical.liquid -->
+{% style %}
+ .customstyle{{ section.id }}{
+    background-position: {{ section.settings.e_position }} !important;
+    background-repeat: {{ section.settings.e_repeat }} !important;
+    background-size: {{ section.settings.e_size }} !important;
+  }
+  .tab-v .tab-title{
+    position: relative;
+  }
+  .tab-v .tab-title:before{
+    content: '';
+    height: 1px;
+    width: 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: currentColor;
+    transition: .6s cubic-bezier(.215,.61,.355,1);
+  }
+  .tab-v.active .tab-title:before{
+    width: 100%;
+  }
+  .tab-v-pane.active{
+    animation: slide-down 1s cubic-bezier(.215,.61,.355,1);
+  }
+  .tab-v-pane{
+    position:relative;
+  }
+  .tab-image__big{
+    padding-right:8rem;
+  }
+  .tab-image__small{
+    position:absolute;
+    top:50%;
+    right:0;
+    width:40%;
+    transform:translateY(-50%);
+  }
+  @keyframes slide-down {
+    0% { opacity: 0;}
+    100% { opacity: 1; }
+}
+  .customstyle{{ section.id }} .tab-v.active .tab-title, .customstyle{{ section.id }} .tab-v.active .subtab-title{
+    color: {{ section.settings.active_color }} !important;
+  }
+  .tab-vertical__textcircle{
+    width:100px;
+    height:100px;
+    position:absolute;
+    top:-50px;
+    left:-50px;
+    overflow: visible !important;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    font-size: 12px;
+    color: {{ section.settings.s_color }};
+    fill: {{ section.settings.s_color }};
+    font-weight: 600;
+    animation: spin 8s linear infinite;
+    animation-play-state: paused;
+  }
+  .tab-v-pane:hover .tab-vertical__textcircle{
+    animation-play-state: running;
+  }
+  .tab-image__video .image-content__image-wrapper{
+    padding-top:100%;
+  }
+  .tab-image__video video{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    object-fit:cover;
+  }
+  .style_row .tab-v-pane .tab-image__big{
+    padding-right:0;
+    flex:2;
+  }
+  .style_row .tab-v-pane .tab-image__small{
+    flex:1;
+    position:static;
+    transform:translateY(0);
+  }
+  .style_row .style_row__right{
+    column-gap:var(--g-gutter);
+  }
+{% endstyle %}
+<section class="customstyle{{ section.id }} lazyload" data-aos="{{ section.settings.animation }}"  
+    data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
+    data-sizes="auto"
+    data-parent-fit="cover" 
+>
+  {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      <div class="mx-0 row">
+            {%- liquid
+                assign column = section.settings.width_column
+                case  column
+                when '50-50'
+                assign leftcolumn = 'col-lg-6'
+                assign rightcolumn = 'col-lg-6'
+                when '40-60'
+                assign leftcolumn = 'col-lg-5'
+                assign rightcolumn = 'col-lg-7'
+                when '35-65'
+                assign leftcolumn = 'col-lg-4'
+                assign rightcolumn = 'col-lg-8'
+                endcase   
+
+            -%}
+            <div class="nav flex-column {{ leftcolumn }} col-12 px-0 mb-5 mb-lg-0 justify-content-{{ section.settings.v_align }} align-items-{{ section.settings.h_align }} 
+            text-{%- if section.settings.h_align == 'start' -%}left{%- elsif section.settings.h_align == 'center' -%}center{%- else -%}right{% endif %}" 
+            id="v-pills-tab-{{ section.id }}" role="tablist" aria-orientation="vertical">
+                {%- if section.settings.title_top != blank -%}
+                <div class="pl-0 pr-5 subtop text-{{ section.settings.align-heading }} text-top mb-4" data-aos="{{ section.settings.animation }}" data-aos-duration="300" style="--g-font-color-subtop:{{ section.settings.s_color }}">{{ section.settings.title_top }}</div>
+              {%- endif -%}
+                {%- for block in section.blocks -%}
+                    <a class="disabled-anchor pl-0 pr-5 nav-link tab-v {% if forloop.index == 1 %} active {% endif %}" id="v-pills-{{ block.id }}-tab" data-toggle="pill" data-hover="tab" href="#v-pills-{{block.id}}" role="tab" aria-controls="v-pills-{{block.id}}" aria-selected="{% if forloop.index == 1 %}true{% else %}false{% endif %}">
+                      {%- if block.settings.title_tab != blank -%}
+                      <span class="tab-title {{ section.settings.size_text }}"  style="color:{{ section.settings.t_color }}">{{ block.settings.title_tab }}</span>
+                      {%- endif -%}
+                    </a>
+                {%- endfor -%}
+            </div>
+              <div class="tab-content {{ rightcolumn }} col-12 px-0 {{ section.settings.style_tab }}" id="v-pills-tabContent-{{ section.id }}">
+              
+                {%- for block in section.blocks -%}
+                    <div class="tab-pane tab-v-pane {% if forloop.index == 1 %} active {% endif %}" id="v-pills-{{ block.id }}" role="tabpanel" aria-labelledby="v-pills-{{block.id}}-tab">
+                        {%- if section.settings.style_tab == "style_row" -%}
+                            <div class="d-flex align-items-center style_row__right">
+                        {%- endif -%}
+                        {%- if block.settings.id_video != blank -%}
+                            <div class="tab-image__big">
+                                <div class="image-content__image-container tab-image__video overflow-hidden">
+                                    <a class="image-content__image-wrapper" href="{{ block.settings.link }}">
+                                      <video class="lazyload scale-in product-video__banner  position-absolute" id="Mp4{{ section.id }}"  loop="" muted="" playsinline="" autoplay="" >
+                                        <source src="{{ block.settings.id_video }}" type="video/mp4">
+                                    </video>
+                                       
+                                    </a>
+                                </div>
+                            </div>
+                            {%- if block.settings.text_circle != blank -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 120 120" class="tab-vertical__textcircle">
+                                    <defs>
+                                    <path d="M 60, 60 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0" id="txt-path"></path>
+                                    </defs>
+                                    <text>
+                                    <textPath startOffset="0" xlink:href="#txt-path"> {{ block.settings.text_circle }}</textPath>
+                                    </text>
+                                </svg>
+                            {%- endif -%}
+                        {%- elsif block.settings.image != blank -%}
+                            <div class="tab-image__big">
+                                <div class="image-content__image-container">
+                                    <a class="image-content__image-wrapper" href="{{ block.settings.link }}" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                                    {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                    <img class="image-content__image scale-in lazyload"
+                                        src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
+                                        data-src="{{ img_url }}"
+                                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                        data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                        data-sizes="auto"
+                                        alt="{{ block.settings.image.alt | escape }}"
+                                        loading="lazy"
+                                        width="{{ block.settings.image.width }}"
+                                        height="{{ block.settings.image.height }}">
+                                    </a>
+                                </div>
+                            </div>
+                            {%- if block.settings.text_circle != blank -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 120 120" class="tab-vertical__textcircle">
+                                    <defs>
+                                    <path d="M 60, 60 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0" id="txt-path"></path>
+                                    </defs>
+                                    <text>
+                                    <textPath startOffset="0" xlink:href="#txt-path"> {{ block.settings.text_circle }}</textPath>
+                                    </text>
+                                </svg>
+                            {%- endif -%}
+                        {%- else -%}
+                            <div class="tab-image__big">
+                                <div class="image-content__image">
+                                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        {%- if block.settings.image2 != blank -%}
+                            <div class="tab-image__small">
+                                <div class="image-content__image-container ">
+                                    <a class="image-content__image-wrapper" href="{{ block.settings.link }}" style="padding-top:{{ 1 | divided_by: block.settings.image2.aspect_ratio | times: 100 }}%;">
+                                    {% assign img_url = block.settings.image2 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                                    <img class="image-content__image scale-in lazyload"
+                                        src="{{ block.settings.image2 | image_url: width: 1, height: 1 }}"
+                                        data-src="{{ img_url }}"
+                                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                                        data-aspectratio="{{ block.settings.image2.aspect_ratio }}"
+                                        data-sizes="auto"
+                                        alt="{{ block.settings.image2.alt | escape }}"
+                                        loading="lazy"
+                                        width="{{ block.settings.image2.width }}"
+                                        height="{{ block.settings.image2.height }}">
+                                    </a>
+                                </div>
+                            </div>
+                        {%- else -%}
+                            <div class="tab-image__small">
+                                <div class="image-content__image">
+                                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.style_tab == "style_row" -%}
+                        </div>
+                        {%- endif -%}
+                    </div>
+                {%- endfor -%}
+                
+        </div>
+      </div>
+
+      {%- if section.blocks.size == 0 -%}
+      {%- render 'no-blocks' -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Tab Vertical",
+  "class": "index-section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bg",
+      "label": "Background image"
+    },
+    {
+      "type": "select",
+      "id": "e_size",
+      "label": "Background Size",
+      "default": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_repeat",
+      "label": "Background Repeat",
+      "default": "no-repeat",
+      "options": [
+        {
+          "value": "no-repeat",
+          "label": "No-repeat"
+        },
+        {
+          "value": "repeat",
+          "label": "Repeat"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "e_position",
+      "label": "Background Position",
+      "options": [
+        {
+          "value": "top left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top center",
+          "label": "Top Center"
+        },
+        {
+          "value": "top right",
+          "label": "Top Right"
+        },
+        {
+          "value": "left center",
+          "label": "Left Center"
+        },
+        {
+          "value": "center center",
+          "label": "Center Center"
+        },
+        {
+          "value": "center right",
+          "label": "Center Right"
+        },
+        {
+          "value": "bottom left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom center",
+          "label": "Bottom Center"
+        },
+        {
+          "value": "bottom right",
+          "label": "Bottom Right"
+        }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "width_column",
+      "label": "Width Column Tab",
+      "default": "50-50",
+      "options": [
+        {
+          "value": "50-50",
+          "label": "50% - 50%"
+        },
+        {
+          "value": "40-60",
+          "label": "40% - 60%"
+        },
+        {
+          "value": "35-65",
+          "label": "35% - 65%"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Column Left "
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "select",
+      "id": "v_align",
+      "label": "Vertical Align",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Middle"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "h_align",
+      "label": "Horizontal Align",
+      "default": "start",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h3",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Heading Size"
+    },
+    {
+      "type": "color",
+      "id": "s_color",
+      "label": "Sub title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "t_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "active_color",
+      "label": "Active color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Column Right "
+    },
+    {
+      "type": "select",
+      "id": "style_tab",
+      "label": "Style Tab",
+      "default": "style_stack",
+      "options": [
+        {
+          "value": "style_stack",
+          "label": "Stack"
+        },
+        {
+          "value": "style_row",
+          "label": "Row"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_tab",
+          "label": "Title Tab",
+          "default": "Title Tab"
+        },
+        {
+          "type": "text",
+          "id": "text_circle",
+          "label": "Text Cricle",
+          "default": "Fashion December"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "id_video",
+          "label": "Link Video",
+          "info": "Upload video in Content / Files => and copy link video",
+          "placeholder": "Link Video"
+        },
+        {
+          "type": "image_picker",
+          "id": "image2",
+          "label": "Image 2"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": " link to"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tab Vertical",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        },
+        {
+          "type": "tab"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

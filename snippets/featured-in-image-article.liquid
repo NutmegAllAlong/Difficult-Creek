@@ -1,0 +1,71 @@
+{%- style -%}
+  .featured-over .article__photo-wrapper{
+    background:var(--g-color-heading);
+  }
+  .featured-over .article__photo-wrapper:before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0, 0, 0, 0.35);
+    z-index:1;
+  }
+  .featured-content-article{
+    z-index:2;
+  }
+  .featured-over h1, .featured-over .blog__meta{
+    color:white;
+  }
+{%- endstyle -%}
+<div class="featured-over">
+    <div class="content-block mb-5 text-center">
+            <div class="content-block__full-image--large featured-img">
+              <div class="article__photo-container mb-4">
+                <div class="article__photo-wrapper h{{ image_size }}px d-flex align-items-center" >
+                  {%- if article.image and enable_image -%}
+                  {%- assign img_url = article.image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+                    <img class="lazyload"
+                       src="{{ article.image | image_url: width: 1, height: 1 }}"
+                       data-src="{{ img_url }}"
+                       data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                       data-aspectratio="{{ article.image.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ article.title | escape }}"
+                       loading="lazy"
+                       width="{{ article.image.width }}"
+                       height="{{ article.image.height }}">
+                  {%- endif -%}
+                  <div class="container position-relative featured-content-article">
+                    <div class="row justify-content-center text-{{ align }}">
+                        <div class="col-md-8 ">
+                            <h1 class="h3 mb-4">{{ article.title }}</h1>
+                            <p class="blog__meta txt-body-70 d-flex align-items-center flex-wrap {% if align == 'left' %}justify-content-start {% else %} justify-content-center {% endif %} ">
+                              {%- if enable_date -%}
+                                <span class="meta-c pr-3 mr-3 blog_date align-items-center d-inline-flex mb-2 mb-lg-0"> {%- render 'icon-date' -%}{{ article.published_at | time_tag: format: 'month_day_year' }} </span>
+                              {%- endif -%}
+                              {%- if enable_author -%}
+                                <span class="blog_user pr-3 meta-c mr-3 align-items-center d-inline-flex mb-2 mb-lg-0">
+                                    {%- render 'icon-user' -%}
+                                    {{ article.author | default: "Author" }}
+                                </span> 
+                              {%- endif -%}
+                              {%- if enable_comment -%}
+                                <span class="blog_comment align-items-center d-inline-flex meta-c">
+                                  {%- render 'icon-comment' -%}
+                                  {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                                </span>
+                              {%- endif -%}
+                              
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+    </div>
+  </div>
+ 

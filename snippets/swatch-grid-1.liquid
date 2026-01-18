@@ -1,0 +1,64 @@
+{%- if settings.e_swatch -%}
+<ul class="product-card__swatch list-unstyled {% if settings.swatch_color %} sw_color{% endif %} {% if settings.swatch_color_circle %}round-color{% endif %}">
+  {%- liquid
+    assign counter = 0
+    assign arrayVariants = ''
+  -%}
+  {%- for option in product.options -%}
+  {%- if option == "Color" or option == "Colour" -%}
+  {%- liquid 
+    assign index0 = forloop.index0
+  -%}
+  {%- for variant in product.variants -%}
+  {%- liquid 
+    assign color =  variant.options[index0]
+  -%}
+    
+    {%- if counter < 4 -%}
+    {%- unless arrayVariants contains variant.image -%}
+    {%- assign arrayVariants = arrayVariants | append: variant.image -%}
+        {%- if variant.image != blank -%}
+          <li  
+          class="js-swatch-card-item {% if variant == product.selected_or_first_available_variant %} active {% endif %}" 
+          data-url="{{ variant.url | within: collection }}" 
+          data-id="{{ variant.id }}" 
+          data-image="{{ variant.image | image_url: width: 720 }}" 
+          data-price="{{ variant.price }}">
+            {%- if settings.swatch_color -%}
+            <span
+              {% comment %}
+              {% if variant.metafields.color.swatch %}
+                style= " background-color: {{ variant.metafields.color.swatch }};"
+              {% elsif variant.metafields.image.swatch %}
+                style=" background-size: cover; background-image: url('{{ variant.metafields.image.swatch | image_url: width: 64 }}');"
+              {% else %}
+                style="background-color:{{ color | handle }};"
+              {% endif %}
+            {% endcomment %}
+            class="st-color-{{ color | escape | downcase }}"
+            style="background-color:{{ color | escape | downcase }};" 
+              > </span>
+            {%- else -%}
+              <img data-sizes="auto" 
+                src="{{ variant.image | image_url: width: 100, height: 100 }}" 
+                class="lazyload" 
+                data-src="{{ variant.image | image_url: width: 100, height: 100 }}" 
+                alt="{{ variant.image.alt }}" 
+                loading="lazy"
+                width="{{ variant.image.width }}"
+                height="{{ variant.image.height }}"
+              />
+            {%- endif -%}
+          </li>
+          {%- assign counter = counter | plus: 1 -%}
+        {%- endif -%}
+    {%- endunless -%}
+    {%- else -%}
+  	  <li><a class="small" href="{{ product.url | within: collection }}" title="{{ 'products.product.view_more' | t }}">All ({{ product.variants.size }})</a></li>
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {% endif %}
+{%- endfor -%}
+</ul>
+{%- endif -%}

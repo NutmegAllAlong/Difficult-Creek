@@ -1,0 +1,108 @@
+
+  {% liquid
+    assign icon_search = section.settings.icon_search
+    case icon_search
+    when 'text'
+      assign styleSearch = 'text'
+    when 'icon-text'
+      assign styleSearch = 'icon-text'
+    when 'none'
+      assign styleSearch = 'none d-lg-none'
+    else
+      assign styleSearch = 'icon'
+    endcase
+  %}
+  <div class="site-header__search-wrap {% if e_search %} sidebar__search {% endif %}">
+    <details-modal class="header__search">
+      <div class="detail-modal" >
+        <div class="header__icon header__icon--search header__icon--summary focus-inset modal__toggle" role="button" aria-expanded="false" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+          <span>
+<span class="modal__toggle-open site-header__link  header-search-{{ styleSearch }} {% if icon_search != "none" %} d-lg-inline-flex {% endif %} d-none" aria-hidden="true" focusable="false" role="presentation">
+              {% render 'icon-search' %}
+              <span class="search-text">{{ 'general.search.search' | t }}</span>
+              
+            </span>
+            {% comment %} <span class="modal__toggle-close hide" aria-hidden="true" focusable="false" role="presentation">
+              {%- render 'icon-close' -%}
+            </span> {% endcomment %}
+          </span>
+        </div>
+        <div class="search-modal modal__content gradient" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+          {% unless e_search %}
+            <div class="modal-overlay"></div>
+          {% endunless %}
+          
+          <div class="py-4 search-modal__content{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} search-modal__content-top{% else %} search-modal__content-bottom{% endif %}" tabindex="-1">
+            {%- if settings.predictive_search_enabled -%}
+              <predictive-search class="search-modal__form" data-loading-text="{{ 'general.accessibility.loading' | t }}">
+            {%- endif -%}
+            <div class="d-flex align-items-center">
+              <label  class="label-search mr-auto mb-0 text-uppercase small">{{ 'general.search.titleplace' | t }}</label>
+              <button type="button" class="search-modal__close-button modal__close-button link--text focus-inset border-0" aria-label="{{ 'general.accessibility.close' | t }}">
+                {% render 'icon-close' %}
+              </button>
+            </div>
+           
+              <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+                <div class="field d-flex">
+                  <input type="hidden" name="type" value="product">
+                  <input class="search__input field__input w-100 mr-atuo px-0 py-1"
+                    id="Search-In-Modal"
+                    type="search"
+                    name="q"
+                    value=""
+                    placeholder="{{ 'general.search.placeholder' | t }}"
+                    {%- if settings.predictive_search_enabled -%}
+                      role="combobox"
+                      aria-expanded="false"
+                      aria-owns="predictive-search-results-list"
+                      aria-controls="predictive-search-results-list"
+                      aria-haspopup="listbox"
+                      aria-autocomplete="list"
+                      autocorrect="off"
+                      autocomplete="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                    {%- endif -%}
+                  >
+                  <label class="field__label visually-hidden" for="Search-In-Modal">{{ 'general.search.search' | t }}</label>
+                  <input type="hidden" name="options[prefix]" value="last">
+                  <button class="search__button field__button border-0" aria-label="{{ 'general.search.search' | t }}">
+                    {% render 'icon-search' %}
+                  </button>
+                </div>
+                
+                {%- if settings.predictive_search_enabled -%}
+                  <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+                    <div class="predictive-search__loading-state">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+                {%- endif -%}
+                {%- if linklists[link_list_search].links.size > 0 -%}
+                  <div class="search-trend mt-4">
+                    {%- if linklists[link_list_search].title != blank -%}
+                      <h2 class="mb-2 text-uppercase txt-body-60 small h6">{{ linklists[link_list_search].title }}</h2>
+                    {%- endif -%}
+                    <ul class="list-group list-group-flush">
+                      {%- for link in linklists[link_list_search].links -%}
+                      <li class="list-group-item border-0 pl-0 pt-1 pb-0 rte mb-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
+                  {%- endif -%}
+              </form>
+            {%- if settings.predictive_search_enabled -%}
+              </predictive-search>
+            {%- endif -%}
+            
+          </div>
+        </div>
+        {% if e_search %}  <div class="modal-overlay"></div> {% endif %} 
+      </div>
+    </details-modal>
+</div>

@@ -1,0 +1,80 @@
+<div class="product-label {{ settings.style_label }} ">
+    {% capture txtupper %}{% if settings.txtuppercase %}text-uppercase {% endif %}{% endcapture %}
+    {%- if settings.sale_label_enable and template != 'product' -%}
+            <div class="{% if product.compare_at_price > product.price %} d-inline-block {% else %} hide {%- endif %} product-tag product-tag-sale product-tag--absolute {{ txtupper }} {{ settings.tagsale }} mb-1" aria-hidden="true" style="background-color: {{ settings.sale_label_bg }};color:{{ settings.sale_label_cl }}">
+                {%- liquid 
+                    if product.first_available_variant.compare_at_price 
+                        assign s =  product.first_available_variant.compare_at_price | minus: product.first_available_variant.price | times: 100
+                        assign f =  product.first_available_variant.compare_at_price
+                        assign sale_percent = s | divided_by: f
+                    else
+                        assign sale_percent = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max
+                    endif
+                -%}
+                
+                {%- if settings.tagsale == 'percent' -%}
+                    -{{ sale_percent | append: '%' }}
+                {%- elsif settings.tagsale == 'txt' -%}
+                    {{ settings.sale_label_text | default: 'on sale' }}
+                {%- else -%}
+                {{ settings.sale_label_text | default: 'on sale' }} <span class="product-tag-sale-number">{{ sale_percent | append: '%' }} </span> 
+                {%- endif -%}
+            </div>
+        
+    {%- endif -%}
+    {%- if settings.new_label_enable -%}
+        {%- liquid
+            assign new = false 
+            assign new_count = settings.new_label_day | plus: 0 
+            assign date_published_year = product.published_at | date: '%Y' 
+            assign date_published_month = product.published_at | date: '%m' 
+            assign date_published_day = product.published_at | date: '%d' 
+         
+            assign date_now_year = 'now' | date: '%Y' 
+            assign date_now_month = 'now' | date: '%m' 
+            assign date_now_day = 'now' | date: '%d' 
+         
+            assign day_year = date_now_year | minus: date_published_year | times: 365 
+            assign day_month = date_now_month | minus: date_published_month | times: 30 
+            assign day_day = date_now_day | minus: date_published_day 
+         
+            assign date_difference = day_year | plus: day_month | plus: day_day 
+
+            if date_difference <= new_count
+                assign new = true
+            endif
+        -%}
+    
+      {% if new %}
+        <span class="product-tag product-tag--absolute mb-1 {{ txtupper }}" aria-hidden="true" style="background-color:{{ settings.new_label_bg }};color:{{ settings.new_label_cl }}">
+          {{ settings.new_label_text | default: 'new' }}
+        </span>
+      {% endif %}
+    
+    {%- endif -%}
+
+    {%- for i in (1..3) -%}
+        {%- liquid
+            assign labeltext = 'label_text' | append: i
+            assign bglabel = 'label_bg' | append: i
+            assign cllabel = 'label_cl' | append: i
+            assign elabel = 'label_e' | append: i
+        -%}
+            {%- if settings[elabel] -%}
+            {%- assign tagtext = settings[labeltext] -%}
+            {%- for tag in product.tags -%}
+                {%- if tag == tagtext -%}
+                    <div class="product-tag product-tag--absolute {{ txtupper }} mb-1" aria-hidden="true" style="background-color: {{ settings[bglabel] }};color:{{ settings[cllabel] }}">
+                    {{ tagtext }}
+                </div>
+                {%- endif -%}
+            {%- endfor -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {%- comment -%} tag soldout {%- endcomment -%}
+    {%- unless product.available -%}
+    <span class="product-tag product-tag--absolute {{ txtupper }}" aria-hidden="true" style="background-color: {{ settings.sold_bg }};color:{{ settings.sold_cl }}">
+        {{ 'products.product.sold_out' | t }}
+    </span>
+    {% endunless %}
+    </div>

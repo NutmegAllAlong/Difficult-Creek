@@ -1,0 +1,412 @@
+{% doc %}
+  @prompt
+    Create a fabric swatch gallery section that automatically displays all entries from the 'fabric_swatch' metaobject definition. Loop through all metaobject entries and display the 'swatch_image' field from each entry as a 150x150 pixel thumbnail in a grid layout. Each image should be clickable to open the full-size version in a lightbox or modal. When hovering over each swatch image, display a tooltip showing the 'fabric_name' field from that metaobject entry. Include a rich text editor setting above the gallery where the merchant can add custom text about designers and fabric information for SEO purposes. Include settings to customize the number of columns, spacing between images, and tooltip styling.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-fabric-swatch-gallery-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} {
+    margin-bottom: 30px;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} h2,
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} h3,
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} h4,
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} h5,
+  .ai-fabric-swatch-intro-{{ ai_gen_id }} h6 {
+    color: {{ block.settings.heading_color }};
+  }
+
+  .ai-fabric-swatch-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: {{ block.settings.spacing }}px;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-fabric-swatch-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_tablet }}, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-fabric-swatch-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.columns_mobile }}, 1fr);
+    }
+  }
+
+  .ai-fabric-swatch-item-{{ ai_gen_id }} {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .ai-fabric-swatch-item-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-fabric-swatch-image-{{ ai_gen_id }} {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-fabric-swatch-tooltip-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background-color: {{ block.settings.tooltip_bg_color }};
+    color: {{ block.settings.tooltip_text_color }};
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: {{ block.settings.tooltip_font_size }}px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-fabric-swatch-tooltip-{{ ai_gen_id }}::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: {{ block.settings.tooltip_bg_color }};
+  }
+
+  .ai-fabric-swatch-item-{{ ai_gen_id }}:hover .ai-fabric-swatch-tooltip-{{ ai_gen_id }} {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .ai-fabric-swatch-modal-{{ ai_gen_id }} {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .ai-fabric-swatch-modal-{{ ai_gen_id }}.active {
+    display: flex;
+  }
+
+  .ai-fabric-swatch-modal-content-{{ ai_gen_id }} {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  .ai-fabric-swatch-modal-image-{{ ai_gen_id }} {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .ai-fabric-swatch-modal-close-{{ ai_gen_id }} {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 36px;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-fabric-swatch-modal-close-{{ ai_gen_id }}:hover {
+    opacity: 0.7;
+  }
+
+  .ai-fabric-swatch-modal-caption-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .ai-fabric-swatch-empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    font-size: 16px;
+    font-style: italic;
+  }
+{% endstyle %}
+
+<fabric-swatch-gallery-{{ ai_gen_id }}
+  class="ai-fabric-swatch-gallery-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.intro_text != blank %}
+    <div class="ai-fabric-swatch-intro-{{ ai_gen_id }}">
+      {{ block.settings.intro_text }}
+    </div>
+  {% endif %}
+
+  {% assign fabric_swatches = shop.metaobjects.fabric_swatch.values %}
+
+  {% if fabric_swatches.size > 0 %}
+    <div class="ai-fabric-swatch-grid-{{ ai_gen_id }}">
+      {% for swatch in fabric_swatches %}
+        {% if swatch.swatch_image %}
+          <div
+            class="ai-fabric-swatch-item-{{ ai_gen_id }}"
+            data-swatch-name="{{ swatch.fabric_name | escape }}"
+            data-swatch-image="{{ swatch.swatch_image | image_url: width: 1200 }}"
+          >
+            <img
+              src="{{ swatch.swatch_image | image_url: width: 150, height: 150, crop: 'center' }}"
+              alt="{{ swatch.fabric_name | escape }}"
+              class="ai-fabric-swatch-image-{{ ai_gen_id }}"
+              loading="lazy"
+              width="150"
+              height="150"
+            >
+            <div class="ai-fabric-swatch-tooltip-{{ ai_gen_id }}">
+              {{ swatch.fabric_name }}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="ai-fabric-swatch-empty-{{ ai_gen_id }}">
+      No fabric swatches found. Add entries to the 'fabric_swatch' metaobject definition to display them here.
+    </div>
+  {% endif %}
+
+  <div class="ai-fabric-swatch-modal-{{ ai_gen_id }}">
+    <div class="ai-fabric-swatch-modal-content-{{ ai_gen_id }}">
+      <button
+        class="ai-fabric-swatch-modal-close-{{ ai_gen_id }}"
+        aria-label="Close modal"
+      >
+        &times;
+      </button>
+      <img
+        src=""
+        alt=""
+        class="ai-fabric-swatch-modal-image-{{ ai_gen_id }}"
+      >
+      <div class="ai-fabric-swatch-modal-caption-{{ ai_gen_id }}"></div>
+    </div>
+  </div>
+</fabric-swatch-gallery-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FabricSwatchGallery{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.swatchItems = this.querySelectorAll('.ai-fabric-swatch-item-{{ ai_gen_id }}');
+        this.modal = this.querySelector('.ai-fabric-swatch-modal-{{ ai_gen_id }}');
+        this.modalImage = this.querySelector('.ai-fabric-swatch-modal-image-{{ ai_gen_id }}');
+        this.modalCaption = this.querySelector('.ai-fabric-swatch-modal-caption-{{ ai_gen_id }}');
+        this.closeButton = this.querySelector('.ai-fabric-swatch-modal-close-{{ ai_gen_id }}');
+
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.swatchItems.forEach((item) => {
+          item.addEventListener('click', () => {
+            const imageSrc = item.getAttribute('data-swatch-image');
+            const fabricName = item.getAttribute('data-swatch-name');
+            this.openModal(imageSrc, fabricName);
+          });
+        });
+
+        this.closeButton.addEventListener('click', () => {
+          this.closeModal();
+        });
+
+        this.modal.addEventListener('click', (e) => {
+          if (e.target === this.modal) {
+            this.closeModal();
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+            this.closeModal();
+          }
+        });
+      }
+
+      openModal(imageSrc, fabricName) {
+        this.modalImage.src = imageSrc;
+        this.modalImage.alt = fabricName;
+        this.modalCaption.textContent = fabricName;
+        this.modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      closeModal() {
+        this.modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    customElements.define('fabric-swatch-gallery-{{ ai_gen_id }}', FabricSwatchGallery{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Fabric swatch gallery",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introduction text",
+      "default": "<h2>Our Fabric Collection</h2><p>Browse our selection of premium fabrics. Click any swatch to view full-size details.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on tablet",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Spacing between swatches",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#231f20"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#343a40"
+    },
+    {
+      "type": "header",
+      "content": "Tooltip"
+    },
+    {
+      "type": "range",
+      "id": "tooltip_font_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "tooltip_bg_color",
+      "label": "Background color",
+      "default": "#231f20"
+    },
+    {
+      "type": "color",
+      "id": "tooltip_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fabric swatch gallery"
+    }
+  ]
+}
+{% endschema %}

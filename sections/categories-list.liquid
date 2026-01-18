@@ -1,0 +1,450 @@
+{%- render 'style-section' -%}
+<style>
+ .ct_list--link{
+  position:relative;
+}
+.ct_list li{
+  padding:16px;
+  position: relative;
+}
+.ct_list li:not(:last-child){
+  border-bottom:1px solid rgba(var(--g-color-heading-rgb),0.1);
+}
+.ct_list li:hover{
+  
+}
+.ct_list--link:hover{
+  color:var(--g-main);
+}
+.ct_list--link::before{
+  position: absolute;
+    content: "";
+    width: 0;
+    height: 1px;
+    background-color: var(--g-main);
+    bottom: -17px;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+.ct_list--link:hover::before{
+  visibility: visible;
+  opacity: 1;
+  width: 100%;
+}
+.ct_list--count{
+  font-size: calc(var(--g-font-size) - 2px );
+  top:-1.8em;
+  -webkit-text-stroke: 0px var(--g-color-heading);
+  -webkit-text-fill-color: rgba(var(--color-body-text-rgb),0.6);
+  text-transform:capitalize;
+}
+</style>
+<div class="customstyle{{ section.id }} categories-list categories-list-{{ section.id }}" 
+  data-aos="{{ section.settings.animation }}"
+  data-section-id="{{ section.id }}" >
+  <div class="{{ section.settings.setwidth }}">
+    {%- render 'section-heading' -%}
+    <div class="section-block">
+      <div class="row align-items-center">
+        <div class="col-lg-4 col-12 pr-lg-5">
+          {%- if section.settings.image_left != blank -%}
+            <div class="image-content__image-container overflow-hidden mb-5">
+              <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.image_left.aspect_ratio | times: 100 }}%;">
+                {% assign img_url = section.settings.image_left | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                <img class="image-content__image scale-in lazyload"
+                  src="{{ section.settings.image_left | image_url: width: 1, height: 1 }}"
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ section.settings.image_left.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ section.settings.image_left.alt | escape }}"
+                  loading="lazy"
+                  width="{{ section.settings.image_left.width }}"
+                  height="{{ section.settings.image_left.height }}">
+              </div>
+            </div>
+          {%- else -%}
+            <div class="image-content__image">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="col-lg-4 col-12 ">
+          {%-liquid
+            assign size_text= section.settings.size_text
+            assign e_uppercase = section.settings.enable_uppercase
+          -%}
+          <ul class="text-center list-unstyled ct_list">
+          {%- for block in section.blocks -%}
+            {%- assign featured_collection = collections[block.settings.collection] -%}
+            {%- assign collectionTitle = featured_collection.title | default: 'Collection title' -%}
+            <li class="">
+              <a href="{{ featured_collection.url }}" class=" ct_list--link {{ size_text }} {% if e_uppercase %} text-uppercase {% endif %}">
+                {{ collectionTitle }}
+                {%- if section.settings.enable_count -%}
+                <sup class="font-family-2 ct_list--count txt-body-60">
+                  {{ featured_collection.products_count | default: 0 }}
+                  {% assign c = featured_collection.products_count | plus: 0 %}
+                    {%- if c > 1 -%}
+                      {{ 'collections.general.items' | t | default : 'items' }}
+                  {%- else -%}
+                      {{ 'collections.general.item' | t | default : 'item' }}
+                  {%- endif -%}
+                </sup>
+              {%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+          </ul>
+        </div>
+        <div class="col-lg-4 col-12 pl-lg-5">
+          {%- if section.settings.image_right != blank -%}
+            <div class="image-content__image-container overflow-hidden mt-5">
+              <div class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: section.settings.image_right.aspect_ratio | times: 100 }}%;">
+                {% assign img_url = section.settings.image_right | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                <img class="image-content__image scale-in lazyload"
+                  src="{{ section.settings.image_right | image_url: width: 1, height: 1 }}"
+                  data-src="{{ img_url }}"
+                  data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                  data-aspectratio="{{ section.settings.image_right.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ section.settings.image_right.alt | escape }}"
+                  loading="lazy"
+                  width="{{ section.settings.image_right.width }}"
+                  height="{{ section.settings.image_right.height }}">
+              </div>
+            </div>
+          {%- else -%}
+            <div class="image-content__image">
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% schema %}
+{
+  "name": "Categories List",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Heading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Categories List"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description",
+      "default": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Style Text "
+    },
+    {
+      "type": "select",
+      "id": "size_text",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        }
+      ],
+      "label": "Heading Size"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_uppercase",
+      "label": "Enable Uppercase",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_count",
+      "label": "Enable Number Collections",
+      "default": true
+    },
+    
+    {
+      "type": "image_picker",
+      "id": "image_left",
+      "label": "Image Left"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_right",
+      "label": "Image Right"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Categories List",
+      "blocks": [
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

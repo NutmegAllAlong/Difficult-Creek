@@ -1,0 +1,466 @@
+<!-- featured-articles-2.liquid -->
+<style>
+    .blog-section{{ section.id }}{
+      position: relative;
+      z-index: {{ section.settings.zindex }};
+    }
+    .blog-section{{ section.id }}::before{
+      position: absolute;
+      top:0;
+      right:0;
+      left:0;
+      content: "";
+      height: {{ section.settings.rangebg }}%;
+      background-color: {{ section.settings.bgbefore }};
+    }
+    .blog-first .blog__item{
+        position: relative;
+    }
+    .blog-first .blog__content{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right:0;
+    }
+    .mask{
+        background: linear-gradient(transparent,rgba(0,0,0,.8));
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+    }
+    .blog-list-right .blog__item{
+        padding-bottom: 30px;
+    }
+    .article__photo-wrapper.portrait{
+      padding-top: 120% !important;
+      overflow: hidden;
+    }
+    .article__photo-wrapper.square{
+      padding-top: 100% !important;
+      overflow: hidden;
+    }
+    .article__photo-wrapper.landscape{
+      padding-top: 75% !important;
+      overflow: hidden;
+    }
+    .article__photo-wrapper.wide{
+      padding-top: 56% !important;
+      overflow: hidden;
+    }
+    .article__photo-wrapper.portrait img,.article__photo-wrapper.square img, .article__photo-wrapper.landscape img,.article__photo-wrapper.wide img{
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+  {%-liquid
+    assign image_size = section.settings.image_size  
+  -%}
+  <div class="customstyle{{ section.id }} blog-section{{section.id}}" data-aos="{{ section.settings.animation }}">
+    {%- render 'style-section' -%}
+  <div class="{{ section.settings.setwidth }}">
+    <div class="section-block">
+      {%- render 'section-heading' -%}
+      <div class="bloglist-wrapper dots-negative " data-aos="{{ section.settings.animation }}">
+        <div class="bloglist-slider row {% if section.settings.reverse %} flex-lg-row-reverse {% endif %}" >
+          {%- assign blog = blogs[section.settings.blog] -%}
+          {%- assign limit = 3 -%}
+          {%- if blog != blank -%}
+          <div class="col-lg-6">
+          {%- for article in blog.articles limit: 1 -%}
+            <div class="bloglist-item blog-first">
+                <div class="blog__item pb-0">
+                    {%- if article.image -%}
+                        <div class="content-block__image mb-3">
+                            <a href="{{ article.url }}">
+                                <div class="article__photo-container">
+                                <div class="article__photo-wrapper {{ image_size }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+                                    {%- assign img_url = article.image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+                                    <img class="lazyload"
+                                        src="{{ article.image | image_url: width: 1, height: 1 }}"
+                                        data-src="{{ img_url }}"
+                                        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                        data-aspectratio="{{ article.image.aspect_ratio }}"
+                                        data-sizes="auto"
+                                        alt="{{ article.title | escape }}"
+                                        loading="lazy"
+                                        width="{{ article.image.width }}"
+                                        height="{{ article.image.height }}">
+                                </div>
+                                </div>
+                            </a>
+                            <a href="{{ article.url }}" class="mask"></a>
+                        </div>
+                        {%- endif -%}
+                        <div class="blog__content p-lg-5 p-4">
+                          <div class="d-flex align-items-center">
+                            <p class="blog__meta mb-3 font-family-2 text-white">
+                            {{ article.published_at | time_tag: format: 'month_day_year' }}
+                            </p>
+                            <div class="blog_comment align-items-center d-flex mb-3 ml-4 text-white">
+                              <svg fill="none" focusable="false" width="18" height="17" class="icon-comment mr-2" viewBox="0 0 18 17">
+                                <path d="M5 5.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M6 8.5H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M13 13V16L9 13H4C3 13 1 12 1 10V4C1 2 3 1 5 1H13C15 1 17 2 17 4V10C17 12 14.3333 12.8333 13 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                              {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                            </div>
+                          </div>
+                        <h4 class="blog__title-link text-white"><a class="text-white" href="{{ article.url }}">{{ article.title }}</a></h4>
+                    </div>
+                </div>
+            </div>
+          {%- endfor -%}
+          </div>
+          <div class="col-lg-6 blog-list-right">
+          {%- for article in blog.articles limit: limit offset: 1 -%}
+            <div class="bloglist-item ">
+                <div class="blog__item row align-items-center">
+                    {%- if article.image -%}
+                        <div class="content-block__image col-4">
+                            <a href="{{ article.url }}">
+                                <div class="article__photo-container mb-0">
+                                <div class="article__photo-wrapper {{ image_size }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+                                    {%- assign img_url = article.image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+                                    <img class="lazyload"
+                                        src="{{ article.image | image_url: width: 1, height: 1 }}"
+                                        data-src="{{ img_url }}"
+                                        data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                        data-aspectratio="{{ article.image.aspect_ratio }}"
+                                        data-sizes="auto"
+                                        alt="{{ article.title | escape }}"
+                                        loading="lazy"
+                                        width="{{ article.image.width }}"
+                                        height="{{ article.image.height }}">
+                                </div>
+                                </div>
+                            </a>
+                        </div>
+                        {%- endif -%}
+                        <div class="blog__content col">
+                          <div class="d-flex align-items-center">
+                            <p class="blog__meta mb-2 font-family-2 txt-body-70">
+                            {{ article.published_at | time_tag: format: 'month_day_year' }}
+                            </p>
+                            <div class="blog_comment align-items-center d-flex mb-2 ml-4 txt-body-70">
+                              <svg fill="none" focusable="false" width="18" height="17" class="icon-comment mr-2" viewBox="0 0 18 17">
+                                <path d="M5 5.5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M6 8.5H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M13 13V16L9 13H4C3 13 1 12 1 10V4C1 2 3 1 5 1H13C15 1 17 2 17 4V10C17 12 14.3333 12.8333 13 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                              </svg>
+                              {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                            </div>
+                          </div>
+                        <h5 class="blog__title-link"><a href="{{ article.url }}">{{ article.title }}</a></h5>
+                    </div>
+                </div>
+            </div>
+          {%- endfor -%}
+        </div>
+          {%- else -%}
+          {%- for i in (1..limit) -%}
+          <div class="bloglist-item col">
+            {%- render 'blog-grid-blank' -%}
+          </div>
+          {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  {% schema %}
+{
+  "name": "Blog posts special",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "zindex",
+      "label": "Z Index Section",
+      "default": "0"
+    },
+    {
+      "type": "color",
+      "id": "bgsection",
+      "label": "Background Section",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "rangebg",
+      "label": "Height Background sub",
+      "max": 100,
+      "min": 0,
+      "step": 10,
+      "unit": " %",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "bgbefore",
+      "label": "Background sub ",
+      "default": "#E3C9B8"
+    },
+    {
+      "type": "text",
+      "id": "title_top",
+      "label": "Sub Title Top",
+      "default": "Sub Title Top"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Blog posts Special"
+    },
+    {
+      "type": "textarea",
+      "id": "des",
+      "label": "HTML / Description"
+    },
+    {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "label": "Blog",
+      "id": "blog",
+      "type": "blog"
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait (2:3)"
+        },
+        {
+          "value": "landscape",
+          "label": "Landscape (4:3)"
+        },
+        {
+          "value": "wide",
+          "label": "Wide (16:9)"
+        },
+        {
+          "value": "square",
+          "label": "Square (1:1)"
+        }
+      ],
+      "default": "auto",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse",
+      "label": "Reverse",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section Padding "
+    },
+    {
+      "type": "text",
+      "id": "paddingsection",
+      "label": "Padding Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "paddingmobile",
+      "label": "Padding Section Mobile",
+      "default": "40px 0px 40px 0px",
+      "info": "Padding: Top Right Bottom Left"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin "
+    },
+    {
+      "type": "text",
+      "id": "marginsection",
+      "label": "Margin Section",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    },
+    {
+      "type": "text",
+      "id": "marginmobile",
+      "label": "Margin Mobile",
+      "default": "0px 0px 0px 0px",
+      "info": "Margin: Top Right Bottom Left"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts special",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

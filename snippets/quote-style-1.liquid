@@ -1,0 +1,45 @@
+<div class="d-flex {% if aligntext == 'text-center' %} justify-content-center {% endif %} quote__slide quote__style_1 {{ aligntext }} ">
+    <div class="quote-wrap"  style="background-color:{{ bg_item }}">
+      <div class="quote-content-top">
+        {%- if rate > 0 -%}
+          <ul class="rating mb-2">
+            {%- for i in (1..5) -%}
+              {%- assign iMax = rate -%}
+              {%- if i <= iMax -%}
+              <li class="rated">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="12" viewBox="0 0 14 12" fill="none">
+                  <path d="M6.91566 0L9.04309 3.60776L13.1743 4.49139L10.3579 7.60474L10.7837 11.7586L6.91566 10.075L3.04762 11.7586L3.47342 7.60474L0.657043 4.49139L4.78824 3.60776L6.91566 0Z" fill="#F99E31"/>
+                  </svg>                
+                {%- else -%}
+              <li>
+                <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if title != blank -%}
+        <h4 class="mb-3">
+          {{ title }}
+        </h4>
+        {%- endif -%}
+        
+        <div class=" pb-3 "><div class="{{ size_text }}">{{ quote }}</div></div>
+    </div>
+      <div class="d-flex align-items-center {% if aligntext == 'text-center' %} justify-content-center {% endif %}">
+        {%- if avatar != blank -%}
+            <div class="author-avatar mr-3">
+              <img class="lazyload" src="{{ avatar | image_url: width: 1 , height: 1 }}" data-src="{{ avatar | image_url: width: 300 }}" 
+                loading="lazy"
+                width="{{ avatar.width }}"
+                height="{{ avatar.height }}"/>
+            </div>
+        {%- endif -%}
+        <div class="text-left">
+            <div class="h5 mb-0">{{ author }}{%- if info != blank -%}
+            <span class="txt-body-60 mt-2 fz-n3 capitalize small d-block">  {{ info }}</span>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

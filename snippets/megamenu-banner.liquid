@@ -1,0 +1,150 @@
+{%- liquid
+    assign menu_width = block.settings.menu_width
+    assign menu_column = block.settings.menu_column
+    assign enable_menu_banner = block.settings.enable_menu_banner
+    assign menu_banner_width = block.settings.menu_banner_width
+    assign menu_banner_height = block.settings.menu_banner_height
+    assign menu_banner_size_title = block.settings.menu_banner_size_title
+    assign link_column = ''
+
+    case menu_column
+      when 1
+      assign link_column = 'col-sm-12'
+      when 2
+      assign link_column = 'col-sm-6'
+      when 3
+      assign link_column = 'col-sm-4'
+      when 4
+      assign link_column = 'col-sm-3'
+      when 5
+      assign link_column = 'col-1-5'
+      when 6
+      assign link_column = 'col-sm-2'
+      else 
+      assign link_column = 'col-sm-2'
+    endcase
+  -%}
+  <div class="{{ menu_width }}">
+    <div class="row">
+      {%- if link.links != blank -%}
+      <div class="mega-col mega-link {% if enable_menu_banner == false %} col-12 {% else %} col {% endif %}">
+        <div class="row">
+          {%- if link.links != blank -%}
+          {%- for childlink in link.links -%}
+          <div class="{{ link_column }}">
+            <div class="mega-col-inner ">
+              <div class="menu-title">
+                <a href="{{ childlink.url }}" >
+                  {%- render 'processMenuTitle' , itemName: childlink.title -%}
+                  {%- render 'processMenuLabel' , itemName: childlink.title -%}
+                </a>
+              </div>
+              <div class="widget-inner">
+                <ul class="nav-links">
+                  {%- if childlink.links != blank -%}
+                  {%- for grandchildlink in childlink.links -%}
+                    <li>
+                      <a href="{{ grandchildlink.url }}" >
+                        {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
+                        {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                  {%- endif -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endif -%}
+  
+      {% if enable_menu_banner %}
+        <div class="mega-col col" style="max-width:{{ menu_banner_width }}%;flex:0 0 {{ menu_banner_width }}%;">    
+          <div class="row">
+            {% for i in (1..3) %}
+              {%- liquid
+                  assign menu_banner_image_var = 'menu_banner_image_' | append: i 
+                  assign menu_banner_subheading_var = 'menu_banner_subheading_' | append: i 
+                  assign menu_banner_heading_var = 'menu_banner_heading_' | append: i 
+                  assign menu_banner_paragraph_var = 'menu_banner_paragraph_' | append: i 
+                  assign menu_banner_btn_var = 'menu_banner_btn_' | append: i 
+                  assign menu_banner_link_var = 'menu_banner_link_' | append: i 
+                  assign menu_banner_position_text_var = 'menu_banner_position_text_' | append: i 
+
+                  assign menu_banner_image = block.settings[menu_banner_image_var]
+                  assign menu_banner_subheading = block.settings[menu_banner_subheading_var]
+                  assign menu_banner_heading = block.settings[menu_banner_heading_var]
+                  assign menu_banner_paragraph = block.settings[menu_banner_paragraph_var]
+                  assign menu_banner_btn = block.settings[menu_banner_btn_var]
+                  assign menu_banner_link = block.settings[menu_banner_link_var]
+                  assign menu_banner_position_text = block.settings[menu_banner_position_text_var]
+
+                  case menu_banner_position_text
+                    when 'top-left'
+                    assign positiontxt = 'align-items-start justify-content-start'
+                    when 'top-center'
+                    assign positiontxt = 'align-items-start justify-content-center text-center'
+                    when 'top-right'
+                    assign positiontxt = 'align-items-start justify-content-end text-right'
+                    when 'mid-left'
+                    assign positiontxt = 'align-items-center justify-content-start'
+                    when 'mid-center'
+                    assign positiontxt = 'align-items-center justify-content-center text-center'
+                    when 'mid-right'
+                    assign positiontxt = 'align-items-center justify-content-end text-right'
+                    when 'bot-left'
+                    assign positiontxt = 'align-items-end justify-content-start'
+                    when 'bot-center'
+                    assign positiontxt = 'align-items-end justify-content-center text-center'
+                    when 'bot-right'
+                    assign positiontxt = 'align-items-end justify-content-end text-right'
+                    else 
+                    assign positiontxt = 'align-items-end justify-content-start'
+                  endcase
+              -%}
+              {%- if menu_banner_image -%}
+                <div class="promotion_menu col mb-4 mt-3">
+                  <div class="image-content__image-container overflow-hidden promotion_menu--container">
+                      <div class="image-content__image-wrapper" style="height:{{ menu_banner_height }}px;">
+                          {% assign img_url = menu_banner_image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
+                          <img class="image-content__image lazyload transition"
+                              src="{{ menu_banner_image | image_url: width: 1, height: 1 }}"
+                              data-src="{{ img_url }}"
+                              data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
+                              data-aspectratio="{{ menu_banner_image.aspect_ratio }}"
+                              data-sizes="auto"
+                              alt="{{ menu_banner_image.alt | escape }}"
+                              loading="lazy"
+                              width="{{ menu_banner_image.width }}"
+                              height="{{ menu_banner_image.height }}">
+                      </div>
+                      <div class="promotion_menu--content d-flex {{ positiontxt }}">
+                          <a class="promotion_menu--link" href="{{ menu_banner_link }}" ></a>
+                          <div class="position-relative promotion_menu--txt">
+                              {%- if menu_banner_subheading != blank -%}
+                                  <div class="subtop mb-1"> {{ menu_banner_subheading }}</div>
+                              {%- endif -%}
+                              {%- if menu_banner_heading != blank -%}
+                                  <div class="{{ menu_banner_size_title }} mb-3"> {{ menu_banner_heading }}</div>
+                              {%- endif -%}
+                              {%- if menu_banner_paragraph != blank -%}
+                                  <div class="mb-3"> {{ menu_banner_paragraph }}</div>
+                              {%- endif -%}
+                              {%- if menu_banner_btn != blank -%}
+                                  <a class="btn btn-underline btn-underline-white" href="{{ menu_banner_link }}"> {{ menu_banner_btn }}</a>
+                              {%- endif -%}
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              {%- endif -%}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  

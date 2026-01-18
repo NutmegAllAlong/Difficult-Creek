@@ -1,0 +1,60 @@
+<!-- blog-grid-6.liquid -->
+<div class="blog__item blog__item--6 ">
+  {%- if article.image -%}
+  <div class="content-block__image">
+    <a href="{{ article.url }}">
+      <noscript>
+        {{ article | image_url: width: 1024, height: 1024 | image_tag: article.title | escape }}
+      </noscript>
+      <div class="article__photo-container">
+        <div class="article__photo-wrapper {{ image_size }}" style="padding-top:{{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;">
+          {%- assign img_url = article.image | image_url: width: 1 | replace: 'width=1', 'width={width}' -%}
+          <img class="lazyload"
+               src="{{ article.image | image_url: width: 1, height: 1 }}"
+               data-src="{{ img_url }}"
+               data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+               data-aspectratio="{{ article.image.aspect_ratio }}"
+               data-sizes="auto"
+               alt="{{ article.title | escape }}"
+               loading="lazy"
+               width="{{ article.image.width }}"
+               height="{{ article.image.height }}">
+        </div>
+      </div>
+    </a>
+    <div class="article__photo-content w-100 d-flex flex-column align-items-start">
+      <div class="mt-3 mb-4">
+        <p class="blog__meta  text-uppercase small txt-body-70 mb-0">
+          {%- if article.tags.size > 0 and enable_tag -%}
+            {%- for tag in article.tags limit: 3 -%}
+            <span class="pr-2 mr-2 border-right d-inline-block">
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="button">{{ tag }}</a>{% if forloop.last %}{% else %}, {% endif %}
+            </span>
+            {%- endfor -%}
+          {% endif %}
+          {%- if enable_date -%}
+            <span class=" pr-2 mr-2 border-right">{{ article.published_at | time_tag: '%m-%d-%Y' }}</span>
+          {%- endif -%}
+          {%- if enable_comment -%}
+            <span>{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</span>
+          {%- endif -%}
+        </p>
+        <h4 class="blog__title-link mt-3"><a href="{{ article.url }}">{{ article.title }}</a></h4>
+        {%- if enable_short -%}
+          <div class="rte rte--indented-images mt-4 ">
+            {%- if article.excerpt.size > 0 -%}
+              {{ article.excerpt }}
+            {%- else -%}
+              <p>{{ article.content | strip_html | truncatewords: 20 }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if enable_btn_blog -%}
+        <a class="btn {% if enable_btn_line %} btn-underline {% else %} btn-theme btn-sm {% endif %} mt-auto mb-1" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+ 
+</div>

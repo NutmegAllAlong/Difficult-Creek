@@ -1,0 +1,260 @@
+
+{% liquid
+  assign icon_cart = section.settings.icon_cart
+  case icon_cart
+  when 'text'
+    assign stylecart = 'text-cart d-lg-inline-flex d-none'
+    assign iconclass = 'text-indicator'
+  when 'number'
+    assign stylecart = 'number-cart hide'
+    assign iconclass = 'text-indicator'
+  when 'icon-text'
+    assign stylecart = 'text-icon-cart pr-2'
+    assign iconclass = 'site-header__cart-indicator'
+  else
+    assign stylecart = 'icon__fallback-text'
+    assign iconclass = 'site-header__cart-indicator'
+  endcase
+%}
+{%- assign cartdraw = settings.cartdraw -%}
+{%- if cartdraw -%}
+  {{ 'cart-draw.css' | asset_url | stylesheet_tag }}
+  <span class="site-header__link site-header__cart js-mini-cart {% unless template contains 'cart' %}  cardraw {% endunless %}  " data-cartmini="{{ cartdraw }}">
+    <span class="js-toggle-cart header-cart-{{ section.settings.icon_cart }}" title="{{ 'cart.general.title' | t }}">
+      <span class="{{ stylecart }}">{{ 'layout.cart.title' | t }}</span>
+      {%- if icon_cart == 'icon' or icon_cart == 'icon-text' -%}
+        {%- render 'icon-cart' -%}
+      {%- endif -%}
+      <span class="js-cart-count {{ iconclass }}">({{ cart.item_count }})</span>
+    </span>
+    <div class="mini-cart-content shadow text-center  px-4 d-flex flex-column">
+      <div class="mini-cart-header ">
+        <div class=" text-left d-flex justify-content-between align-items-center border-bottom mb-4 pb-3 ">
+            <div class="d-flex align-items-center">
+            <span>{{ 'layout.cart.title' | t }}</span>
+            <span class="js-cart-count site-header__cart-indicator ml-2">{{ cart.item_count }}</span>
+            </div>
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="close"></button>
+            </div>
+        </div>
+        
+        <div class="js-cart-bottom">
+        {%- render 'free-shipping' -%}
+        </div>
+      </div>
+      
+      <div class="js-mini-cart-content pt-2"></div>
+      {% if settings.e_upsellcart %}
+        <div class="drawer-crossell pt-2">
+          <div class="drawer-crossell-inner">
+          {%- if settings.title_upsell != blank -%}
+            <h5 class="text-left mb-4">{{ settings.title_upsell }}</h5>
+          {%- endif -%}
+          <div class="flex-row d-flex drawer-crossell-product flex-nowrap mb-0">
+            {%- for product in settings.product_list limit: 8 -%}
+              <div class="drawer-crossell__item">
+              {%- render 'product-grid-buywith', product: product -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+         </div>
+      {% endif %}
+     
+      <footer class="mini-cart-footer js-cart-bottom">
+          <div class="mini-cart-total font-family-1">
+            <div class="d-flex align-items-center mb-3 pb-3 border-bottom block-addon gap-5 ">
+              {%- if settings.e_notecart -%}
+              <div class="block-notecart block-addon__box">
+                <div class="small txt-body edit-notecart font-family-2 d-flex align-items-center" title="{{ 'cart.general.note_title' | t }}">
+                  {% render 'icon-note' %}
+                  <span>{{ 'cart.general.note_title' | t }}</span>
+                </div>
+                <div class="js-note-cart text-left block-addon__box--wrap">
+                  <label for="cart__note" class="mb-3"> {{ 'cart.general.note_label' | t }}</label>
+                  <textarea name="note" id="cart__note"  class="cart__note mb-3">{{ cart.note }}</textarea>
+                  <button class="cart-notes-submit btn btn-theme"> {{ 'cart.general.save' | t }}</button>
+                  <button class="link cart-note-close btn ml-2"> {{ 'cart.general.close' | t }}</button>
+                </div>
+              </div>
+              {%- endif -%}
+              {% assign product_gift = settings.product_gift %}
+              {%- if settings.gift_wrapping_enable and product_gift != blank -%}
+                <div class="giftwrap block-addon__box">
+                  <div class="open-gift cursor small txt-body  d-flex align-items-center" > 
+                  {% render 'icon-gift' %} <span> {{ 'cart.gift.title' | t }}</span>
+                  </div>
+                  <div class="boxgift block-addon__box--wrap" >
+                    <div class="boxgif__wrap d-flex flex-column align-items-center">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="" viewBox="0 0 64 64"><defs><style>.a{fill:none;stroke:#000;stroke-width:2px}</style></defs><path class="a" d="M9 20.23h46v8.68H9zM13.34 28.91h36.89v24.3H13.34zM27.82 20.66v32.98M35.91 20.88v32.98M20.52 11.43a3.73 3.73 0 0 0-.74 2.87 4.57 4.57 0 0 0 .8 2.27C22 18.09 25.15 20 32 20.23a12 12 0 0 0-2.43-7 7.52 7.52 0 0 0-5.66-3.12 4 4 0 0 0-3.39 1.32z"/><path class="a" d="M43.37 11.43a3.73 3.73 0 0 1 .74 2.87 4.48 4.48 0 0 1-.8 2.27c-1.42 1.52-4.57 3.41-11.42 3.66a12.08 12.08 0 0 1 2.43-7A7.56 7.56 0 0 1 40 10.14a4 4 0 0 1 3.37 1.29z"/></svg>
+                      <p class="font-family-2 mt-3 mb-4">{{ 'cart.gift.description' | t }} {{ product_gift.price | money }}</p>
+                      <div class="d-flex justify-content-center align-items-center gap-3">
+                        <a class="add-gift__btn add-gift btn btn-theme" href="{{ product_gift.url }}" data-id="{{ product_gift.selected_or_first_available_variant.id }}">
+                          <div class="product-card__loading spinner-border" role="status"></div>
+                          <span>{{ 'cart.gift.save' | t }}</span></a>
+                        <button class="close-gift__btn btn link" >{{ 'cart.gift.close' | t }}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if settings.coupon_code_enable and template != 'cart' -%}
+              <div class="block-coupon block-addon__box">
+                <div class="small txt-body edit-discountcode font-family-2 d-flex align-items-center js-open-addon" title="{{ 'cart.general.coupon_title' | t }}">
+                {% render 'icon-discount' %}
+                  <span>{{ 'cart.general.coupon_title' | t }}</span>
+                </div>
+                <discount-code class="open-add-on block-addon__box--wrap">
+                  {%- if settings.coupon_code_title != blank -%}
+                  <div id="list-coupon" class="mb-4 text-left">
+                    <div class="card-coupon">
+                      <div class="card-header-coupon" id="headcoupon1">
+                        <h6 class="mb-0">
+                          <span class="heading-coupon collapsed d-flex align-items-center position-relative py-3" data-toggle="collapse" data-target="#coupon1" aria-expanded="false" aria-controls="coupon1">
+                            {{ settings.coupon_code_title }}
+                            <span class="coupon-icon">
+                              <i class="icon-plus"></i>
+                              </span>
+                          </span>
+                        </h6>
+                      </div>
+                      <div id="coupon1" class="collapse" aria-labelledby="headcoupon1" data-parent="#list-coupon">
+                        <div class="pb-3">
+                          {{ settings.coupon_code_content }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
+                <div class="d-flex flex-column align-items-center">
+                  <div class=" mb-4 w-100 text-left">
+                    <label class="mb-3" for="discount-code-input">{{ 'cart.general.coupon_title' | t }}</label>
+                    <input class="form-control" type="text" id="discount-code-input" autocomplete="on" value="">
+                  </div>
+                  <div class="d-flex w-100 gap-3">
+                    <button id="apply-discount-btn" class="btn btn-theme btn-close-addon">{{ 'cart.general.save' | t }}</button>
+                    <button class="link discount-close btn btn-close-addon"> {{ 'cart.general.close' | t }}</button>
+                  </div>
+                </div>
+                </discount-code>
+              </div>
+              <script>
+                class DiscountCode extends HTMLElement {
+                    constructor() {
+                      super();
+                      this.couponCodeValue = document.getElementById('discount-code-input'); 
+                      this.btnApply = document.getElementById('apply-discount-btn');
+                      this.checkCode();
+                      this.btnApply.addEventListener('click', this.saveCode.bind(this));
+                    }
+                    checkCode(){
+                      if (localStorage.getItem('couponCode')){
+                        this.couponCodeValue.value = localStorage.getItem('couponCode');  
+                        //this.couponCodeValue.classList.add('has-value');
+                      }
+                    }
+                    saveCode(){
+                      this.valCode = this.couponCodeValue.value;
+                      localStorage.setItem('couponCode', this.valCode );
+                      fetch(`/discount/${this.valCode}`)
+                            .then((response) => response.text())
+                            .then((responseText) => {
+                        });
+                    }
+                  }
+                  customElements.define('discount-code', DiscountCode);
+              </script>
+            {%- endif -%}
+              {%- if settings.shipping_calculator  and template != 'cart' -%}
+                <div class="block-addon__box">
+                  <div class="small txt-body font-family-2 d-flex align-items-center js-open-addon" title="{{ 'cart.general.calc_title' | t }}">
+                    {% render 'icon-shipping' %}
+                    <span>{{ 'cart.general.calc_title' | t }}</span>
+                  </div>
+                    <div class="open-add-on block-addon__box--wrap" >
+                    {% render 'shipping-calc' %}
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+            <div class="bottom-total">
+              {{ 'cart.label.total' | t }}: <span class="js-cart-total">{{ cart.total_price | money }}</span>
+            </div>
+          </div>
+          
+          <div class="mini-cart-taxes">
+            {{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+          </div>
+          <div class="mini-cart-btns mt-4 d-flex">
+            <a class="btn btn-outline js-cart-btn-cart w-50 mr-2" href="{{ routes.cart_url }}">{{ 'cart.general.view' | t }}</a>
+            <a class="ml-2 btn gradient-theme js-cart-btn-checkout btn-theme w-50 d-flex align-items-center justify-content-center {% if cart.item_count == 0 %} disabled{% endif %}" href="/checkout"> {{ 'cart.general.checkout' | t }}</a>
+          </div>
+  
+          {%- if settings.safe_checkout_pcart != blank -%}
+          <div class="mini-cart-safe-checkout">
+            <img class="lazyload" loading="lazy" width="{{ settings.safe_checkout_pcart.width }}" 
+              height="{{ settings.safe_checkout_pcart.height }}"
+              src="{{ settings.safe_checkout_pcart | image_url: width: 1, height: 1 }}"
+              data-src="{{ settings.safe_checkout_pcart | image_url: width: 500 }}"/>
+          </div>
+          {%- endif -%}
+        </footer>
+    </div>
+      <div class="overlaycart">
+      </div>
+  
+  </span>
+{%- else -%}
+<style>
+  .js-mini-cart-content .mini-cart-image{
+    flex: 0 0 104px;
+    padding-right: 24px;
+  }
+  .js-mini-cart-content .mini-cart-meta{
+    flex: 0 0 calc(100% - 104px);
+    padding-right: 0px;
+  }
+  .js-remove-mini-cart{
+      font-weight: normal;
+      margin-left:16px;
+      font-size: 12px;
+  }
+  .js-mini-cart .mini-cart-content{
+    width: 380px;
+  }
+  </style>
+  <span class="site-header__link site-header__cart js-mini-cart">
+    <span class="js-toggle-cart" title="{{ 'cart.general.title' | t }}">
+      {%- render 'icon-cart' -%}
+      <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+      <span class="js-cart-count site-header__cart-indicator">{{ cart.item_count }}</span>
+    </span>
+    <div class="mini-cart-content shadow text-left">
+      {%- render 'free-shipping' -%}
+      <div class="js-mini-cart-content pt-2"></div>
+      <div class="mini-cart-total font-family-1">
+        {{ 'cart.label.total' | t }}: <span class="js-cart-total">{{ cart.total_price | money }}</span>
+      </div>
+      
+      <div class="mini-cart-taxes">
+        {{ 'cart.general.taxes_and_shipping_at_checkout' | t }}
+      </div>
+      <div class="mini-cart-btns mt-4 d-flex">
+        <a class="btn btn-outline js-cart-btn-cart w-50 mr-2" href="{{ routes.cart_url }}">{{ 'cart.general.view' | t }}</a>
+        <a class="ml-2 btn gradient-theme js-cart-btn-checkout btn-theme w-50 {% if cart.item_count == 0 %} disabled{% endif %}" href="/checkout">{{ 'cart.general.checkout' | t }}</a>
+      </div>
+  
+      {%- if settings.safe_checkout_pcart != blank -%}
+      <div class="mini-cart-safe-checkout">
+        <img class="lazyload"
+           width="{{ settings.safe_checkout_pcart.width }}"
+           height = "{{ settings.safe_checkout_pcart.height }}"
+           loading="lazy"
+           src="{{ settings.safe_checkout_pcart | image_url: width: 1, height: 1 }}"
+           data-src="{{ settings.safe_checkout_pcart | image_url: width: 500 }}"/>
+      </div>
+      {%- endif -%}
+    </div>
+  </span>
+{%- endif -%}

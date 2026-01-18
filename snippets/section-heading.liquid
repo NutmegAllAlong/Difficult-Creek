@@ -1,0 +1,51 @@
+<!-- section-heading.liquid - Apply for all section title -->
+{%- if settings.sectionheading == 'heading-1' -%}
+  {% if section.settings.countdown_header != blank or section.settings.image_header != blank or section.settings.title_top != blank or section.settings.title != blank or section.settings.des != blank or section.settings.button_header_text != blank or section.settings.link_base_text != blank %}
+  
+  <div class="section-header text-{{ section.settings.align-heading }}">
+    {% if section.settings.countdown_header != blank %}
+      <div class="countdown-header mb-3">
+        <div class="js-countdown" data-time="{{ section.settings.countdown_header }}"></div>
+      </div>
+    {% endif %}
+    {%- if section.settings.image_header != blank -%}
+    <div class="image-header mb-2" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+     <img src="{{ section.settings.image_header | image_url: width: 1920 }}" width="auto" height="auto" loading="lazy" alt="">
+    </div>
+    {%- endif -%}
+  
+    {%- if section.settings.title_top != blank -%}
+      <div class="subtop text-top mb-1" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+    {%- endif -%}
+  
+    {%- if section.settings.title != blank -%}
+    <h3 class="section-title-1  {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+      <span>{{ section.settings.title }}</span>
+    </h3>
+    {%- endif -%}
+    
+    {%- if section.settings.des != blank -%}
+    <div class="font-family-2 des-header txt-body-70 {% if section.settings.button_header_text != blank %} mb-4{% else %} mb-5{% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+    {%- endif -%}
+    {%- if section.settings.button_header_text != blank -%}
+    <div class="button-header mb-5">
+      <a href="{{ section.settings.button_header_link }}" class="btn btn-theme">{{ section.settings.button_header_text }}</a>
+    </div>
+    {%- endif -%}
+  </div>
+  {%- endif -%}
+{%- elsif settings.sectionheading == 'heading-2' -%}
+  <div class="section-header text-{{ section.settings.align-heading }}">  
+    {%- if section.settings.title_top != blank -%}
+      <div class="subtop text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+    <h3 class="section-title-2 {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}">
+      <span>{{ section.settings.title }}</span>
+    </h3>
+    {%- endif -%}
+    {%- if section.settings.des != blank -%}
+    <p class="font-family-2 mb-5 txt-body-70">{{ section.settings.des }}</p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

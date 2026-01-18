@@ -1,0 +1,26 @@
+<div class="modal fade" id="jsSoldout" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog--soldout modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">{%- render 'icon-close' -%}</button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center js-soldout-content">
+          {%- form 'contact', class: 'col-10' -%}
+          {{ form.errors | default_errors }}
+          <p class="js-notify-text">{{ 'products.product.soldout_messenger' | t }}<span> {% if current_variant.available %}{{ product.title }} - {{ current_variant.title }} {% else %} {{product.title}} {% endif %}</span></p>
+          <div>
+          <input class="hide" type="text" id="ContactFormMessenger" name="contact[messenger]" value="{{ 'products.product.soldout_messenger' | t }}">
+          <input class="hide" type="text" id="ContactProduct" name="contact[product]" value="{{ product.title }} - {{ current_variant.title }}">
+          <div class="form-group mb-3">
+            <input class="form-control" type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{%- if form.email -%}{{ form.email }}{%- elsif customer -%}{{ customer.email }}{%- endif -%}">
+            <label for="ContactFormEmail" class="">{{ 'contact.form.email' | t }}</label>
+          </div>
+          <input type="submit" class="btn btn-theme gradient-theme mb-4 w-100" value="{{ 'contact.form.receive_info' | t }}">
+        </div>
+          {%- endform -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
