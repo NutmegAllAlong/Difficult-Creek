@@ -33,18 +33,8 @@
       if isColor and currenVariant.image 
       assign hasImage = true 
       endif
-      
-     
-      assign color_handle = value | handleize
-      assign metaobject_ref = 'shopify--color-pattern/' | append: color_handle
-      assign color_metaobject = metaobject_ref | metaobject
-      assign show_swatch = true
-      if isColor and color_metaobject.image == blank
-        assign show_swatch = false
-      endif
     -%}
 
-  {%- if show_swatch -%}
   <input type="radio"
         {% if option.selected_value == value -%} checked="checked"{%- endif %}
         {% unless variant_label_state -%} disabled="disabled"{%- endunless %}
@@ -54,19 +44,24 @@
          class="single-option-selector-{{ section.id }} single-option-selector__radio{% unless variant_label_state %} disabled{% endunless %}"
          id="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
     <label {% if hasImage %} title="{{ value | escape }}" 
-    {%- if sw_color_product -%}
-      {%- if color_metaobject.image and optionName contains 'colo' -%}
-        style="background-size: cover; background-position: center; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"
-      {%- else -%}
+    {%- if sw_color_product and optionName contains 'colo' -%}
+      {%- assign swatch_image_found = false -%}
+      {%- for color_entry in shop.metaobjects["shopify--color-pattern"] -%}
+        {%- if color_entry.label == value and color_entry.image != blank -%}
+          style="background-size: cover; background-position: center; background-image: url('{{ color_entry.image | image_url: width: 64 }}');"
+          {%- assign swatch_image_found = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless swatch_image_found -%}
         style="background-color:{{ value | escape | handle }};"
-      {%- endif -%}
+      {%- endunless -%}
     {% else %} 
     style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
     {% endif %}{% endif %}
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}"{% unless variant_label_state %} class="disabled"{% endunless %}>
       {%- unless hasImage -%}{{ value | escape }}{%- endunless -%}
     </label>
-  {%- endif -%}
   {%- endfor -%}
 </fieldset>
 {%- else -%}
@@ -79,4 +74,3 @@
   {%- endfor -%}
 </select>
 {%- endif -%}
-
