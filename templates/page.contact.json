@@ -1,1 +1,243 @@
-{"sections":{"main":{"type":"main-page","settings":{}},"e7285e43-2bb7-46e5-a5e4-538568d8723e":{"type":"image-content","blocks":{"template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0":{"type":"image_block","settings":{"image":"shopify:\/\/shop_images\/handmade-soap-bars-2024-12-07-21-31-31-utc.jpg"}},"template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1":{"type":"text_block","settings":{"width":"100%","bgtext":"rgba(0,0,0,0)","title_color":"rgba(0,0,0,0)","subtitle":"Timeless Elegance, Modern Charm","title":"Indulge in Timeless Classics with a Modern Twist","size_text":"h3","text":"","answer_content":"<p>Embrace the allure of timeless fashion with our collection of modern classics. From essential basics to statement pieces, redefine elegance with a contemporary touch.<\/p>","style_btn":"btn-underline btn-underline-white","button":"","link":"","enable_padding":true,"align":"left"}}},"block_order":["template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0","template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1"],"settings":{"animation":"fade-up","setwidth":"full","bgsection":"#f7f7f7","rangebg":0,"bgbefore":"rgba(0,0,0,0)","bg_pos":"left","enable_padding":true,"align_center":true,"paddingsection":"0px 0px 0px 0px","paddingmobile":"0px 0px 60px 0px","marginsection":"0px 0px 0px 0px","marginmobile":"0px 0px 0px 0px"}},"fb754d90-39ba-47df-8255-8b3096ae9437":{"type":"service","blocks":{"template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0":{"type":"service","settings":{"bgblock":"rgba(0,0,0,0)","title":"Address","description":"Copley, South Australia 5732, Australia.","icon":"<i class=\"icon-placeholder\"><\/i>"}},"template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-1":{"type":"service","settings":{"bgblock":"rgba(0,0,0,0)","title":"Call us","description":"+ (02) 6171 3859<br>\n+ (07) 4088 1324","icon":"<i class=\"icon-phone\"><\/i>"}},"template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2":{"type":"service","settings":{"bgblock":"rgba(0,0,0,0)","title":"Open","description":"Monday - Friday: 8am - 4pm<br>\nSaturday - Sunday: 9am - 5pm","icon":"<i class=\"icon-check-circle\"><\/i>"}},"d58418bf-4652-4e45-8cbb-19e0434944cf":{"type":"service","settings":{"bgblock":"rgba(0,0,0,0)","title":"Emails","description":"example@example.com<br>\nexample@example.com","icon":"<i class=\"icon-mail\"><\/i>"}}},"block_order":["template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0","template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-1","template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2","d58418bf-4652-4e45-8cbb-19e0434944cf"],"settings":{"animation":"fade","setwidth":"container","bgsection":"rgba(0,0,0,0)","title_top":"","title":"","des":"","align-heading":"center","rows":"1","show":3,"paddingbox":"0px 0px 0px 0px","iconcolor":"#000000","titlecolor":"#000000","subcolor":"#666666","color_border":"rgba(0,0,0,0)","size":24,"service_heading":"h5","layout":"style-1","enable_carousel":false,"arrows":false,"draggable":true,"dots":true,"infinite":true,"paddingsection":"64px 0px 64px 0px","paddingmobile":"32px 0px 8px 0px","marginsection":"0px 0px 0px 0px","marginmobile":"0px 0px 0px 0px"}},"c025329d-7132-4163-b678-b778c06ac8f9":{"type":"line","settings":{"animation":"fade","paddingsection":"0px 0px 0px 0px","marginsection":"0px 0px 0px 0px","bgsection":"#ffffff","setwidth":"full","bgborder":"#e7e7e7","wborder":"1px"}},"863c2be4-cbba-4ba1-ba39-64e0fe639fc6":{"type":"contact-form","settings":{"animation":"","bgsection":"rgba(0,0,0,0)","title_top":"","title":"Got Any Questions?","des":"Use the form below to get in touch with the sales team","align-heading":"center","answer_content":"<p>This site is protected by reCAPTCHA and the Google <a href=\"https:\/\/policies.google.com\/privacy\">Privacy Policy<\/a> and <a href=\"https:\/\/policies.google.com\/terms\">Terms of Service<\/a> apply.<\/p>","paddingsection":"80px 0px 80px 0px","paddingmobile":"40px 0px 40px 0px","marginsection":"0px 0px 0px 0px","marginmobile":"0px 0px 0px 0px"}},"e47bb256-2659-485f-9896-382aaec96e87":{"type":"map","settings":{"heading":"Our store","address":"<p>Copley, <br\/>South Australia 5732<\/p><p>Mon - Fri, 10am - 9pm<br\/>Saturday, 11am - 9pm<br\/>Sunday, 11am - 5pm<\/p>","map_address":"Copley, South Australia 5732","button_text":"Get directions","show_pin":true,"api_key":"","map_code":"<div class=\"mapouter\"><div class=\"gmap_canvas\">\n<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d27484.301271700904!2d138.4054104021136!3d-30.562364124946757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6a91693244257183%3A0x4033654628eee30!2sCopley%20SA%205732%2C%20Australia!5e0!3m2!1sen!2sin!4v1699610018476!5m2!1sen!2sin\" width=\"600\" height=\"500\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}<\/style>\n<style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}<\/style>\n<\/div><\/div>","background_image_position":"center center"}},"a1490854-4f8f-471c-864a-2fb0e79e264b":{"type":"faq-accordion","blocks":{"template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0":{"type":"faq","settings":{"faq_title":"How long will shipping take?","faq_des":"<p>All orders are shipped within 12-36 hours from our warehouse in Bellingham WA.  Delivery times will depend on your shipping option but all orders are tracked from our facility to your door.  <\/p>"}},"template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1":{"type":"faq","settings":{"faq_title":"How do I know if my order is confirmed?","faq_des":"<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.<\/p>"}},"template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2":{"type":"faq","settings":{"faq_title":"Can I change my shipping address after my order is placed?","faq_des":"<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.<\/p>"}}},"block_order":["template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0","template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1","template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2"],"settings":{"animation":"fade-up","setwidth":"container","bgsection":"rgba(0,0,0,0)","e_size":"auto","e_repeat":"no-repeat","e_pos":"center center","title_top":"","title":"FAQs","des":"Below are some of are common questions","align-heading":"center","title_size":"h5","e_first_open":false,"e_reverse":true,"e_small":true,"left_html":"","e_right":false,"paddingsection":"80px 0px 80px 0px","paddingmobile":"60px 0px 60px 0px","marginsection":"0px 0px 0px 0px","marginmobile":"0px 0px 0px 0px"}}},"order":["main","e7285e43-2bb7-46e5-a5e4-538568d8723e","fb754d90-39ba-47df-8255-8b3096ae9437","c025329d-7132-4163-b678-b778c06ac8f9","863c2be4-cbba-4ba1-ba39-64e0fe639fc6","e47bb256-2659-485f-9896-382aaec96e87","a1490854-4f8f-471c-864a-2fb0e79e264b"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "custom_css": [
+        ".container {text-align: left !important;}"
+      ],
+      "settings": {}
+    },
+    "e7285e43-2bb7-46e5-a5e4-538568d8723e": {
+      "type": "image-content",
+      "blocks": {
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0": {
+          "type": "image_block",
+          "settings": {}
+        },
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1": {
+          "type": "text_block",
+          "settings": {
+            "width": "100%",
+            "bgtext": "rgba(0,0,0,0)",
+            "title_color": "rgba(0,0,0,0)",
+            "subtitle": "Timeless Elegance, Modern Charm",
+            "title": "Indulge in Timeless Classics with a Modern Twist",
+            "size_text": "h3",
+            "text": "",
+            "answer_content": "<p>Embrace the allure of timeless fashion with our collection of modern classics. From essential basics to statement pieces, redefine elegance with a contemporary touch.</p>",
+            "style_btn": "btn-underline btn-underline-white",
+            "button": "",
+            "link": "",
+            "enable_padding": true,
+            "align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0",
+        "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "full",
+        "bgsection": "#f7f7f7",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": true,
+        "align_center": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "0px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "fb754d90-39ba-47df-8255-8b3096ae9437": {
+      "type": "service",
+      "blocks": {
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Address",
+            "description": "Copley, South Australia 5732, Australia.",
+            "icon": "<i class=\"icon-placeholder\"></i>"
+          }
+        },
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-1": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Call us",
+            "description": "+ (02) 6171 3859<br>\n+ (07) 4088 1324",
+            "icon": "<i class=\"icon-phone\"></i>"
+          }
+        },
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Open",
+            "description": "Monday - Friday: 8am - 4pm<br>\nSaturday - Sunday: 9am - 5pm",
+            "icon": "<i class=\"icon-check-circle\"></i>"
+          }
+        },
+        "d58418bf-4652-4e45-8cbb-19e0434944cf": {
+          "type": "service",
+          "settings": {
+            "bgblock": "rgba(0,0,0,0)",
+            "title": "Emails",
+            "description": "example@example.com<br>\nexample@example.com",
+            "icon": "<i class=\"icon-mail\"></i>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0",
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-1",
+        "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2",
+        "d58418bf-4652-4e45-8cbb-19e0434944cf"
+      ],
+      "settings": {
+        "animation": "fade",
+        "setwidth": "container",
+        "bgsection": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "rows": "1",
+        "show": 3,
+        "paddingbox": "0px 0px 0px 0px",
+        "iconcolor": "#000000",
+        "titlecolor": "#000000",
+        "subcolor": "#666666",
+        "color_border": "rgba(0,0,0,0)",
+        "size": 24,
+        "service_heading": "h5",
+        "layout": "style-1",
+        "enable_carousel": false,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "64px 0px 64px 0px",
+        "paddingmobile": "32px 0px 8px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "c025329d-7132-4163-b678-b778c06ac8f9": {
+      "type": "line",
+      "settings": {
+        "animation": "fade",
+        "paddingsection": "0px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "bgsection": "#ffffff",
+        "setwidth": "full",
+        "bgborder": "#e7e7e7",
+        "wborder": "1px"
+      }
+    },
+    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6": {
+      "type": "contact-form",
+      "settings": {
+        "animation": "",
+        "bgsection": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "Got Any Questions?",
+        "des": "Use the form below to get in touch with the sales team",
+        "align-heading": "center",
+        "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms of Service</a> apply.</p>",
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "e47bb256-2659-485f-9896-382aaec96e87": {
+      "type": "map",
+      "settings": {
+        "heading": "Our store",
+        "address": "<p>Copley, <br/>South Australia 5732</p><p>Mon - Fri, 10am - 9pm<br/>Saturday, 11am - 9pm<br/>Sunday, 11am - 5pm</p>",
+        "map_address": "Copley, South Australia 5732",
+        "button_text": "Get directions",
+        "show_pin": true,
+        "api_key": "",
+        "map_code": "<div class=\"mapouter\"><div class=\"gmap_canvas\">\n<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27484.301271700904!2d138.4054104021136!3d-30.562364124946757!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6a91693244257183%3A0x4033654628eee30!2sCopley%20SA%205732%2C%20Australia!5e0!3m2!1sen!2sin!4v1699610018476!5m2!1sen!2sin\" width=\"600\" height=\"500\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>\n<style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style>\n</div></div>",
+        "background_image_position": "center center"
+      }
+    },
+    "a1490854-4f8f-471c-864a-2fb0e79e264b": {
+      "type": "faq-accordion",
+      "blocks": {
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "How long will shipping take?",
+            "faq_des": "<p>All orders are shipped within 12-36 hours from our warehouse in Bellingham WA.  Delivery times will depend on your shipping option but all orders are tracked from our facility to your door.  </p>"
+          }
+        },
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "How do I know if my order is confirmed?",
+            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+          }
+        },
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2": {
+          "type": "faq",
+          "settings": {
+            "faq_title": "Can I change my shipping address after my order is placed?",
+            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-0",
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1",
+        "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "rgba(0,0,0,0)",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_pos": "center center",
+        "title_top": "",
+        "title": "FAQs",
+        "des": "Below are some of are common questions",
+        "align-heading": "center",
+        "title_size": "h5",
+        "e_first_open": false,
+        "e_reverse": true,
+        "e_small": true,
+        "left_html": "",
+        "e_right": false,
+        "paddingsection": "80px 0px 80px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "e7285e43-2bb7-46e5-a5e4-538568d8723e",
+    "fb754d90-39ba-47df-8255-8b3096ae9437",
+    "c025329d-7132-4163-b678-b778c06ac8f9",
+    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6",
+    "e47bb256-2659-485f-9896-382aaec96e87",
+    "a1490854-4f8f-471c-864a-2fb0e79e264b"
+  ]
+}
