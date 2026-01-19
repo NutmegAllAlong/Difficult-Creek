@@ -21,10 +21,12 @@
       "blocks": {
         "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0": {
           "type": "image_block",
+          "disabled": true,
           "settings": {}
         },
         "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1": {
           "type": "text_block",
+          "disabled": true,
           "settings": {
             "width": "100%",
             "bgtext": "rgba(0,0,0,0)",
@@ -46,6 +48,7 @@
         "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0",
         "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-1"
       ],
+      "disabled": true,
       "settings": {
         "animation": "fade-up",
         "setwidth": "full",
@@ -69,7 +72,7 @@
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Address",
-            "description": "Copley, South Australia 5732, Australia.",
+            "description": "5133 Clay's Mill Rd.<br>Scottsburg, VA 24589",
             "icon": "<i class=\"icon-placeholder\"></i>"
           }
         },
@@ -78,8 +81,8 @@
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Call us",
-            "description": "+ (02) 6171 3859<br>\n+ (07) 4088 1324",
-            "icon": "<i class=\"icon-phone\"></i>"
+            "description": "(703) 424-6497",
+            "icon": "<i class=\"icon-mobile-phone\"></i>"
           }
         },
         "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2": {
@@ -87,7 +90,7 @@
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Open",
-            "description": "Monday - Friday: 8am - 4pm<br>\nSaturday - Sunday: 9am - 5pm",
+            "description": "Appointment only<br> until Grand Re-Opening",
             "icon": "<i class=\"icon-check-circle\"></i>"
           }
         },
@@ -96,7 +99,7 @@
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Emails",
-            "description": "example@example.com<br>\nexample@example.com",
+            "description": "amie@difficultcreek.com",
             "icon": "<i class=\"icon-mail\"></i>"
           }
         }
@@ -155,7 +158,7 @@
         "bgsection": "rgba(0,0,0,0)",
         "title_top": "",
         "title": "Got Any Questions?",
-        "des": "Use the form below to get in touch with the sales team",
+        "des": "Use the form below to get in touch with us for questions or to discuss a custom lamp shade",
         "align-heading": "center",
         "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms of Service</a> apply.</p>",
         "paddingsection": "80px 0px 80px 0px",
@@ -166,10 +169,11 @@
     },
     "e47bb256-2659-485f-9896-382aaec96e87": {
       "type": "map",
+      "disabled": true,
       "settings": {
         "heading": "Our store",
-        "address": "<p>Copley, <br/>South Australia 5732</p><p>Mon - Fri, 10am - 9pm<br/>Saturday, 11am - 9pm<br/>Sunday, 11am - 5pm</p>",
-        "map_address": "Copley, South Australia 5732",
+        "address": "<p>Scottsburg, VA 24589</p><p>By appointment</p>",
+        "map_address": "Scottsburg, VA 24589",
         "button_text": "Get directions",
         "show_pin": true,
         "api_key": "",
@@ -184,21 +188,21 @@
           "type": "faq",
           "settings": {
             "faq_title": "How long will shipping take?",
-            "faq_des": "<p>All orders are shipped within 12-36 hours from our warehouse in Bellingham WA.  Delivery times will depend on your shipping option but all orders are tracked from our facility to your door.  </p>"
+            "faq_des": "<p>Delivery times will depend on your shipping location but all orders are tracked from our facility to your door.  You should receive your order in 1-2 weeks.</p>"
           }
         },
         "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-1": {
           "type": "faq",
           "settings": {
             "faq_title": "How do I know if my order is confirmed?",
-            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "faq_des": "<p>You'll automatically receive an confirmation email of your order.</p>"
           }
         },
         "template--16736981025086__a1490854-4f8f-471c-864a-2fb0e79e264b-1666770139cd483e01-2": {
           "type": "faq",
           "settings": {
-            "faq_title": "Can I change my shipping address after my order is placed?",
-            "faq_des": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "faq_title": "Are lamp shades included with the lamps?",
+            "faq_des": "<p>Our lamp shades are sold separately.</p>"
           }
         }
       },
