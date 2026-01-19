@@ -30,17 +30,16 @@
       data-image="{{ color_variant.image | image_url: width: 720 }}" 
       data-price="{{ color_variant.price }}">
         {%- if settings.swatch_color -%}
-          {%- comment -%} Pull image from Color metaobject {%- endcomment -%}
-          {%- assign color_metaobject = null -%}
-          {%- for metaobject in shop.metaobjects.shopify--color-pattern -%}
-            {%- if metaobject.label == value -%}
-              {%- assign color_metaobject = metaobject -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
+          {%- comment -%} Pull image from Color metaobject using metafield {%- endcomment -%}
+          {%- assign swatch_image = null -%}
+          {%- assign color_handle = value | handleize -%}
+          {%- assign metaobject_ref = 'shopify--color-pattern/' | append: color_handle -%}
+          {%- assign color_metaobject = metaobject_ref | metaobject -%}
           
-          {%- if color_metaobject and color_metaobject.image -%}
-            <span style="background-size: cover; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"></span>
+          {%- if color_metaobject.image -%}
+            <span style="background-size: cover; background-position: center; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"></span>
+          {%- elsif color_variant.image -%}
+            <span style="background-size: cover; background-position: center; background-image: url('{{ color_variant.image | image_url: width: 64 }}');"></span>
           {%- else -%}
             <span class="st-color-{{ value | escape | downcase }}" style="background-color:{{ value | escape | downcase }};"></span>
           {%- endif -%}
@@ -52,7 +51,7 @@
             alt="{{ color_variant.image.alt }}" 
             loading="lazy"
             width="{{ color_variant.image.width }}"
-            height="{{ color_variant.height }}"
+            height="{{ color_variant.image.height }}"
           />
         {%- endif -%}
       </li>
