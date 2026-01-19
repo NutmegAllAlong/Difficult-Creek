@@ -1,0 +1,30 @@
+{% if section.settings.product != blank %}
+  {% assign product = section.settings.product %}
+  <div class="featured-product-wrapper page-width">
+    {% render 'card-product', card_product: product, show_vendor: section.settings.show_vendor %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Featured Product Block",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product Block"
+    }
+  ]
+}
+{% endschema %}
