@@ -80,7 +80,27 @@
       "type": "featured-product-block",
       "name": "Featured Product Display",
       "settings": {
-        "product": "test-jewel-tone-horizontal-stripes-drumshade-copy"
+        "product": "test-jewel-tone-horizontal-stripes-drumshade-copy",
+        "setwidth": "container",
+        "media_style": "media-bottom",
+        "media_size": "small",
+        "image_size": "square",
+        "enable_video_looping": true,
+        "stock_enable": true,
+        "sizeguide_enable": false,
+        "sizeguide_title": "Size guide",
+        "sizeguide_page": "",
+        "crosssell_title": "Cross-selling",
+        "upsell_accept": "Yes, let me select variants",
+        "upsell_decline": "No, thanks",
+        "upsell_time": 3,
+        "enable": true,
+        "mix_1": "#262626",
+        "mix_2": "#c0c0c0",
+        "text_cl": "#ffffff",
+        "cart_bg": "#008060",
+        "cart_cl": "#ffffff",
+        "cart_cl_hover": "#ffffff"
       }
     }
   },
