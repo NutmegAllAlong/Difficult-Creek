@@ -33,6 +33,14 @@
       if isColor and currenVariant.image 
       assign hasImage = true 
       endif
+      
+      assign swatch_image_url = blank
+      for color_entry in shop.metaobjects["shopify--color-pattern"]
+        if color_entry.label == value and color_entry.image != blank
+          assign swatch_image_url = color_entry.image | image_url: width: 64
+          break
+        endif
+      endfor
     -%}
 
   <input type="radio"
@@ -45,17 +53,13 @@
          id="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
     <label {% if hasImage %} title="{{ value | escape }}" 
     {%- if sw_color_product and optionName contains 'colo' -%}
-      {%- assign swatch_image_found = false -%}
-      {%- for color_entry in shop.metaobjects["shopify--color-pattern"] -%}
-        {%- if color_entry.label == value and color_entry.image != blank -%}
-          style="background-size: cover; background-position: center; background-image: url('{{ color_entry.image | image_url: width: 64 }}');"
-          {%- assign swatch_image_found = true -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
-      {%- unless swatch_image_found -%}
-        style="background-color:{{ value | escape | handle }};"
-      {%- endunless -%}
+      {%- if swatch_image_url != blank -%}
+        class="color-swatch-image"
+        style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('{{ swatch_image_url }}'); display: inline-block; width: 40px; height: 40px;"
+      {%- else -%}
+        class="st-color-{{ value | escape | handle }}"
+        style="background-color:{{ value | escape | handle }}; display: inline-block; width: 40px; height: 40px;"
+      {%- endif -%}
     {% else %} 
     style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
     {% endif %}{% endif %}
