@@ -11,10 +11,74 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {}
+    },
+    "featured_collections_1_U8rfgM": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_Pz6dLM": {
+          "type": "collection",
+          "settings": {
+            "collection": "drum-lampshades-1",
+            "image": "shopify://shop_images/drum_lamp_shade_floral_1.png",
+            "icon": ""
+          }
+        },
+        "collection_CtxE9H": {
+          "type": "collection",
+          "settings": {
+            "collection": "empire-lampshades",
+            "image": "shopify://shop_images/empire_turquoise.png",
+            "icon": ""
+          }
+        },
+        "collection_XiiQwq": {
+          "type": "collection",
+          "settings": {
+            "collection": "cone-lampshades",
+            "image": "shopify://shop_images/cone-lamp-shade.png",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_Pz6dLM",
+        "collection_CtxE9H",
+        "collection_XiiQwq"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#faf5f2",
+        "title_top": "one of a kind",
+        "title": "Handcrafted Lamp Shades",
+        "des": "",
+        "align-heading": "center",
+        "size_image": "auto",
+        "style_item": "bottom",
+        "rows": "1",
+        "show": 3,
+        "radius": 0,
+        "space": 15,
+        "size_text": "h4",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": true,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "featured_collections_1_U8rfgM"
   ]
 }
