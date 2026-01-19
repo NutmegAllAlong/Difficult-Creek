@@ -210,7 +210,7 @@
         "883720d7-3346-4495-85a0-add8b3d7a51f"
       ],
       "custom_css": [
-        ".product-single {background-color: #ffffff; padding: 20px ;}",
+        ".product-single {background-color: #ffffff; padding: 20px 0px 0px 0px;}",
         ".ptrust-badge-heading {background-color: #ffffff;}"
       ],
       "settings": {
