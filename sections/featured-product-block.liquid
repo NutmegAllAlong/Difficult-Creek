@@ -399,6 +399,36 @@
 
     assign media_style = section.settings.media_style
   -%}
+  <!-- adding style to force thumbnails below the featured image  -->
+  <style>
+.section-{{ section.id }} .photos-thumb-bottom .photo-image {
+  max-width: 100px !important;
+  display: inline-block !important;
+}
+
+.section-{{ section.id }} .photos-thumb-bottom .my-gallery {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+}
+
+.section-{{ section.id }} .photos-thumb-bottom .photo-image img {
+  width: 100px !important;
+  height: auto !important;
+}
+
+.section-{{ section.id }} .photos-thumb-bottom > .photo-image:first-child {
+  max-width: 100% !important;
+  width: 100% !important;
+  flex-basis: 100% !important;
+}
+
+.section-{{ section.id }} .photos-thumb-bottom > .photo-image:first-child img {
+  width: 100% !important;
+  max-width: 600px !important;
+}
+</style>
+
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | image_url: width: 600, height: 600 }}">
