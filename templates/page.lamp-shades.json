@@ -155,12 +155,7 @@
         "tabfix_MAG9Cq",
         "image_pLfPAt"
       ],
-      "custom_css": [
-        ".featured-product-block .product-single {display: flex; gap: 3rem;}",
-        ".featured-product-block .product-single__media-wrapper,.featured-product-block .product-photos {flex: 0 0 50%; max-width: 50%;}",
-        ".featured-product-block .product-single__info-wrapper,.featured-product-block .product-information {flex: 0 0 50%; max-width: 50%;}",
-        ".featured-product-block .product-single__thumbnails {display: flex; gap: 0.5rem; margin-top: 1rem;}"
-      ],
+      "custom_css": [],
       "name": "Featured Product Display",
       "settings": {
         "product": "test-jewel-tone-horizontal-stripes-drumshade-copy",
