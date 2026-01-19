@@ -9,7 +9,7 @@
 {%- if optionName contains 'colo' -%}
 {%- assign isColor = true -%}
 {%- endif -%}
-<!-- corrected roud-color to round-color -->
+
 <fieldset class="single-option-radio {% if isColor %} single-color {{ size_color }} {% if color_circle %}round-color{% endif %} {% endif %} "
           name="{{ option.name | handleize }}"
           id="ProductSelect-option-{{ firstloop }}">
@@ -32,9 +32,19 @@
       assign hasImage = false 
       if isColor and currenVariant.image 
       assign hasImage = true 
-      endif 
+      endif
+      
+     
+      assign color_handle = value | handleize
+      assign metaobject_ref = 'shopify--color-pattern/' | append: color_handle
+      assign color_metaobject = metaobject_ref | metaobject
+      assign show_swatch = true
+      if isColor and color_metaobject.image == blank
+        assign show_swatch = false
+      endif
     -%}
 
+  {%- if show_swatch -%}
   <input type="radio"
         {% if option.selected_value == value -%} checked="checked"{%- endif %}
         {% unless variant_label_state -%} disabled="disabled"{%- endunless %}
@@ -44,24 +54,19 @@
          class="single-option-selector-{{ section.id }} single-option-selector__radio{% unless variant_label_state %} disabled{% endunless %}"
          id="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}">
     <label {% if hasImage %} title="{{ value | escape }}" 
-    {%- if sw_color_product -%} 
-    {% comment %}
-    {% if currenVariant.metafields.color.swatch and optionName contains 'colo' %}
-      style="background-color: {{ currenVariant.metafields.color.swatch }}"
-    {% elsif currenVariant.metafields.image.swatch and optionName contains 'colo' %}
-      style="background-size: cover; background-image: url('{{ currenVariant.metafields.image.swatch | image_url: width: 64 }}')"
-    {% else %}
-      style="background-color:{{ value | escape }};"
-    {% endif %}
-  {% endcomment %}
-    class="st-color-{{ value | escape | handle }}"
-    style="background-color:{{ value | escape | handle }};"
+    {%- if sw_color_product -%}
+      {%- if color_metaobject.image and optionName contains 'colo' -%}
+        style="background-size: cover; background-position: center; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"
+      {%- else -%}
+        style="background-color:{{ value | escape | handle }};"
+      {%- endif -%}
     {% else %} 
     style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
     {% endif %}{% endif %}
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}"{% unless variant_label_state %} class="disabled"{% endunless %}>
       {%- unless hasImage -%}{{ value | escape }}{%- endunless -%}
     </label>
+  {%- endif -%}
   {%- endfor -%}
 </fieldset>
 {%- else -%}
@@ -74,3 +79,4 @@
   {%- endfor -%}
 </select>
 {%- endif -%}
+
