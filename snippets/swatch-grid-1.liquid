@@ -4,60 +4,68 @@
     assign counter = 0
     assign arrayVariants = ''
   -%}
-  {%- for option in product.options -%}
-  {%- if option == "Color" or option == "Colour" -%}
-  {%- liquid 
-    assign index0 = forloop.index0
-  -%}
-  {%- for variant in product.variants -%}
-  {%- liquid 
-    assign color =  variant.options[index0]
-  -%}
-    
+  {%- for option in product.options_with_values -%}
+  {%- if option.name == "Color" or option.name == "Colour" -%}
+  
+  {%- for value in option.values -%}
     {%- if counter < 4 -%}
-    {%- unless arrayVariants contains variant.image -%}
-    {%- assign arrayVariants = arrayVariants | append: variant.image -%}
-        {%- if variant.image != blank -%}
-          <li  
-          class="js-swatch-card-item {% if variant == product.selected_or_first_available_variant %} active {% endif %}" 
-          data-url="{{ variant.url | within: collection }}" 
-          data-id="{{ variant.id }}" 
-          data-image="{{ variant.image | image_url: width: 720 }}" 
-          data-price="{{ variant.price }}">
-            {%- if settings.swatch_color -%}
-            <span
-              {% comment %}
-              {% if variant.metafields.color.swatch %}
-                style= " background-color: {{ variant.metafields.color.swatch }};"
-              {% elsif variant.metafields.image.swatch %}
-                style=" background-size: cover; background-image: url('{{ variant.metafields.image.swatch | image_url: width: 64 }}');"
-              {% else %}
-                style="background-color:{{ color | handle }};"
-              {% endif %}
-            {% endcomment %}
-            class="st-color-{{ color | escape | downcase }}"
-            style="background-color:{{ color | escape | downcase }};" 
-              > </span>
-            {%- else -%}
-              <img data-sizes="auto" 
-                src="{{ variant.image | image_url: width: 100, height: 100 }}" 
-                class="lazyload" 
-                data-src="{{ variant.image | image_url: width: 100, height: 100 }}" 
-                alt="{{ variant.image.alt }}" 
-                loading="lazy"
-                width="{{ variant.image.width }}"
-                height="{{ variant.image.height }}"
-              />
+    
+    {%- comment -%} Find the first variant with this color value {%- endcomment -%}
+    {%- assign color_variant = null -%}
+    {%- for variant in product.variants -%}
+      {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+        {%- assign color_variant = variant -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    
+    {%- if color_variant and color_variant.image != blank -%}
+    {%- unless arrayVariants contains color_variant.image -%}
+    {%- assign arrayVariants = arrayVariants | append: color_variant.image -%}
+    
+      <li  
+      class="js-swatch-card-item {% if color_variant == product.selected_or_first_available_variant %} active {% endif %}" 
+      data-url="{{ color_variant.url | within: collection }}" 
+      data-id="{{ color_variant.id }}" 
+      data-image="{{ color_variant.image | image_url: width: 720 }}" 
+      data-price="{{ color_variant.price }}">
+        {%- if settings.swatch_color -%}
+          {%- comment -%} Pull image from Color metaobject {%- endcomment -%}
+          {%- assign color_metaobject = null -%}
+          {%- for metaobject in shop.metaobjects.shopify--color-pattern -%}
+            {%- if metaobject.label == value -%}
+              {%- assign color_metaobject = metaobject -%}
+              {%- break -%}
             {%- endif -%}
-          </li>
-          {%- assign counter = counter | plus: 1 -%}
+          {%- endfor -%}
+          
+          {%- if color_metaobject and color_metaobject.image -%}
+            <span style="background-size: cover; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"></span>
+          {%- else -%}
+            <span class="st-color-{{ value | escape | downcase }}" style="background-color:{{ value | escape | downcase }};"></span>
+          {%- endif -%}
+        {%- else -%}
+          <img data-sizes="auto" 
+            src="{{ color_variant.image | image_url: width: 100, height: 100 }}" 
+            class="lazyload" 
+            data-src="{{ color_variant.image | image_url: width: 100, height: 100 }}" 
+            alt="{{ color_variant.image.alt }}" 
+            loading="lazy"
+            width="{{ color_variant.image.width }}"
+            height="{{ color_variant.height }}"
+          />
         {%- endif -%}
+      </li>
+      {%- assign counter = counter | plus: 1 -%}
     {%- endunless -%}
+    {%- endif -%}
+    
     {%- else -%}
-  	  <li><a class="small" href="{{ product.url | within: collection }}" title="{{ 'products.product.view_more' | t }}">All ({{ product.variants.size }})</a></li>
+      <li><a class="small" href="{{ product.url | within: collection }}" title="{{ 'products.product.view_more' | t }}">All ({{ product.variants.size }})</a></li>
       {%- break -%}
     {%- endif -%}
   {%- endfor -%}
+  
   {% endif %}
 {%- endfor -%}
 </ul>
