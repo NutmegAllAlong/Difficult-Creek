@@ -137,12 +137,6 @@
             "stab_title4": "",
             "stab_content4": ""
           }
-        },
-        "image_pLfPAt": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/horizontal_jubilee_honey_drum_1.jpg"
-          }
         }
       },
       "block_order": [
@@ -152,8 +146,7 @@
         "buttons_JmtpUB",
         "fakeviewer_QVVq4W",
         "share_MMmFeH",
-        "tabfix_MAG9Cq",
-        "image_pLfPAt"
+        "tabfix_MAG9Cq"
       ],
       "custom_css": [],
       "name": "Featured Product Display",
