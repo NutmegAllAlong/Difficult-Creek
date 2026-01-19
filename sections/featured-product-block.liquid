@@ -1,4 +1,7 @@
-{{ 'photoswipe.css' | asset_url | stylesheet_tag }}
+{% if section.settings.product != blank %}
+  {% assign product = section.settings.product %}
+ <!-- from product-template-1.liquid  --> 
+  {{ 'photoswipe.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'photoswipe.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'photoswipe-ui-default.min.js' | asset_url }}" defer="defer"></script>
 {%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
@@ -841,7 +844,7 @@
   <script src="{{ 'product-model.js' | asset_url }}" defer></script>
 {%- endif -%}
 
-{% javascript %}
+<script>
 
 var initPhotoSwipeFromDOM = function(gallerySelector) {
 
@@ -1049,5 +1052,25 @@ if (hashData.pid && hashData.gid) {
 
 // execute above function
 initPhotoSwipeFromDOM('.my-gallery');
+</script>
 
-{% endjavascript %}
+  
+{% endif %}
+
+{% schema %}
+{
+  "name": "Featured Product Block",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product Block"
+    }
+  ]
+}
+{% endschema %}
