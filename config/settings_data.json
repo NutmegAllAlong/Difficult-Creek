@@ -2531,6 +2531,22 @@
       "custom-color": {
         "type": "custom-color",
         "blocks": {
+          "color_ffqFNz": {
+            "type": "color",
+            "settings": {
+              "name_color": "Garibaldi II by Windham Fabrics",
+              "name_color_hex": "#000000",
+              "image_color": "shopify://shop_images/Garibaldi_II_Wiindham_Fabrics.heic"
+            }
+          },
+          "color_rwpMay": {
+            "type": "color",
+            "settings": {
+              "name_color": "Year of the Dragon by Lewis & Irene",
+              "name_color_hex": "#000000",
+              "image_color": "shopify://shop_images/Year_of_the_Dragon_D_A866_Lewis_Irene.heic"
+            }
+          },
           "color_wYQDNX": {
             "type": "color",
             "settings": {
@@ -2757,6 +2773,8 @@
           }
         },
         "block_order": [
+          "color_ffqFNz",
+          "color_rwpMay",
           "color_wYQDNX",
           "color_mh9dp3",
           "color_TFPVNE",
