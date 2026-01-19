@@ -1,20 +1,9 @@
 {% if section.settings.product != blank %}
   {% assign product = section.settings.product %}
-  <div class="featured-product-section page-width section-{{ section.id }}-padding">
-    <div class="product-display">
-      <a href="{{ product.url }}" class="product-link">
-        {% if product.featured_image %}
-          <img src="{{ product.featured_image | image_url: width: 800 }}" 
-               alt="{{ product.featured_image.alt | escape }}" 
-               loading="lazy"
-               class="product-featured-image">
-        {% endif %}
-        <h2 class="product-title">{{ product.title }}</h2>
-        <div class="product-price">{{ product.price | money }}</div>
-        <div class="product-description">{{ product.description | truncate: 200 }}</div>
-        <span class="button">View Full Details</span>
-      </a>
-    </div>
+  {% assign collection = null %}
+  
+  <div class="featured-product-wrapper page-width section-{{ section.id }}-padding">
+    {% render 'product-card', product: product %}
   </div>
 {% endif %}
 
