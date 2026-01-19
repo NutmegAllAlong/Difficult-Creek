@@ -78,11 +78,94 @@
     },
     "featured_product_block_3W3Kxn": {
       "type": "featured-product-block",
+      "blocks": {
+        "image_e4nXEa": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/horizontal_jubilee_honey_drum_1.jpg"
+          }
+        },
+        "title_CUM7CM": {
+          "type": "title",
+          "settings": {
+            "e_label": true
+          }
+        },
+        "price_8DnQTp": {
+          "type": "price",
+          "settings": {}
+        },
+        "shortdesc_B69RGk": {
+          "type": "shortdesc",
+          "settings": {}
+        },
+        "buttons_JmtpUB": {
+          "type": "buttons",
+          "settings": {
+            "enable_local_pickup": true,
+            "enable_hurrify": true,
+            "enable_payment_button": true,
+            "waitlist": true,
+            "product_selector": "radio",
+            "sw_color_product": true,
+            "color_circle": true,
+            "size_color": "small-38"
+          }
+        },
+        "fakeviewer_QVVq4W": {
+          "type": "fakeviewer",
+          "settings": {
+            "fake_view_min": 12,
+            "fake_view_max": 30,
+            "fake_view_duration": 3,
+            "fake_view_text_prefix": "Currently there are",
+            "fake_view_text_suffix": "peoples are currently looking at this product"
+          }
+        },
+        "share_MMmFeH": {
+          "type": "share",
+          "disabled": true,
+          "settings": {}
+        },
+        "tabfix_MAG9Cq": {
+          "type": "tabfix",
+          "settings": {
+            "enable_tabvertical": false,
+            "gtab_des": "Description",
+            "gtab_review_enable": true,
+            "gtab_review": "Review",
+            "stab_title1": "",
+            "stab_content1": "",
+            "stab_title2": "",
+            "stab_content2": "",
+            "stab_title3": "",
+            "stab_content3": "",
+            "stab_title4": "",
+            "stab_content4": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_e4nXEa",
+        "title_CUM7CM",
+        "price_8DnQTp",
+        "shortdesc_B69RGk",
+        "buttons_JmtpUB",
+        "fakeviewer_QVVq4W",
+        "share_MMmFeH",
+        "tabfix_MAG9Cq"
+      ],
+      "custom_css": [
+        ".featured-product-block .product-single {display: flex; gap: 3rem;}",
+        ".featured-product-block .product-single__media-wrapper,.featured-product-block .product-photos {flex: 0 0 50%; max-width: 50%;}",
+        ".featured-product-block .product-single__info-wrapper,.featured-product-block .product-information {flex: 0 0 50%; max-width: 50%;}",
+        ".featured-product-block .product-single__thumbnails {display: flex; gap: 0.5rem; margin-top: 1rem;}"
+      ],
       "name": "Featured Product Display",
       "settings": {
         "product": "test-jewel-tone-horizontal-stripes-drumshade-copy",
-        "setwidth": "container-fluid",
-        "media_style": "media-left",
+        "setwidth": "container",
+        "media_style": "media-bottom",
         "media_size": "small",
         "image_size": "square",
         "enable_video_looping": true,
