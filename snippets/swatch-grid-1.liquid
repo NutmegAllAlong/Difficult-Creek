@@ -19,7 +19,13 @@
       {%- endif -%}
     {%- endfor -%}
     
-    {%- if color_variant and color_variant.image != blank -%}
+    {%- comment -%} Check if Color metaobject has an image {%- endcomment -%}
+    {%- assign color_handle = value | handleize -%}
+    {%- assign metaobject_ref = 'shopify--color-pattern/' | append: color_handle -%}
+    {%- assign color_metaobject = metaobject_ref | metaobject -%}
+    
+    {%- comment -%} Only display if Color metaobject has an image {%- endcomment -%}
+    {%- if color_metaobject.image != blank and color_variant and color_variant.image != blank -%}
     {%- unless arrayVariants contains color_variant.image -%}
     {%- assign arrayVariants = arrayVariants | append: color_variant.image -%}
     
@@ -30,19 +36,7 @@
       data-image="{{ color_variant.image | image_url: width: 720 }}" 
       data-price="{{ color_variant.price }}">
         {%- if settings.swatch_color -%}
-          {%- comment -%} Pull image from Color metaobject using metafield {%- endcomment -%}
-          {%- assign swatch_image = null -%}
-          {%- assign color_handle = value | handleize -%}
-          {%- assign metaobject_ref = 'shopify--color-pattern/' | append: color_handle -%}
-          {%- assign color_metaobject = metaobject_ref | metaobject -%}
-          
-          {%- if color_metaobject.image -%}
-            <span style="background-size: cover; background-position: center; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"></span>
-          {%- elsif color_variant.image -%}
-            <span style="background-size: cover; background-position: center; background-image: url('{{ color_variant.image | image_url: width: 64 }}');"></span>
-          {%- else -%}
-            <span class="st-color-{{ value | escape | downcase }}" style="background-color:{{ value | escape | downcase }};"></span>
-          {%- endif -%}
+          <span style="background-size: cover; background-position: center; background-image: url('{{ color_metaobject.image | image_url: width: 64 }}');"></span>
         {%- else -%}
           <img data-sizes="auto" 
             src="{{ color_variant.image | image_url: width: 100, height: 100 }}" 
