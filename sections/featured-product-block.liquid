@@ -442,6 +442,13 @@
 
 
     {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-bottom' %}
+<!-- debug block  -->
+    <div style="background: pink; padding: 10px; font-size: 12px;">
+  DEBUG:<br>
+  media_style: {{ media_style }}<br>
+  section.settings.media_style: {{ section.settings.media_style }}<br>
+  Layout classes should be: photos-thumb-bottom
+</div>
 
     <!-- {% render 'product-media', product : product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: section.settings.media_style %} -->
     </div>
