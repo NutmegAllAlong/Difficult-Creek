@@ -79,12 +79,6 @@
     "featured_product_block_3W3Kxn": {
       "type": "featured-product-block",
       "blocks": {
-        "image_e4nXEa": {
-          "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/horizontal_jubilee_honey_drum_1.jpg"
-          }
-        },
         "title_CUM7CM": {
           "type": "title",
           "settings": {
@@ -143,17 +137,23 @@
             "stab_title4": "",
             "stab_content4": ""
           }
+        },
+        "image_pLfPAt": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/horizontal_jubilee_honey_drum_1.jpg"
+          }
         }
       },
       "block_order": [
-        "image_e4nXEa",
         "title_CUM7CM",
         "price_8DnQTp",
         "shortdesc_B69RGk",
         "buttons_JmtpUB",
         "fakeviewer_QVVq4W",
         "share_MMmFeH",
-        "tabfix_MAG9Cq"
+        "tabfix_MAG9Cq",
+        "image_pLfPAt"
       ],
       "custom_css": [
         ".featured-product-block .product-single {display: flex; gap: 3rem;}",
