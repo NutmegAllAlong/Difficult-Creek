@@ -1,7 +1,13 @@
+{% if section.settings.product != blank %}
+  {% assign product = section.settings.product %}
+  <div class="featured-product-wrapper">
+    {% render 'product-content', product: product %}
+  </div>
+{% endif %}
+
 {% schema %}
 {
-  "name": "Featured Product",
-  "class": "section",
+  "name": "Featured Product Block",
   "settings": [
     {
       "type": "product",
@@ -9,34 +15,10 @@
       "label": "Product"
     }
   ],
-  "blocks": [
-    {
-      "type": "product_display",
-      "name": "Product Display",
-      "settings": [
-        {
-          "type": "product",
-          "id": "featured_product",
-          "label": "Select Product"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "Featured Product Display"
+      "name": "Featured Product Block"
     }
   ]
 }
 {% endschema %}
-
-{% for block in section.blocks %}
-  {% if block.type == 'product_display' %}
-    {% assign product = block.settings.featured_product %}
-    {% if product != blank %}
-      <div class="featured-product-block" {{ block.shopify_attributes }}>
-        {% render 'product-card', product: product %}
-      </div>
-    {% endif %}
-  {% endif %}
-{% endfor %}
