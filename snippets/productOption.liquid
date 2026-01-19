@@ -35,21 +35,24 @@
       endif
       
       assign swatch_image_url = blank
-      assign has_color_metaobject = false
-      if isColor
-        for color_entry in shop.metaobjects["shopify--color-pattern"]
-          if color_entry.label == value
-            assign has_color_metaobject = true
-            if color_entry.image != blank
-              assign swatch_image_url = color_entry.image | image_url: width: 64
+      if isColor and currenVariant
+        assign color_ref = currenVariant.metafields.shopify--discovery.standard_product_type
+        for variant_check in product.variants
+          assign vOpt = 'option' | append: option_index
+          if variant_check[vOpt] == value
+            if variant_check.metafields.custom.color
+              assign color_metaobj = variant_check.metafields.custom.color.value
+              if color_metaobj.image
+                assign swatch_image_url = color_metaobj.image | image_url: width: 64
+                break
+              endif
             endif
-            break
           endif
         endfor
       endif
     -%}
 
-  {%- if isColor == false or swatch_image_url != blank -%}
+  {%- if isColor == false or swatch_image_url != blank or hasImage -%}
   <input type="radio"
         {% if option.selected_value == value -%} checked="checked"{%- endif %}
         {% unless variant_label_state -%} disabled="disabled"{%- endunless %}
@@ -63,6 +66,8 @@
       {%- if swatch_image_url != blank -%}
         class="color-swatch-image"
         style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('{{ swatch_image_url }}'); display: inline-block; width: 40px; height: 40px;"
+      {%- elsif hasImage -%}
+        style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('{{ currenVariant.image | image_url: width: 64 }}'); display: inline-block; width: 40px; height: 40px;"
       {%- endif -%}
     {% else %} 
     style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
