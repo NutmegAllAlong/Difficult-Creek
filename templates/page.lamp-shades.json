@@ -82,11 +82,11 @@
       "settings": {
         "product": "test-jewel-tone-horizontal-stripes-drumshade-copy",
         "setwidth": "container-fluid",
-        "media_style": "media-bottom",
+        "media_style": "media-left",
         "media_size": "small",
         "image_size": "square",
         "enable_video_looping": true,
-        "stock_enable": true,
+        "stock_enable": false,
         "sizeguide_enable": false,
         "sizeguide_title": "Size guide",
         "sizeguide_page": "",
