@@ -1,1 +1,150 @@
-{"sections":{"collection-promo":{"type":"main-coupon_code","disabled":true,"settings":{"coupon_time":3}},"collection-banner":{"type":"main-collection-banner","settings":{"show_collection_description":true,"show_collection_image":false,"style_banner":"full","heading_size":"h2","img_height":"350px","bg_color":"#f3f3f3","image_text_color":"#ffffff","image_overlay_color":"#000000","image_overlay_opacity":40,"enable_collection":true,"enable_count":true,"link_list_head":""}},"product-grid":{"type":"main-collection-template","settings":{"collection_width":"container","products_per_page":32,"collection_perrow":"3","type_pagination":"pagi","enable_viewcolumn":true,"enable_filtering":true,"enable_sorting":true,"filter_type":"vertical","first_group":false,"open_group":true,"enable_color":true,"type_color":true,"style_color":"color_list","style_size":"list","enable_edit_item":false,"select_item":"product-7","enable_list_collection":false,"link_list_head":"","padding_top":48,"padding_bottom":48}},"ea7af2bd-7a4c-4129-ae32-bacb42814742":{"type":"featured-collections-3","blocks":{"4a36101a-baa0-4a6b-aee6-5f7f00c28b02":{"type":"collection","settings":{"collection":"brass-lamps"}},"4a23ad15-f46c-41b2-a652-f47841e11d49":{"type":"collection","settings":{"collection":"custom-built-lamps"}},"4207c9e4-bbe8-43d4-b9fe-4ad7b689ea67":{"type":"collection","settings":{"collection":"vintage-antique-lamps"}},"4ed3a5c4-6354-4eb8-96e7-982ff3d16a57":{"type":"collection","settings":{"collection":"mid-century-modern-lamps"}},"5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86":{"type":"collection","disabled":true,"settings":{"collection":"kids-gentle-soaps"}},"9bbeb24f-ddab-448f-8cdb-ac1c29d621c5":{"type":"collection","disabled":true,"settings":{"collection":"organic-facial-bars"}}},"block_order":["4a36101a-baa0-4a6b-aee6-5f7f00c28b02","4a23ad15-f46c-41b2-a652-f47841e11d49","4207c9e4-bbe8-43d4-b9fe-4ad7b689ea67","4ed3a5c4-6354-4eb8-96e7-982ff3d16a57","5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86","9bbeb24f-ddab-448f-8cdb-ac1c29d621c5"],"settings":{"animation":"fade-up","setwidth":"container","bgsection":"rgba(0,0,0,0)","title_top":"","title":"You May Also Like","des":"","align-heading":"center","stylecollection":"namesup","size_image_col":"square","color":"#231f20","bg_overlay":"#222222","enable_gradient":false,"opacity_overlay":0,"size_title":"h5","button_link":"","button":"","perviewDesktop":5,"spaceBetween":30,"nowrap":true,"arrows":true,"scrollbar":true,"paddingsection":"40px 0px 0px 0px","paddingmobile":"40px 0px 0px 0px","marginsection":"0px 0px 0px 0px","marginmobile":"0px 0px 0px 0px"}}},"order":["collection-promo","collection-banner","product-grid","ea7af2bd-7a4c-4129-ae32-bacb42814742"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection-promo": {
+      "type": "main-coupon_code",
+      "disabled": true,
+      "settings": {
+        "coupon_time": 3
+      }
+    },
+    "collection-banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": false,
+        "style_banner": "full",
+        "heading_size": "h2",
+        "img_height": "350px",
+        "bg_color": "#f3f3f3",
+        "image_text_color": "#ffffff",
+        "image_overlay_color": "#000000",
+        "image_overlay_opacity": 40,
+        "enable_collection": true,
+        "enable_count": true,
+        "link_list_head": ""
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-template",
+      "settings": {
+        "collection_width": "container",
+        "products_per_page": 32,
+        "collection_perrow": "3",
+        "type_pagination": "pagi",
+        "enable_viewcolumn": true,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "filter_type": "vertical",
+        "first_group": false,
+        "open_group": true,
+        "enable_color": true,
+        "type_color": true,
+        "style_color": "color_list",
+        "style_size": "grid",
+        "enable_edit_item": true,
+        "select_item": "product-7",
+        "enable_list_collection": true,
+        "link_list_head": "",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "ea7af2bd-7a4c-4129-ae32-bacb42814742": {
+      "type": "featured-collections-3",
+      "blocks": {
+        "4a36101a-baa0-4a6b-aee6-5f7f00c28b02": {
+          "type": "collection",
+          "settings": {
+            "collection": "brass-lamps",
+            "image": "shopify://shop_images/BrassLampA12.png"
+          }
+        },
+        "4a23ad15-f46c-41b2-a652-f47841e11d49": {
+          "type": "collection",
+          "settings": {
+            "collection": "custom-built-lamps",
+            "image": "shopify://shop_images/BrassandGlassA2.png"
+          }
+        },
+        "4207c9e4-bbe8-43d4-b9fe-4ad7b689ea67": {
+          "type": "collection",
+          "settings": {
+            "collection": "vintage-antique-lamps",
+            "image": "shopify://shop_images/Monkey_lamp.png"
+          }
+        },
+        "4ed3a5c4-6354-4eb8-96e7-982ff3d16a57": {
+          "type": "collection",
+          "settings": {
+            "collection": "mid-century-modern-lamps",
+            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png"
+          }
+        },
+        "5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "kids-gentle-soaps"
+          }
+        },
+        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": "organic-facial-bars"
+          }
+        }
+      },
+      "block_order": [
+        "4a36101a-baa0-4a6b-aee6-5f7f00c28b02",
+        "4a23ad15-f46c-41b2-a652-f47841e11d49",
+        "4207c9e4-bbe8-43d4-b9fe-4ad7b689ea67",
+        "4ed3a5c4-6354-4eb8-96e7-982ff3d16a57",
+        "5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86",
+        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "bgsection": "rgba(0,0,0,0)",
+        "title_top": "",
+        "title": "You May Also Like",
+        "des": "",
+        "align-heading": "center",
+        "stylecollection": "namesup",
+        "size_image_col": "square",
+        "color": "#231f20",
+        "bg_overlay": "#222222",
+        "enable_gradient": false,
+        "opacity_overlay": 0,
+        "size_title": "h5",
+        "button_link": "",
+        "button": "",
+        "perviewDesktop": 5,
+        "spaceBetween": 30,
+        "nowrap": true,
+        "arrows": true,
+        "scrollbar": false,
+        "paddingsection": "40px 0px 0px 0px",
+        "paddingmobile": "40px 0px 0px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "collection-promo",
+    "collection-banner",
+    "product-grid",
+    "ea7af2bd-7a4c-4129-ae32-bacb42814742"
+  ]
+}
