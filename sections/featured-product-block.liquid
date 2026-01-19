@@ -410,16 +410,10 @@
       photos-sticky 
     {% endunless %}">
 
-<!-- Adding block to see why media isn't displaying correctly -->    
-<div style="background: yellow; padding: 10px;">
-  DEBUG: Product ID: {{ product.id }}<br>
-  Product Title: {{ product.title }}<br>
-  Number of images: {{ product.images.size }}<br>
-  Featured image: {{ product.featured_image.src }}
-</div>
 
-<!-- end extra block -->
-    {% render 'product-media', product : product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: section.settings.media_style %}
+    {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-thumbnail' %}
+
+    <!-- {% render 'product-media', product : product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: section.settings.media_style %} -->
     </div>
     <div class="{{ right_size }} order-1 
       {% if  media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
