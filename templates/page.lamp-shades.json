@@ -75,10 +75,18 @@
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
+    },
+    "featured_product_block_3W3Kxn": {
+      "type": "featured-product-block",
+      "name": "Featured Product Display",
+      "settings": {
+        "product": "test-jewel-tone-horizontal-stripes-drumshade-copy"
+      }
     }
   },
   "order": [
     "main",
-    "featured_collections_1_U8rfgM"
+    "featured_collections_1_U8rfgM",
+    "featured_product_block_3W3Kxn"
   ]
 }
