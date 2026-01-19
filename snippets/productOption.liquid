@@ -35,14 +35,21 @@
       endif
       
       assign swatch_image_url = blank
-      for color_entry in shop.metaobjects["shopify--color-pattern"]
-        if color_entry.label == value and color_entry.image != blank
-          assign swatch_image_url = color_entry.image | image_url: width: 64
-          break
-        endif
-      endfor
+      assign has_color_metaobject = false
+      if isColor
+        for color_entry in shop.metaobjects["shopify--color-pattern"]
+          if color_entry.label == value
+            assign has_color_metaobject = true
+            if color_entry.image != blank
+              assign swatch_image_url = color_entry.image | image_url: width: 64
+            endif
+            break
+          endif
+        endfor
+      endif
     -%}
 
+  {%- if isColor == false or swatch_image_url != blank -%}
   <input type="radio"
         {% if option.selected_value == value -%} checked="checked"{%- endif %}
         {% unless variant_label_state -%} disabled="disabled"{%- endunless %}
@@ -56,9 +63,6 @@
       {%- if swatch_image_url != blank -%}
         class="color-swatch-image"
         style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('{{ swatch_image_url }}'); display: inline-block; width: 40px; height: 40px;"
-      {%- else -%}
-        class="st-color-{{ value | escape | handle }}"
-        style="background-color:{{ value | escape | handle }}; display: inline-block; width: 40px; height: 40px;"
       {%- endif -%}
     {% else %} 
     style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
@@ -66,6 +70,7 @@
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value | escape }}"{% unless variant_label_state %} class="disabled"{% endunless %}>
       {%- unless hasImage -%}{{ value | escape }}{%- endunless -%}
     </label>
+  {%- endif -%}
   {%- endfor -%}
 </fieldset>
 {%- else -%}
