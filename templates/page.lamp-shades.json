@@ -172,7 +172,7 @@
         "upsell_accept": "Yes, let me select variants",
         "upsell_decline": "No, thanks",
         "upsell_time": 3,
-        "enable": true,
+        "enable": false,
         "mix_1": "#262626",
         "mix_2": "#c0c0c0",
         "text_cl": "#ffffff",
