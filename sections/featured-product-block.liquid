@@ -2104,3 +2104,12 @@ initPhotoSwipeFromDOM('.my-gallery');
     unavailable: {{ 'products.product.unavailable' | t | json }}
   }
 </script>
+
+<script>
+  (function() {
+    var productSection = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (productSection && typeof theme !== 'undefined' && theme.Product) {
+      new theme.Product(productSection);
+    }
+  })();
+</script>
