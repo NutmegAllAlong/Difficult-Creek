@@ -81,7 +81,7 @@
       "name": "Featured Product Display",
       "settings": {
         "product": "test-jewel-tone-horizontal-stripes-drumshade-copy",
-        "setwidth": "container",
+        "setwidth": "container-fluid",
         "media_style": "media-bottom",
         "media_size": "small",
         "image_size": "square",
