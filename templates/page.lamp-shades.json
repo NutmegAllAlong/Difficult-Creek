@@ -79,7 +79,9 @@
     "featured_product_block_3W3Kxn": {
       "type": "featured-product-block",
       "name": "Featured Product Display",
-      "settings": {}
+      "settings": {
+        "product": "test-jewel-tone-horizontal-stripes-drumshade-copy"
+      }
     }
   },
   "order": [
