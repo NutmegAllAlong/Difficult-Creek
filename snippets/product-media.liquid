@@ -129,8 +129,8 @@
         }
     </style>
 <div class="photos {{ layout_style }}">
-    
-      <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
+  <div class="photos__item photos__item--main" data-aos="fade">
+    <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
           {%- if media_style == 'media-bottom' -%}
@@ -141,6 +141,8 @@
         {%- break -%}
       {%- endif -%}
     {%- endfor -%}
+    </div>
+  </div>
     {%- if is_variant_image -%}
       {%- continue -%}
     {%- endif -%}
@@ -354,5 +356,8 @@
       }
     </script>
     {%- endif -%}
-    </div>
+  {% if media_style == 'media-bottom' %}
   </div>
+{% else %}
+  </div>
+{% endif %}
