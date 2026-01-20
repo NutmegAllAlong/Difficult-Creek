@@ -360,17 +360,23 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-          {%- assign is_variant_image = false -%}
-          {%- for variant in product.variants -%}
-            {%- if variant.image.id == media.id -%}
-              {%- assign is_variant_image = true -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- if is_variant_image -%}
+  {%- assign is_variant_image = false -%}
+  {%- for variant in product.variants -%}
+    {%- if variant.image.id == media.id -%}
+      {%- assign is_variant_image = true -%}
+      <!-- MATCH FOUND: Media {{ media.id }} matches variant {{ variant.title }} image {{ variant.image.id }} -->
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- if is_variant_image -%}
+    <!-- FILTERING OUT: {{ media.id }} ({{ media.alt }}) -->
     {%- continue -%}
+  {%- else -%}
+    <!-- KEEPING: {{ media.id }} ({{ media.alt }}) - Not a variant image -->
   {%- endif -%}
 {% assign image = media %}
+
 
 
 <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
