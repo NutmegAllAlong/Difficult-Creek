@@ -487,7 +487,6 @@ console.log('Image element classes:', mainImg.className);
   }
 }
 
-
   function init() {
     // Listen for Foamy's variant change event
     document.addEventListener('variant:change', function(event) {
@@ -524,8 +523,7 @@ console.log('Image element classes:', mainImg.className);
 </script>
 
 
-
-  {% if media_style == 'media-bottom' %}
+{% if media_style == 'media-bottom' %}
   </div>
 {% else %}
   </div>
