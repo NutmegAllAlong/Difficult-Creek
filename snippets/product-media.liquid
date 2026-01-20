@@ -140,10 +140,10 @@
         {%- assign is_variant_image = true -%}
         {%- break -%}
       {%- endif -%}
-    {%- endfor -%}
-    </div>
-  </div>
-</div>
+      {%- endfor -%}
+    </div>  <!-- closes gallery-wrap -->
+  </div>  <!-- closes photos__item--main -->
+
     {%- if is_variant_image -%}
       {%- continue -%}
     {%- endif -%}
@@ -299,8 +299,20 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-        {% assign image = media %}
-        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+  {%- if media_style == 'media-bottom' -%}
+    {%- assign is_variant_image = false -%}
+    {%- for variant in product.variants -%}
+      {%- if variant.image.id == media.id -%}
+        {%- assign is_variant_image = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if is_variant_image -%}
+      {%- continue -%}
+    {%- endif -%}
+  {%- endif -%}
+{% assign image = media %}
+<div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
           data-image-id="{{ image.id }}">
           <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
             {% if media.media_type == 'video' %}
