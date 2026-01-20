@@ -77,7 +77,7 @@
       }
     },
     "featured_product_block_3W3Kxn": {
-      "type": "featured-product-block",
+      "type": "featured-product-block-old",
       "blocks": {
         "title_CUM7CM": {
           "type": "title",
