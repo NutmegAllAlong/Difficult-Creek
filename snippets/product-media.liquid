@@ -29,19 +29,7 @@
     endif
     -%}
 
-    {% if media_style == 'media-bottom' %}
-<style>
-.photos-thumb-bottom .photos__item--main .photo-image:not(.slick-current) {
-  display: none !important;
-}
-.photos-thumb-bottom .photos__item--main {
-  margin-bottom: 1rem;
-}
-</style>
-{% endif %}
-
-
-    <style>
+        <style>
         .photos-thumb-left .photos__item--main{
             position: relative;
             flex: 1 1 auto;
@@ -145,6 +133,19 @@
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
+  {%- if media_style == 'media-bottom' -%}
+    {%- assign is_variant_image = false -%}
+    {%- for variant in product.variants -%}
+      {%- if variant.image.id == media.id -%}
+        {%- assign is_variant_image = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if is_variant_image -%}
+      {%- continue -%}
+    {%- endif -%}
+  {%- endif -%}
+
         {%- liquid
           assign image = media
         -%}
