@@ -437,79 +437,57 @@
   const sectionId = '{{ section.id }}';
   const productData = {{ product | json }};
   
-  console.log('Product data:', productData);
-  
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM ready');
     
-    // Listen for variant change events (Foamy uses this)
-    document.addEventListener('variant:change', function(event) {
-      console.log('variant:change event fired:', event.detail);
-      if (event.detail && event.detail.variant) {
-        updateFeaturedImage(event.detail.variant);
-      }
-    });
+    // Find the color variant inputs (case-insensitive)
+    const colorInputs = document.querySelectorAll('input[name="color"], input[name="Color"]');
+    console.log('Found color inputs:', colorInputs.length);
     
-    // Find all possible variant inputs
-    const variantInputs = document.querySelectorAll('input[type="radio"][name*="Color"], .variant-input, .single-option-selector');
-    console.log('Found variant inputs:', variantInputs.length, variantInputs);
-    
-    variantInputs.forEach(function(input) {
+    colorInputs.forEach(function(input) {
       input.addEventListener('change', function() {
-        console.log('Input changed:', input.name, input.value);
-        const selectedVariant = getSelectedVariant();
-        console.log('Selected variant:', selectedVariant);
-        if (selectedVariant) {
-          updateFeaturedImage(selectedVariant);
+        console.log('Color changed to:', input.value);
+        
+        // Get the currently selected variant ID from the hidden input
+        const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
+        if (variantIdInput) {
+          const variantId = variantIdInput.value;
+          console.log('Selected variant ID:', variantId);
+          
+          const variant = productData.variants.find(v => v.id == variantId);
+          console.log('Found variant:', variant);
+          
+          if (variant && variant.featured_image) {
+            updateFeaturedImage(variant);
+          }
         }
       });
     });
   });
   
-  function getSelectedVariant() {
-    // Try to get from form
-    const form = document.querySelector('form[action*="/cart/add"]');
-    if (form) {
-      const variantId = form.querySelector('[name="id"]');
-      if (variantId && variantId.value) {
-        return productData.variants.find(v => v.id == variantId.value);
-      }
-    }
-    return null;
-  }
-  
   function updateFeaturedImage(variant) {
-    console.log('updateFeaturedImage called with:', variant);
-    
-    if (!variant || !variant.featured_image) {
-      console.log('No variant or featured_image');
-      return;
-    }
+    console.log('Updating image to:', variant.featured_image.src);
     
     const mainImage = document.querySelector('.product-single__photo img, .product__photo-container img');
     const mainImageLink = document.querySelector('.product__photo-wrapper');
     
-    console.log('Main image element:', mainImage);
-    console.log('Variant image src:', variant.featured_image.src);
-    
     if (mainImage && variant.featured_image) {
-      // Update main image
       mainImage.src = variant.featured_image.src;
       mainImage.srcset = variant.featured_image.src;
-      mainImage.alt = variant.featured_image.alt || variant.name;
+      mainImage.alt = variant.name;
       
-      console.log('Image updated!');
-      
-      // Update link
       if (mainImageLink) {
         mainImageLink.href = variant.featured_image.src;
       }
+      
+      console.log('Image updated successfully!');
+    } else {
+      console.log('Could not find main image element');
     }
   }
 })();
 </script>
-
 
   {% if media_style == 'media-bottom' %}
   </div>
