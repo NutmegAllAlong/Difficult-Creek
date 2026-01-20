@@ -28,30 +28,7 @@
         assign layout_mobile = ' hide '
     endif
     -%}
-    {% if media_style == 'media-bottom' %}
-
-      <style>
-    /* Hide all large gallery images except the featured one */
-      .photos-thumb-bottom .my-gallery .photo-image:not(.slick-current) {
-          display: none !important;
-        }
-
-    /* Ensure featured image displays properly */
-      .photos-thumb-bottom .my-gallery .photo-image.slick-current {
-          display: block !important;
-          margin-bottom: 1.5rem;
-        }
-
-      /* Ensure thumbnails display in a row */
-      .photos-thumb-bottom .product-single__thumbnails {
-          display: flex !important;
-          flex-wrap: wrap !important;
-          gap: 8px !important;
-        }
-      </style>
-      {% endif %}
-
-        <style>
+    <style>
         .photos-thumb-left .photos__item--main{
             position: relative;
             flex: 1 1 auto;
@@ -151,25 +128,10 @@
         }
     </style>
 <div class="photos {{ layout_style }}">
-  <div class="photos__item photos__item--main" data-aos="fade">
-    <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
+    <div class="photos__item photos__item--main" data-aos="fade">
+      <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
-          {%- if hide_variant_images -%}
-          {%- assign is_variant_image = false -%}
-          {%- for variant in product.variants -%}
-            {%- if variant.image.id == media.id -%}
-              {%- assign is_variant_image = true -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
-  <!-- DEBUG: Media ID {{ media.id }}, Is variant image: {{ is_variant_image }}, Media type: {{ media.media_type }} -->
-          {%- if is_variant_image -%}
-            {%- continue -%}
-          {%- endif -%}
-        {%- endif -%}
-
-
         {%- liquid
           assign image = media
         -%}
@@ -320,20 +282,8 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-  {%- if media_style == 'media-bottom' -%}
-    {%- assign is_variant_image = false -%}
-    {%- for variant in product.variants -%}
-      {%- if variant.image.id == media.id -%}
-        {%- assign is_variant_image = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- if is_variant_image -%}
-      {%- continue -%}
-    {%- endif -%}
-  {%- endif -%}
-{% assign image = media %}
-<div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+        {% assign image = media %}
+        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
           data-image-id="{{ image.id }}">
           <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
             {% if media.media_type == 'video' %}
@@ -390,8 +340,4 @@
       }
     </script>
     {%- endif -%}
-  {% if media_style == 'media-bottom' %}
   </div>
-{% else %}
-  </div>
-{% endif %}
