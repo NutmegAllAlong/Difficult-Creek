@@ -155,7 +155,7 @@
     <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
-          {%- if media_style == 'media-bottom' -%}
+          {%- if hide_variant_images -%}
           {%- assign is_variant_image = false -%}
           {%- for variant in product.variants -%}
           {%- if variant.image.id == media.id -%}
