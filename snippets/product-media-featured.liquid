@@ -184,18 +184,27 @@
     <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
-          {%- assign is_variant_image = false -%}
-          {%- for variant in product.variants -%}
-            {%- if variant.image.id == media.id -%}
-              {%- assign is_variant_image = true -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
-          {%- if is_variant_image -%}
-            {%- continue -%}
-          {%- endif -%}
+  {%- assign is_swatch_image = false -%}
+  
+  {%- comment %} Check if this image is used in any Color option value {% endcomment -%}
+  {%- for option in product.options_with_values -%}
+    {%- if option.name == 'Color' -%}
+      {%- for value in option.values -%}
+        {%- assign color_metafield = product.metafields.custom.color -%}
+        {%- comment %} Check if media matches any swatch image {% endcomment -%}
+        {%- if media.src contains value or media.alt contains value -%}
+          {%- assign is_swatch_image = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- if is_swatch_image -%}
+    {%- continue -%}
+  {%- endif -%}
+{% assign image = media %}
 
-        {%- assign image = media -%}
 
         {% case media.media_type %}
         {% when 'image' %}
@@ -340,19 +349,26 @@
       {%- endfor -%}
       </div>
     </div>
-    {%- assign non_variant_image_count = 0 -%}
-    {%- for media in product.media -%}
-      {%- assign is_variant_image = false -%}
-      {%- for variant in product.variants -%}
-        {%- if variant.image.id == media.id -%}
-          {%- assign is_variant_image = true -%}
+{%- assign non_swatch_image_count = 0 -%}
+{%- for media in product.media -%}
+  {%- assign is_swatch_image = false -%}
+  
+  {%- for option in product.options_with_values -%}
+    {%- if option.name == 'Color' -%}
+      {%- for value in option.values -%}
+        {%- if media.src contains value or media.alt contains value -%}
+          {%- assign is_swatch_image = true -%}
           {%- break -%}
         {%- endif -%}
       {%- endfor -%}
-      {%- unless is_variant_image -%}
-        {%- assign non_variant_image_count = non_variant_image_count | plus: 1 -%}
-      {%- endunless -%}
-    {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- unless is_swatch_image -%}
+    {%- assign non_swatch_image_count = non_swatch_image_count | plus: 1 -%}
+  {%- endunless -%}
+{%- endfor -%}
+
 
     {%- if non_variant_image_count > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
