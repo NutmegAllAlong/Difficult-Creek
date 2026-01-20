@@ -471,22 +471,25 @@
 </div>
 
 <style>
-.custom-thumbnail-gallery {
-  display: flex;
+<style>
+#ProductSection-{{ section.id }} .photos__item--main {
+  display: none !important;
+}
+#ProductSection-{{ section.id }} .photos__item--thumbs {
+  display: block !important;
+  width: 100%;
+}
+#ProductSection-{{ section.id }} .product-single__thumbnails {
+  display: flex !important;
   flex-wrap: wrap;
   gap: 8px;
 }
-.custom-thumbnail {
-  width: calc(12.5% - 7px);
-  height: auto;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
-.custom-thumbnail:hover {
-  border-color: #000;
+#ProductSection-{{ section.id }} .product-single__thumbnail-item {
+  flex: 0 0 calc(12.5% - 7px) !important;
+  max-width: calc(12.5% - 7px) !important;
+  padding: 0 !important;
 }
 </style>
-
 
 
     </div>
