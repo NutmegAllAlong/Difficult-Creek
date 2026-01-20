@@ -471,7 +471,7 @@ console.log('Variant switcher loading...');
             return String(v.id) === String(selectedId);
           });
           
-            if (variant && variant.image) {
+          if (variant && variant.image) {
             console.log('Found variant image:', variant.image);
             const mainImg = document.querySelector('.product__photo-container img, .product-single__photo img');
             if (mainImg) {
@@ -500,7 +500,10 @@ console.log('Variant switcher loading...');
           } else {
             console.log('No variant or image found');
           }
-
+        }, 150);
+      });
+    });
+  }
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -509,6 +512,7 @@ console.log('Variant switcher loading...');
   }
 })();
 </script>
+
 
   {% if media_style == 'media-bottom' %}
   </div>
