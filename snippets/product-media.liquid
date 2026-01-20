@@ -343,4 +343,6 @@
       }
     </script>
     {%- endif -%}
-  </div>
+  {% unless media_style == 'media-bottom' %}
+</div>
+{% endunless %}
