@@ -158,16 +158,17 @@
           {%- if hide_variant_images -%}
           {%- assign is_variant_image = false -%}
           {%- for variant in product.variants -%}
-          {%- if variant.image.id == media.id -%}
-        {%- assign is_variant_image = true -%}
-        {%- break -%}
-      {%- endif -%}
-      {%- endfor -%}
+            {%- if variant.image.id == media.id -%}
+              {%- assign is_variant_image = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+  <!-- DEBUG: Media ID {{ media.id }}, Is variant image: {{ is_variant_image }}, Media type: {{ media.media_type }} -->
+          {%- if is_variant_image -%}
+            {%- continue -%}
+          {%- endif -%}
+        {%- endif -%}
 
-    {%- if is_variant_image -%}
-      {%- continue -%}
-    {%- endif -%}
-  {%- endif -%}
 
         {%- liquid
           assign image = media
