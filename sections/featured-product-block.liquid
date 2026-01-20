@@ -395,7 +395,7 @@
     assign left_size = 'col-md-7 col-12'
     assign right_size = 'col-md-5 col-12'
     endcase
-    assign featured_img = current_variant.featured_image | default: product.featured_image 
+    assign featured_img = product.featured_image 
 
     assign media_style = 'media-bottom'
 
