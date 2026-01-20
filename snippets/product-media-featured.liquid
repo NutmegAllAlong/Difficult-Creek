@@ -195,10 +195,8 @@
             {%- continue -%}
           {%- endif -%}
 
+        {%- assign image = media -%}
 
-        {%- liquid
-          assign image = media
-        -%}
         {% case media.media_type %}
         {% when 'image' %}
             <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" 
@@ -360,17 +358,17 @@
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-  {%- assign is_variant_image = false -%}
-  {%- for variant in product.variants -%}
-    {%- if variant.image.id == media.id -%}
-      {%- assign is_variant_image = true -%}
-      {%- break -%}
-    {%- endif -%}
-  {%- endfor -%}
-  {%- if is_variant_image -%}
-    {%- continue -%}
-  {%- endif -%}
-{% assign image = media %}
+          {%- assign is_variant_image = false -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.image.id == media.id -%}
+              {%- assign is_variant_image = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if is_variant_image -%}
+            {%- continue -%}
+          {%- endif -%}
+        {% assign image = media %}
 
 <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
           data-image-id="{{ image.id }}">
