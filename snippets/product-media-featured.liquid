@@ -433,15 +433,15 @@
     {%- endif -%}
     <script>
 (function() {
-  console.log('Featured Product Block JS loaded');
   const sectionId = '{{ section.id }}';
   const productData = {{ product | json }};
   
+  console.log('Total variants in product:', productData.variants.length);
+  console.log('First variant ID type:', typeof productData.variants[0].id, productData.variants[0].id);
+  
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM ready');
-    
-    // Find the color variant inputs (case-insensitive)
+    // Find the color variant inputs
     const colorInputs = document.querySelectorAll('input[name="color"], input[name="Color"]');
     console.log('Found color inputs:', colorInputs.length);
     
@@ -449,17 +449,26 @@
       input.addEventListener('change', function() {
         console.log('Color changed to:', input.value);
         
-        // Get the currently selected variant ID from the hidden input
+        // Get the currently selected variant ID
         const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
         if (variantIdInput) {
           const variantId = variantIdInput.value;
-          console.log('Selected variant ID:', variantId);
+          console.log('Selected variant ID:', variantId, 'Type:', typeof variantId);
           
-          const variant = productData.variants.find(v => v.id == variantId);
+          // Try both string and number comparison
+          const variant = productData.variants.find(v => v.id == variantId || v.id === parseInt(variantId));
           console.log('Found variant:', variant);
           
-          if (variant && variant.featured_image) {
-            updateFeaturedImage(variant);
+          if (variant) {
+            console.log('Variant has featured_image?', !!variant.featured_image);
+            if (variant.featured_image) {
+              console.log('Featured image src:', variant.featured_image.src);
+              updateFeaturedImage(variant);
+            } else {
+              console.log('No featured_image on this variant');
+            }
+          } else {
+            console.log('Could not find variant with ID:', variantId);
           }
         }
       });
@@ -467,23 +476,22 @@
   });
   
   function updateFeaturedImage(variant) {
-    console.log('Updating image to:', variant.featured_image.src);
+    console.log('updateFeaturedImage called');
     
     const mainImage = document.querySelector('.product-single__photo img, .product__photo-container img');
-    const mainImageLink = document.querySelector('.product__photo-wrapper');
+    console.log('Main image element:', mainImage);
     
     if (mainImage && variant.featured_image) {
       mainImage.src = variant.featured_image.src;
       mainImage.srcset = variant.featured_image.src;
       mainImage.alt = variant.name;
       
+      const mainImageLink = document.querySelector('.product__photo-wrapper');
       if (mainImageLink) {
         mainImageLink.href = variant.featured_image.src;
       }
       
-      console.log('Image updated successfully!');
-    } else {
-      console.log('Could not find main image element');
+      console.log('Image updated to:', variant.featured_image.src);
     }
   }
 })();
