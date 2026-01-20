@@ -183,19 +183,20 @@
   <div class="photos__item photos__item--main" data-aos="fade">
     <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
-        {%- for media in product.media -%}
-          {%- assign is_variant_image = false -%}
-            {%- for variant in product.variants -%}
-              {%- if variant.image.id == media.id -%}
-                {%- assign is_variant_image = true -%}
-                {%- break -%}
-              {%- endif -%}
+    {%- assign non_variant_image_count = 0 -%}
+      {%- for media in product.media -%}
+        {%- assign is_variant_image = false -%}
+        {%- for variant in product.variants -%}
+          {%- if variant.image.src == media.src -%}
+            {%- assign is_variant_image = true -%}
+            {%- break -%}
+          {%- endif -%}
         {%- endfor -%}
-        {%- if is_variant_image -%}
-          {%- continue -%}
-        {%- endif -%}
-
-        {% assign image = media %}
+  
+  {%- if is_variant_image -%}
+    {%- continue -%}
+  {%- endif -%}
+{% assign image = media %}
 
         {% case media.media_type %}
         {% when 'image' %}
@@ -341,66 +342,40 @@
       </div>
     </div>
 
-    {%- assign non_variant_image_count = 0 -%}
-      {%- for media in product.media -%}
-        {%- assign is_variant_image = false -%}
-        {%- for variant in product.variants -%}
-          {%- if variant.image.id == media.id -%}
-            {%- assign is_variant_image = true -%}
-            {%- break -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- unless is_variant_image -%}
-          {%- assign non_variant_image_count = non_variant_image_count | plus: 1 -%}
-        {%- endunless -%}
-      {%- endfor -%}
-
-      <div style="background: orange; padding: 10px; margin: 10px 0; font-size: 11px; max-height: 300px; overflow: auto;">
-  <strong>DEBUG - First 5 Variants and their images:</strong><br>
-  {%- for variant in product.variants limit: 5 -%}
-    Variant: {{ variant.title }}<br>
-    - Has image? {{ variant.image }}<br>
-    - Image ID: {{ variant.image.id }}<br>
-    - Image src: {{ variant.image.src }}<br>
-    <br>
+{%- assign non_variant_image_count = 0 -%}
+{%- for media in product.media -%}
+  {%- assign is_variant_image = false -%}
+  {%- for variant in product.variants -%}
+    {%- if variant.image.src == media.src -%}
+      {%- assign is_variant_image = true -%}
+      {%- break -%}
+    {%- endif -%}
   {%- endfor -%}
-  <strong>First 5 Product Media:</strong><br>
-  {%- for media in product.media limit: 5 -%}
-    Media {{ forloop.index }}: {{ media.media_type }}<br>
-    - ID: {{ media.id }}<br>
-    - Alt: {{ media.alt }}<br>
-    - Src: {{ media.src }}<br>
-    <br>
-  {%- endfor -%}
-</div>
-
+  
+  {%- unless is_variant_image -%}
+    {%- assign non_variant_image_count = non_variant_image_count | plus: 1 -%}
+  {%- endunless -%}
+{%- endfor -%}
+      
 {%- if non_variant_image_count > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
-        {%- for media in product.media -%}
+{%- for media in product.media -%}
   {%- assign is_variant_image = false -%}
   {%- for variant in product.variants -%}
-    {%- if variant.image.id == media.id -%}
+    {%- if variant.image.src == media.src -%}
       {%- assign is_variant_image = true -%}
-      <!-- MATCH FOUND: Media {{ media.id }} matches variant {{ variant.title }} image {{ variant.image.id }} -->
       {%- break -%}
     {%- endif -%}
   {%- endfor -%}
   
   {%- if is_variant_image -%}
-    <!-- FILTERING OUT: {{ media.id }} ({{ media.alt }}) -->
     {%- continue -%}
-  {%- else -%}
-    <!-- KEEPING: {{ media.id }} ({{ media.alt }}) - Not a variant image -->
   {%- endif -%}
 {% assign image = media %}
 
-
-
-
-
-<div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
-          data-image-id="{{ image.id }}">
+        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+  data-image-id="{{ image.id }}">
           <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
             {% if media.media_type == 'video' %}
             data-videoid="{{ image.id }}"
