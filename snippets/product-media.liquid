@@ -129,7 +129,7 @@
     </style>
 <div class="photos {{ layout_style }}">
     {% unless media_style == 'media-bottom' %}
-    <div class="photos__item photos__item--main" data-aos="fade" style="display: none !important;">
+    <div class="photos__item photos__item--main" data-aos="fade" {% if media_style == 'media-bottom' %}hidden{% endif %}>
 
     {% endunless %}
 
