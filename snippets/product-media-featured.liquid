@@ -387,10 +387,13 @@
     {%- endif -%}
   {%- endfor -%}
   
-  {%- if is_swatch_image -%}
-    {%- continue -%}
-  {%- endif -%}
-{% assign image = media %}
+{%- if is_swatch_image -%}
+  <!-- SWATCH FILTERED: {{ media.src }} -->
+  {%- continue -%}
+{%- else -%}
+  <!-- KEEPING: {{ media.src }} | Alt: {{ media.alt }} -->
+{%- endif -%}
+
 
 
 <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
