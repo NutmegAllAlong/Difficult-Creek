@@ -155,7 +155,6 @@
     <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
-          {%- if hide_variant_images -%}
           {%- assign is_variant_image = false -%}
           {%- for variant in product.variants -%}
             {%- if variant.image.id == media.id -%}
@@ -163,11 +162,9 @@
               {%- break -%}
             {%- endif -%}
           {%- endfor -%}
-  <!-- DEBUG: Media ID {{ media.id }}, Is variant image: {{ is_variant_image }}, Media type: {{ media.media_type }} -->
           {%- if is_variant_image -%}
             {%- continue -%}
           {%- endif -%}
-        {%- endif -%}
 
 
         {%- liquid
