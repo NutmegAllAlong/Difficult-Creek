@@ -441,22 +441,6 @@
       photos-sticky 
     {% endunless %}">
 
-<!-- custom gallery style -->
-    <div class="featured-product-gallery gallery-wrap{{ section.id }}">
-  {% if product.images.size > 0 %}
-    <div class="main-image">
-      <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt }}">
-    </div>
-    <div class="thumbnail-row">
-      {% for image in product.images limit: 8 %}
-        <img src="{{ image | image_url: width: 100 }}" 
-             alt="{{ image.alt }}" 
-             onclick="document.querySelector('.main-image img').src='{{ image | image_url: width: 600 }}'">
-      {% endfor %}
-    </div>
-  {% endif %}
-</div>
-
 <style>
 .section-{{ section.id }} .featured-product-gallery .main-image {
   margin-bottom: 1rem;
@@ -484,7 +468,8 @@
 </style>
 
 
-    <!-- {% render 'product-media', product : product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: section.settings.media_style %} -->
+    {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-bottom' %}
+
     </div>
     <div class="{{ right_size }} order-1 
       {% if  media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
