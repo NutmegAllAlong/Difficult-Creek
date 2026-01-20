@@ -442,7 +442,7 @@
     {% endunless %}">
 
 <!-- custom gallery style -->
-    <div class="featured-product-gallery">
+    <div class="featured-product-gallery gallery-wrap{{ section.id }}">
   {% if product.images.size > 0 %}
     <div class="main-image">
       <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt }}">
