@@ -400,35 +400,32 @@
     assign media_style = 'media-bottom'
 
   -%}
-  <!-- adding style to force thumbnails below the featured image  -->
-  <style>
-.section-{{ section.id }} .photos-thumb-bottom .photo-image {
-  max-width: 100px !important;
-  display: inline-block !important;
+<!-- adding style to force thumbnails below the featured image  -->
+<style>
+/* Hide the main photo gallery completely */
+.section-{{ section.id }} .photos__item--main {
+  display: none !important;
 }
 
-.section-{{ section.id }} .photos-thumb-bottom .my-gallery {
+/* Show only the thumbnail section */
+.section-{{ section.id }} .photos__item--thumbs {
+  display: block !important;
+  width: 100%;
+}
+
+/* Style the thumbnails in a row */
+.section-{{ section.id }} .product-single__thumbnails {
   display: flex !important;
   flex-wrap: wrap !important;
-  gap: 0.5rem !important;
+  gap: 8px !important;
 }
 
-.section-{{ section.id }} .photos-thumb-bottom .photo-image img {
-  width: 100px !important;
-  height: auto !important;
-}
-
-.section-{{ section.id }} .photos-thumb-bottom > .photo-image:first-child {
-  max-width: 100% !important;
-  width: 100% !important;
-  flex-basis: 100% !important;
-}
-
-.section-{{ section.id }} .photos-thumb-bottom > .photo-image:first-child img {
-  width: 100% !important;
-  max-width: 600px !important;
+.section-{{ section.id }} .product-single__thumbnail-item {
+  flex: 0 0 calc(12.5% - 7px) !important;
+  max-width: calc(12.5% - 7px) !important;
 }
 </style>
+
 
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
@@ -441,7 +438,7 @@
       photos-sticky 
     {% endunless %}">
     </div>
-    
+
     <div class="{{ right_size }} order-1 
       {% if  media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
       photos-sticky 
