@@ -461,7 +461,32 @@
 </style>
 
 
-{% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-bottom' %}
+<div class="custom-thumbnail-gallery">
+  {% for image in product.images limit: 8 %}
+    <img src="{{ image | image_url: width: 100 }}" 
+         alt="{{ image.alt }}" 
+         class="custom-thumbnail"
+         data-image-id="{{ image.id }}">
+  {% endfor %}
+</div>
+
+<style>
+.custom-thumbnail-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.custom-thumbnail {
+  width: calc(12.5% - 7px);
+  height: auto;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+.custom-thumbnail:hover {
+  border-color: #000;
+}
+</style>
+
 
 
     </div>
