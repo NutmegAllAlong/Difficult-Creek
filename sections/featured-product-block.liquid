@@ -441,55 +441,6 @@
       photos-sticky 
     {% endunless %}">
 
-<style>
-#ProductSection-{{ section.id }} .product__photo-wrapper,
-#ProductSection-{{ section.id }} .product__photo-container,
-#ProductSection-{{ section.id }} .photos__item:not(.photos__item--thumbs) {
-  display: none !important;
-}
-#ProductSection-{{ section.id }} .product-single__thumbnails,
-#ProductSection-{{ section.id }} .photos__item--thumbs {
-  display: flex !important;
-  flex-wrap: wrap;
-  gap: 8px;
-  width: 100%;
-}
-#ProductSection-{{ section.id }} .product-single__thumbnail-item {
-  flex: 0 0 calc(12.5% - 7px);
-  max-width: calc(12.5% - 7px);
-}
-</style>
-
-
-<div class="custom-thumbnail-gallery">
-  {% for image in product.images limit: 8 %}
-    <img src="{{ image | image_url: width: 100 }}" 
-         alt="{{ image.alt }}" 
-         class="custom-thumbnail"
-         data-image-id="{{ image.id }}">
-  {% endfor %}
-</div>
-
-<style>
-#ProductSection-{{ section.id }} .photos__item--main {
-  display: none !important;
-}
-#ProductSection-{{ section.id }} .photos__item--thumbs {
-  display: block !important;
-  width: 100%;
-}
-#ProductSection-{{ section.id }} .product-single__thumbnails {
-  display: flex !important;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-#ProductSection-{{ section.id }} .product-single__thumbnail-item {
-  flex: 0 0 calc(12.5% - 7px) !important;
-  max-width: calc(12.5% - 7px) !important;
-  padding: 0 !important;
-}
-</style>
-
 
     </div>
     <div class="{{ right_size }} order-1 
