@@ -128,10 +128,7 @@
         }
     </style>
 <div class="photos {{ layout_style }}">
-    {% unless media_style == 'media-bottom' %}
     <div class="photos__item photos__item--main" data-aos="fade">
-    {% endunless %}
-
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
@@ -343,6 +340,4 @@
       }
     </script>
     {%- endif -%}
-  {% unless media_style == 'media-bottom' %}
-</div>
-{% endunless %}
+  </div>
