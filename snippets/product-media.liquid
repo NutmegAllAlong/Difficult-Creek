@@ -28,6 +28,19 @@
         assign layout_mobile = ' hide '
     endif
     -%}
+
+    {% if media_style == 'media-bottom' %}
+<style>
+.photos-thumb-bottom .photos__item--main .photo-image:not(.slick-current) {
+  display: none !important;
+}
+.photos-thumb-bottom .photos__item--main {
+  margin-bottom: 1rem;
+}
+</style>
+{% endif %}
+
+
     <style>
         .photos-thumb-left .photos__item--main{
             position: relative;
@@ -128,9 +141,7 @@
         }
     </style>
 <div class="photos {{ layout_style }}">
-    <div class="photos__item photos__item--main" data-aos="fade" {% if media_style == 'media-bottom' %}style="display:none;"{% endif %}>
-
-
+    
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
