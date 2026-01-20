@@ -362,14 +362,6 @@
       {%- endfor -%}
 
 
-<!-- DEBUG Color metafield exists: {{ product.metafields.custom.color }} -->
-{%- if product.metafields.custom.color -%}
-  <!-- Color metafield type: {{ product.metafields.custom.color.type }} -->
-  {%- for color_entry in product.metafields.custom.color.value -%}
-    <!-- Color entry: {{ color_entry }} | Swatch image: {{ color_entry.swatch_image }} -->
-  {%- endfor -%}
-{%- endif -%}
-
 {%- if non_variant_image_count > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
