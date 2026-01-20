@@ -449,7 +449,47 @@ console.log('Variant switcher loading...');
   
   console.log('Loaded variants:', variants.length);
   
+  function updateVariantImage(variantId) {
+    console.log('Updating for variant ID:', variantId);
+    
+    const variant = variants.find(function(v) {
+      return String(v.id) === String(variantId);
+    });
+    
+    if (variant && variant.image) {
+      console.log('Found variant image:', variant.image);
+      const mainImg = document.querySelector('.product__photo-container img, .product-single__photo img');
+      if (mainImg) {
+        mainImg.src = variant.image;
+        mainImg.srcset = variant.image;
+        mainImg.setAttribute('data-src', variant.image);
+        mainImg.setAttribute('data-srcset', variant.image);
+        
+        if (mainImg.classList.contains('lazyload')) {
+          mainImg.classList.remove('lazyload');
+          mainImg.classList.add('lazyloaded');
+        }
+        
+        const parentLink = mainImg.closest('a');
+        if (parentLink) {
+          parentLink.href = variant.image;
+        }
+        
+        console.log('Image updated!');
+      }
+    }
+  }
+  
   function init() {
+    // Listen for Foamy's variant change event
+    document.addEventListener('variant:change', function(event) {
+      console.log('variant:change event:', event.detail);
+      if (event.detail && event.detail.variant) {
+        updateVariantImage(event.detail.variant.id);
+      }
+    });
+    
+    // Backup: also listen to color input changes with longer delay
     const colorInputs = document.querySelectorAll('input[name="color"]');
     console.log('Found color inputs:', colorInputs.length);
     
@@ -459,48 +499,10 @@ console.log('Variant switcher loading...');
         
         setTimeout(function() {
           const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
-          if (!variantIdInput) {
-            console.log('No variant ID input found');
-            return;
+          if (variantIdInput && variantIdInput.value) {
+            updateVariantImage(variantIdInput.value);
           }
-          
-          const selectedId = variantIdInput.value;
-          console.log('Selected variant ID:', selectedId);
-          
-          const variant = variants.find(function(v) {
-            return String(v.id) === String(selectedId);
-          });
-          
-          if (variant && variant.image) {
-            console.log('Found variant image:', variant.image);
-            const mainImg = document.querySelector('.product__photo-container img, .product-single__photo img');
-            if (mainImg) {
-              // Update all image attributes to force reload
-              mainImg.src = variant.image;
-              mainImg.srcset = variant.image;
-              mainImg.setAttribute('data-src', variant.image);
-              mainImg.setAttribute('data-srcset', variant.image);
-              
-              // Force lazyload to update
-              if (mainImg.classList.contains('lazyload')) {
-                mainImg.classList.remove('lazyload');
-                mainImg.classList.add('lazyloaded');
-              }
-              
-              // Also update the parent link if it exists
-              const parentLink = mainImg.closest('a');
-              if (parentLink) {
-                parentLink.href = variant.image;
-              }
-              
-              console.log('Image updated!');
-            } else {
-              console.log('Main image element not found');
-            }
-          } else {
-            console.log('No variant or image found');
-          }
-        }, 150);
+        }, 500);
       });
     });
   }
@@ -512,6 +514,7 @@ console.log('Variant switcher loading...');
   }
 })();
 </script>
+
 
 
   {% if media_style == 'media-bottom' %}
