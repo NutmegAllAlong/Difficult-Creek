@@ -434,8 +434,6 @@
     
 <script>
 console.log('Variant switcher loading...');
-console.log('Actual img.src after update:', mainImg.src);
-console.log('Image element classes:', mainImg.className);
 
 (function() {
   'use strict';
@@ -444,7 +442,9 @@ console.log('Image element classes:', mainImg.className);
     {%- for variant in product.variants -%}
       {
         id: {{ variant.id | json }},
-        image: {{ variant.image.src | json }}
+        image: {{ variant.image.src | json }},
+        option1: {{ variant.option1 | json }},
+        option2: {{ variant.option2 | json }}
       }{%- unless forloop.last -%},{%- endunless -%}
     {%- endfor -%}
   ];
@@ -452,64 +452,95 @@ console.log('Image element classes:', mainImg.className);
   console.log('Loaded variants:', variants.length);
   
   function updateVariantImage(variantId) {
-  console.log('Updating for variant ID:', variantId);
-  
-  const variant = variants.find(function(v) {
-    return String(v.id) === String(variantId);
-  });
-  
-  if (variant && variant.image) {
-    console.log('Found variant image:', variant.image);
+    console.log('Updating for variant ID:', variantId);
     
-    // Find ALL images in the gallery and update them
-    const allImages = document.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
-    console.log('Found images:', allImages.length);
+    const variant = variants.find(function(v) {
+      return String(v.id) === String(variantId);
+    });
     
-    allImages.forEach(function(img) {
-      img.src = variant.image;
-      img.srcset = variant.image;
-      img.setAttribute('data-src', variant.image);
+    if (variant && variant.image) {
+      console.log('Found variant image:', variant.image);
       
-      // Remove lazyload
-      img.classList.remove('lazyload', 'lazypreload');
-      img.classList.add('lazyloaded');
-    });
-    
-    // Update PhotoSwipe data if it exists
-    const photoswipeItems = document.querySelectorAll('[data-mfp-src], [data-zoom-src]');
-    photoswipeItems.forEach(function(item) {
-      item.setAttribute('data-mfp-src', variant.image);
-      item.setAttribute('data-zoom-src', variant.image);
-      if (item.href) item.href = variant.image;
-    });
-    
-    console.log('All images updated!');
+      // Find ALL images in the gallery and update them
+      const allImages = document.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
+      console.log('Found images to update:', allImages.length);
+      
+      allImages.forEach(function(img) {
+        console.log('Updating image, old src:', img.src);
+        img.src = variant.image;
+        img.srcset = variant.image;
+        img.setAttribute('data-src', variant.image);
+        console.log('New src:', img.src);
+        
+        // Remove lazyload
+        img.classList.remove('lazyload', 'lazypreload');
+        img.classList.add('lazyloaded');
+      });
+      
+      // Update PhotoSwipe/zoom data
+      const photoswipeItems = document.querySelectorAll('[data-mfp-src], [data-zoom-src], .product__photo-wrapper');
+      photoswipeItems.forEach(function(item) {
+        item.setAttribute('data-mfp-src', variant.image);
+        item.setAttribute('data-zoom-src', variant.image);
+        if (item.href) item.href = variant.image;
+      });
+      
+      console.log('All images updated!');
+    } else {
+      console.log('No variant or image found for ID:', variantId);
+    }
   }
-}
-
-  function init() {
-    // Listen for Foamy's variant change event
-    document.addEventListener('variant:change', function(event) {
-      console.log('variant:change event:', event.detail);
-      if (event.detail && event.detail.variant) {
-        updateVariantImage(event.detail.variant.id);
-      }
-    });
+  
+  function getSelectedVariantByOptions() {
+    // Manually find variant based on selected options
+    const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
+    const colorInput = document.querySelector('input[name="color"]:checked');
     
-    // Backup: also listen to color input changes with longer delay
+    if (sizeInput && colorInput) {
+      const size = sizeInput.value;
+      const color = colorInput.value;
+      console.log('Looking for variant with size:', size, 'color:', color);
+      
+      const variant = variants.find(function(v) {
+        return v.option1 === size && v.option2 === color;
+      });
+      
+      if (variant) {
+        console.log('Found variant by options:', variant.id);
+        return variant.id;
+      }
+    }
+    return null;
+  }
+  
+  function init() {
+    console.log('Initializing...');
+    
+    // Listen for color changes
     const colorInputs = document.querySelectorAll('input[name="color"]');
     console.log('Found color inputs:', colorInputs.length);
     
     colorInputs.forEach(function(input) {
       input.addEventListener('change', function() {
-        console.log('Swatch clicked:', input.value);
-        
-        setTimeout(function() {
-          const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
-          if (variantIdInput && variantIdInput.value) {
-            updateVariantImage(variantIdInput.value);
-          }
-        }, 500);
+        console.log('Color changed to:', input.value);
+        const variantId = getSelectedVariantByOptions();
+        if (variantId) {
+          updateVariantImage(variantId);
+        }
+      });
+    });
+    
+    // Listen for size changes
+    const sizeInputs = document.querySelectorAll('input[name="diameter-size"], select[name="diameter-size"]');
+    console.log('Found size inputs:', sizeInputs.length);
+    
+    sizeInputs.forEach(function(input) {
+      input.addEventListener('change', function() {
+        console.log('Size changed to:', input.value);
+        const variantId = getSelectedVariantByOptions();
+        if (variantId) {
+          updateVariantImage(variantId);
+        }
       });
     });
   }
@@ -521,7 +552,6 @@ console.log('Image element classes:', mainImg.className);
   }
 })();
 </script>
-
 
 {% if media_style == 'media-bottom' %}
   </div>
