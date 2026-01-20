@@ -467,8 +467,23 @@
 }
 </style>
 
+<style>
+  #ProductSection-{{ section.id }} .product__photo-container {
+    display: none !important;
+  }
+  #ProductSection-{{ section.id }} .product-single__thumbnails {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  #ProductSection-{{ section.id }} .product-single__thumbnail-item {
+    flex: 0 0 calc(12.5% - 7px);
+    max-width: calc(12.5% - 7px);
+  }
+</style>
 
-    {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-bottom' %}
+{% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: 'media-bottom' %}
+
 
     </div>
     <div class="{{ right_size }} order-1 
