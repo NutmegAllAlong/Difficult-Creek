@@ -433,23 +433,33 @@
     {%- endif -%}
     <script>
 (function() {
+  console.log('Featured Product Block JS loaded');
   const sectionId = '{{ section.id }}';
   const productData = {{ product | json }};
   
+  console.log('Product data:', productData);
+  
   // Wait for DOM to be ready
   document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM ready');
+    
     // Listen for variant change events (Foamy uses this)
     document.addEventListener('variant:change', function(event) {
+      console.log('variant:change event fired:', event.detail);
       if (event.detail && event.detail.variant) {
         updateFeaturedImage(event.detail.variant);
       }
     });
     
-    // Also listen for option changes (backup method)
-    const variantInputs = document.querySelectorAll('.variant-input, input[name="Color"]');
+    // Find all possible variant inputs
+    const variantInputs = document.querySelectorAll('input[type="radio"][name*="Color"], .variant-input, .single-option-selector');
+    console.log('Found variant inputs:', variantInputs.length, variantInputs);
+    
     variantInputs.forEach(function(input) {
       input.addEventListener('change', function() {
+        console.log('Input changed:', input.name, input.value);
         const selectedVariant = getSelectedVariant();
+        console.log('Selected variant:', selectedVariant);
         if (selectedVariant) {
           updateFeaturedImage(selectedVariant);
         }
@@ -458,30 +468,38 @@
   });
   
   function getSelectedVariant() {
-    // Get selected options
-    const options = {};
-    document.querySelectorAll('.variant-input:checked, select.variant-input').forEach(function(input) {
-      const optionName = input.name;
-      options[optionName] = input.value;
-    });
-    
-    // Find matching variant
-    return productData.variants.find(function(variant) {
-      return variant.option1 === options['Diameter Size'] && variant.option2 === options['Color'];
-    });
+    // Try to get from form
+    const form = document.querySelector('form[action*="/cart/add"]');
+    if (form) {
+      const variantId = form.querySelector('[name="id"]');
+      if (variantId && variantId.value) {
+        return productData.variants.find(v => v.id == variantId.value);
+      }
+    }
+    return null;
   }
   
   function updateFeaturedImage(variant) {
-    if (!variant || !variant.featured_image) return;
+    console.log('updateFeaturedImage called with:', variant);
     
-    const mainImage = document.querySelector('.product-single__photo img');
+    if (!variant || !variant.featured_image) {
+      console.log('No variant or featured_image');
+      return;
+    }
+    
+    const mainImage = document.querySelector('.product-single__photo img, .product__photo-container img');
     const mainImageLink = document.querySelector('.product__photo-wrapper');
+    
+    console.log('Main image element:', mainImage);
+    console.log('Variant image src:', variant.featured_image.src);
     
     if (mainImage && variant.featured_image) {
       // Update main image
       mainImage.src = variant.featured_image.src;
       mainImage.srcset = variant.featured_image.src;
       mainImage.alt = variant.featured_image.alt || variant.name;
+      
+      console.log('Image updated!');
       
       // Update link
       if (mainImageLink) {
@@ -491,6 +509,7 @@
   }
 })();
 </script>
+
 
   {% if media_style == 'media-bottom' %}
   </div>
