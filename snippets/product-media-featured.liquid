@@ -185,24 +185,21 @@
         
         {%- for media in product.media -%}
   {%- assign is_swatch_image = false -%}
-  
-  {%- comment %} Check if this image is used in any Color option value {% endcomment -%}
-  {%- for option in product.options_with_values -%}
-    {%- if option.name == 'Color' -%}
-      {%- for value in option.values -%}
-        {%- assign color_metafield = product.metafields.custom.color -%}
-        {%- comment %} Check if media matches any swatch image {% endcomment -%}
-        {%- if media.src contains value or media.alt contains value -%}
-          {%- assign is_swatch_image = true -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
+
+{%- comment %} Get all swatch image IDs from Color metafield {% endcomment -%}
+{%- if product.metafields.custom.color -%}
+  {%- for color_entry in product.metafields.custom.color.value -%}
+    {%- if color_entry.swatch_image.value.id == media.id -%}
+      {%- assign is_swatch_image = true -%}
+      {%- break -%}
     {%- endif -%}
   {%- endfor -%}
-  
-  {%- if is_swatch_image -%}
-    {%- continue -%}
-  {%- endif -%}
+{%- endif -%}
+
+{%- if is_swatch_image -%}
+  {%- continue -%}
+{%- endif -%}
+
 {% assign image = media %}
 
 
@@ -375,24 +372,21 @@
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
   {%- assign is_swatch_image = false -%}
-  
-  {%- for option in product.options_with_values -%}
-    {%- if option.name == 'Color' -%}
-      {%- for value in option.values -%}
-        {%- if media.src contains value or media.alt contains value -%}
-          {%- assign is_swatch_image = true -%}
-          {%- break -%}
-        {%- endif -%}
-      {%- endfor -%}
+
+{%- comment %} Get all swatch image IDs from Color metafield {% endcomment -%}
+{%- if product.metafields.custom.color -%}
+  {%- for color_entry in product.metafields.custom.color.value -%}
+    {%- if color_entry.swatch_image.value.id == media.id -%}
+      {%- assign is_swatch_image = true -%}
+      {%- break -%}
     {%- endif -%}
   {%- endfor -%}
-  
-{%- if is_swatch_image -%}
-  <!-- SWATCH FILTERED: {{ media.src }} -->
-  {%- continue -%}
-{%- else -%}
-  <!-- KEEPING: {{ media.src }} | Alt: {{ media.alt }} -->
 {%- endif -%}
+
+{%- if is_swatch_image -%}
+  {%- continue -%}
+{%- endif -%}
+
 
 
 
