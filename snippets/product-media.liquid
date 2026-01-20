@@ -28,6 +28,28 @@
         assign layout_mobile = ' hide '
     endif
     -%}
+    {% if media_style == 'media-bottom' %}
+
+      <style>
+    /* Hide all large gallery images except the featured one */
+      .photos-thumb-bottom .my-gallery .photo-image:not(.slick-current) {
+          display: none !important;
+        }
+
+    /* Ensure featured image displays properly */
+      .photos-thumb-bottom .my-gallery .photo-image.slick-current {
+          display: block !important;
+          margin-bottom: 1.5rem;
+        }
+
+      /* Ensure thumbnails display in a row */
+      .photos-thumb-bottom .product-single__thumbnails {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+        }
+      </style>
+      {% endif %}
 
         <style>
         .photos-thumb-left .photos__item--main{
