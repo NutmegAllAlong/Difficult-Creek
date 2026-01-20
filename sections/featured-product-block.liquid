@@ -414,7 +414,8 @@
 {% endunless %}">
 
 
-  {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style, hide_variant_images: true %}
+  {% render 'product-media-featured', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style %}
+
 </div>
 
 
