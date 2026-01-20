@@ -377,6 +377,25 @@
   {%- endif -%}
 {% assign image = media %}
 
+<div style="background: orange; padding: 10px; margin: 10px 0; font-size: 11px; max-height: 300px; overflow: auto;">
+  <strong>DEBUG - First 5 Variants and their images:</strong><br>
+  {%- for variant in product.variants limit: 5 -%}
+    Variant: {{ variant.title }}<br>
+    - Has image? {{ variant.image }}<br>
+    - Image ID: {{ variant.image.id }}<br>
+    - Image src: {{ variant.image.src }}<br>
+    <br>
+  {%- endfor -%}
+  <strong>First 5 Product Media:</strong><br>
+  {%- for media in product.media limit: 5 -%}
+    Media {{ forloop.index }}: {{ media.media_type }}<br>
+    - ID: {{ media.id }}<br>
+    - Alt: {{ media.alt }}<br>
+    - Src: {{ media.src }}<br>
+    <br>
+  {%- endfor -%}
+</div>
+
 
 
 <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
