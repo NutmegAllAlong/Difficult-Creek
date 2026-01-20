@@ -395,7 +395,8 @@
     assign left_size = 'col-md-7 col-12'
     assign right_size = 'col-md-5 col-12'
     endcase
-    assign featured_img = product.featured_image 
+    assign featured_img = product.featured_image
+
 
     assign media_style = 'media-bottom'
 
@@ -407,11 +408,46 @@
   <meta itemprop="brand" content="{{ product.vendor }}">
 
   <div class="row product-single">
-    <div class="{{ left_size }} 
-      {% unless media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
-      photos-sticky 
-    {% endunless %}">
-    </div>
+   <div class="{{ left_size }} 
+  {% unless media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
+  photos-sticky 
+{% endunless %}">
+
+<style>
+/* Hide all main gallery images */
+.section-{{ section.id }} .photos__item--main .photo-image {
+  display: none !important;
+}
+
+/* Show only the first image (featured image) */
+.section-{{ section.id }} .photos__item--main .photo-image.slick-current {
+  display: block !important;
+  margin-bottom: 1rem;
+}
+
+/* Style the thumbnail section */
+.section-{{ section.id }} .photos__item--thumbs {
+  display: block !important;
+  width: 100%;
+}
+
+.section-{{ section.id }} .product-single__thumbnails {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 1rem;
+}
+
+.section-{{ section.id }} .product-single__thumbnail-item {
+  flex: 0 0 calc(12.5% - 7px) !important;
+  max-width: calc(12.5% - 7px) !important;
+}
+</style>
+
+  {% render 'product-media', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style %}
+
+</div>
+
 
     <div class="{{ right_size }} order-1 
       {% if  media_style == 'media-list' or media_style == 'media-grid' or media_style == 'media-collage-1' or media_style == 'media-collage-2' %} 
