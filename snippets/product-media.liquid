@@ -128,7 +128,8 @@
         }
     </style>
 <div class="photos {{ layout_style }}">
-    <div class="photos__item photos__item--main" data-aos="fade">
+    <div class="photos__item photos__item--main" data-aos="fade" {% if media_style == 'media-bottom' %}style="display:none;"{% endif %}>
+
 
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
