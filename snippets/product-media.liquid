@@ -133,10 +133,10 @@
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
         {%- for media in product.media -%}
-  {%- if media_style == 'media-bottom' -%}
-    {%- assign is_variant_image = false -%}
-    {%- for variant in product.variants -%}
-      {%- if variant.image.id == media.id -%}
+          {%- if media_style == 'media-bottom' -%}
+          {%- assign is_variant_image = false -%}
+          {%- for variant in product.variants -%}
+          {%- if variant.image.id == media.id -%}
         {%- assign is_variant_image = true -%}
         {%- break -%}
       {%- endif -%}
