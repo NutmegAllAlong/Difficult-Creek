@@ -389,12 +389,23 @@
             {%- endfor -%}
           {%- endif -%}
 
-          {%- if is_swatch_image -%}
-            <!-- FILTERED SWATCH: {{ media.id }} -->
-            {%- continue -%}
-          {%- else -%}
-            <!-- KEEPING: {{ media.id }} | {{ media.alt }} -->
-          {%- endif -%}
+          <div style="background: yellow; padding: 10px; margin: 10px 0; font-size: 12px;">
+  <strong>DEBUG:</strong><br>
+  Color metafield exists: {{ product.metafields.custom.color }}<br>
+  {%- if product.metafields.custom.color -%}
+    Color metafield type: {{ product.metafields.custom.color.type }}<br>
+    Number of entries: {{ product.metafields.custom.color.value.size }}<br>
+    {%- for color_entry in product.metafields.custom.color.value -%}
+      Entry {{ forloop.index }}: {{ color_entry }}<br>
+      Swatch image: {{ color_entry.swatch_image }}<br>
+      Swatch image value: {{ color_entry.swatch_image.value }}<br>
+      Swatch image ID: {{ color_entry.swatch_image.value.id }}<br>
+    {%- endfor -%}
+  {%- else -%}
+    Color metafield is EMPTY or doesn't exist!<br>
+  {%- endif -%}
+</div>
+
         {% assign image = media %}
 
 
