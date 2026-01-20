@@ -347,61 +347,44 @@
       </div>
     </div>
 
-    {%- assign non_swatch_image_count = 0 -%}
-{%- for media in product.media -%}
-  {%- assign is_swatch_image = false -%}
-  
-  {%- comment %} Check Color metafield for swatches {% endcomment -%}
-  {%- if product.metafields.custom.color -%}
-    {%- for color_entry in product.metafields.custom.color.value -%}
-      {%- if color_entry.swatch_image.value.id == media.id -%}
-        {%- assign is_swatch_image = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-  {%- endif -%}
-  
-  {%- unless is_swatch_image -%}
-    {%- assign non_swatch_image_count = non_swatch_image_count | plus: 1 -%}
-  {%- endunless -%}
-{%- endfor -%}
+    {%- assign non_variant_image_count = 0 -%}
+      {%- for media in product.media -%}
+        {%- assign is_variant_image = false -%}
+        {%- for variant in product.variants -%}
+          {%- if variant.image.id == media.id -%}
+            {%- assign is_variant_image = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- unless is_variant_image -%}
+          {%- assign non_variant_image_count = non_variant_image_count | plus: 1 -%}
+        {%- endunless -%}
+      {%- endfor -%}
 
-<div style="background: yellow; padding: 10px; margin: 10px 0; font-size: 12px;">
-  <strong>DEBUG - All Product Metafields:</strong><br>
-  {%- for metafield in product.metafields.custom -%}
-    {{ metafield[0] }}: {{ metafield[1] }}<br>
+
+<!-- DEBUG Color metafield exists: {{ product.metafields.custom.color }} -->
+{%- if product.metafields.custom.color -%}
+  <!-- Color metafield type: {{ product.metafields.custom.color.type }} -->
+  {%- for color_entry in product.metafields.custom.color.value -%}
+    <!-- Color entry: {{ color_entry }} | Swatch image: {{ color_entry.swatch_image }} -->
   {%- endfor -%}
-  <br>
-  <strong>Product options:</strong><br>
-  {%- for option in product.options_with_values -%}
-    {{ option.name }}: {{ option.values | join: ', ' }}<br>
-  {%- endfor -%}
-</div>
+{%- endif -%}
 
-
-{%- if non_swatch_image_count > 1 -%}
+{%- if non_variant_image_count > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
-          {%- assign is_swatch_image = false -%}
-
-          {%- if product.metafields.custom.color -%}
-            {%- for color_entry in product.metafields.custom.color.value -%}
-              {%- if color_entry.swatch_image.value.id == media.id -%}
-                {%- assign is_swatch_image = true -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-
-          {%- if is_swatch_image -%}
-            <!-- FILTERED SWATCH: {{ media.id }} -->
-            {%- continue -%}
-          {%- else -%}
-            <!-- KEEPING: {{ media.id }} | {{ media.alt }} -->
-          {%- endif -%}
-        {% assign image = media %}
-
+          {%- assign is_variant_image = false -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.image.id == media.id -%}
+              {%- assign is_variant_image = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- if is_variant_image -%}
+    {%- continue -%}
+  {%- endif -%}
+{% assign image = media %}
 
 
 <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
