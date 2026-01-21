@@ -2358,6 +2358,9 @@
           "96e8331c-f8e4-4b9d-802b-4a659893f052",
           "bd742a30-30ad-494f-bb7a-d35c5cd1f2ae"
         ],
+        "custom_css": [
+          ".header-bottom {padding: 30px 0;}"
+        ],
         "settings": {
           "logo": "shopify://shop_images/DCL_Logo__Boeklins.png",
           "logo_white": "shopify://shop_images/DCL_Logo__Boeklins.png",
