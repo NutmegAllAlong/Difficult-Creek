@@ -2340,6 +2340,7 @@
           },
           "bd742a30-30ad-494f-bb7a-d35c5cd1f2ae": {
             "type": "topbar",
+            "disabled": true,
             "settings": {
               "enable_money_topbar": true,
               "enable_language_topbar": true,
@@ -2391,7 +2392,7 @@
           "font_weight": "600",
           "menu_spacing": 0.1,
           "type_menu": "uppercase",
-          "menu_active": "thick-line",
+          "menu_active": "thin-line",
           "menu_label_text": "#ffffff",
           "menu_label_new": "#e35353",
           "menu_label_hot": "#5369e3",
