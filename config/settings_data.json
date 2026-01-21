@@ -1284,7 +1284,7 @@
               "opacity_overlay": 0,
               "slide_toptitle": "Custom made lamp shades",
               "slide_toptitle_color": "#7f4a88",
-              "slide_title": "Your Journey Starts Here",
+              "slide_title": "Light Your Way",
               "slide_title_color": "#ffffff",
               "subheading": "",
               "subheading_color": "#ffffff",
@@ -2346,8 +2346,8 @@
             "type": "text",
             "settings": {
               "widthlogofooter": 130,
-              "title": "Company",
-              "text": "<ul style=\"line-height:1.6;\">\n    <li style=\"font-weight:200;\" class=\"mb-4\">\n        We're located at<br>5133 Clay's Mill Rd.<br>Scottsburg, VA 24589\n    </li>\n    <li>\n        <div>\n<span style=\"font-weight:500;\">T:</span> 703-434-6497</div>\n        <div>\n<span style=\"font-weight:500;\">E:</span> amie@difficultcreek.com</div>\n    </li>\n    \n</ul>",
+              "title": "difficult creek",
+              "text": "<ul style=\"line-height:1.6;\">\n    <li style=\"font-weight:200;\" class=\"mb-4\">\n        <b>We're located at</b><br>5133 Clay's Mill Rd.<br>Scottsburg, VA 24589\n    </li>\n    <li>\n        <div>\n<span style=\"font-weight:500;\">Tel:</span> 703-434-6497</div>\n        <div>\n<span style=\"font-weight:500;\">E:</span> amie@difficultcreek.com</div>\n    </li>\n    \n</ul>",
               "show_social": false,
               "width": "25%"
             }
