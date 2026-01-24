@@ -2215,18 +2215,18 @@
             "type": "menu-collection",
             "settings": {
               "menu_title": "Lamps",
-              "menu_width": "container",
+              "menu_width": "container-fluid",
               "menu_column": 1,
               "enable_menu_collection": true,
               "enable_items_count": false,
-              "image_size": "square",
+              "image_size": "portrait",
               "menu_collection_width": 75,
               "menu_collection_1": "vintage-antique-lamps",
               "menu_collection_2": "custom-built-lamps",
               "menu_collection_3": "asian-lamps",
-              "menu_collection_4": "mid-century-modern-lamps",
-              "menu_collection_5": "brass-lamps",
-              "menu_collection_6": ""
+              "menu_collection_4": "candlestick-lamps",
+              "menu_collection_5": "mid-century-modern-lamps",
+              "menu_collection_6": "brass-lamps"
             }
           },
           "bd742a30-30ad-494f-bb7a-d35c5cd1f2ae": {
