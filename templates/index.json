@@ -203,6 +203,13 @@
             "icon": ""
           }
         },
+        "collection_UgCpV3": {
+          "type": "collection",
+          "settings": {
+            "collection": "candlestick-lamps",
+            "icon": ""
+          }
+        },
         "collection_84kTw9": {
           "type": "collection",
           "settings": {
@@ -217,12 +224,13 @@
         "collection_yi7cNU",
         "collection_TATq9b",
         "collection_RF4gF8",
+        "collection_UgCpV3",
         "collection_84kTw9"
       ],
       "name": "Collection list",
       "settings": {
         "animation": "zoom-in",
-        "setwidth": "container-fluid",
+        "setwidth": "container",
         "bgsection": "#faf5f2",
         "title_top": "Explore Our Lamps Collection",
         "title": "Asian, Vintage & Antique, Brass, Mid Century Modern and Custom Built",
@@ -231,7 +239,7 @@
         "size_image": "square",
         "style_item": "bottom",
         "rows": "1",
-        "show": 5,
+        "show": 6,
         "radius": 0,
         "space": 15,
         "size_text": "h6",
@@ -244,72 +252,6 @@
         "infinite": true,
         "paddingsection": "50px 0px 0px 0px",
         "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
-    "brand_carousel_dnJR8V": {
-      "type": "brand-carousel",
-      "blocks": {
-        "logo_7PfKV3": {
-          "type": "logo",
-          "settings": {
-            "link": ""
-          }
-        },
-        "logo_qrWgN8": {
-          "type": "logo",
-          "settings": {
-            "link": ""
-          }
-        },
-        "logo_fWKD6L": {
-          "type": "logo",
-          "settings": {
-            "link": ""
-          }
-        },
-        "logo_NEMVaP": {
-          "type": "logo",
-          "settings": {
-            "link": ""
-          }
-        },
-        "logo_cgCPGX": {
-          "type": "logo",
-          "settings": {
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "logo_7PfKV3",
-        "logo_qrWgN8",
-        "logo_fWKD6L",
-        "logo_NEMVaP",
-        "logo_cgCPGX"
-      ],
-      "custom_css": [],
-      "settings": {
-        "animation": "",
-        "setwidth": "container",
-        "bgsection": "#f4efe9",
-        "title_top": "",
-        "title": "",
-        "des": "<h3>Our lamps are refreshed and renewed and given new life</h3>",
-        "align-heading": "center",
-        "grayscale": false,
-        "arrows": false,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "width_image": 70,
-        "slidestoshow": 5,
-        "slidescroll": 1,
-        "pd_items": 15,
-        "rows": "1",
-        "paddingsection": "75px 0px 75px 0px",
-        "paddingmobile": "50px 0px 50px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
@@ -380,6 +322,69 @@
         "rows": "1",
         "show": 4
       }
+    },
+    "17692939121f0c05b8": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_42784c1_ECrDg7": {
+          "type": "ai_gen_block_42784c1",
+          "settings": {
+            "subtitle": "Given New Life",
+            "title": "Our Lamps are Renewed & Refreshed",
+            "heading_alignment": "center",
+            "heading_spacing": 40,
+            "subtitle_font_size": 14,
+            "subtitle_font_weight": "700",
+            "subtitle_transform": "uppercase",
+            "subtitle_letter_spacing": 0.2,
+            "subtitle_color": "#7f4a88",
+            "subtitle_spacing": 10,
+            "title_font_size": 34,
+            "title_font_weight": "600",
+            "title_color": "#231f20",
+            "logos_per_row_desktop": 4,
+            "logos_per_row_tablet": 4,
+            "logos_per_row_mobile": 2,
+            "desktop_width_percent": 100,
+            "logo_max_width": 150,
+            "logo_spacing": 40,
+            "hover_opacity": 70,
+            "text_alignment": "center",
+            "text_font_size": 14,
+            "text_font_weight": "400",
+            "text_color": "#343a40",
+            "image_text_spacing": 15,
+            "background_color": "#faf5f2",
+            "section_padding_top": 50,
+            "section_padding_bottom": 50,
+            "logo_image_1": "shopify://shop_images/rewiring.svg",
+            "logo_link_1": "",
+            "logo_text_1": "Rewiring",
+            "logo_image_2": "shopify://shop_images/refurbish_old_shade.svg",
+            "logo_link_2": "",
+            "logo_text_2": "Refurbish old shades",
+            "logo_image_3": "shopify://shop_images/replace_parts.svg",
+            "logo_link_3": "",
+            "logo_text_3": "Replace old parts",
+            "logo_image_4": "shopify://shop_images/create_new_lamps_b3b4e8cf-60c2-44b6-a57b-b87483b485ed.svg",
+            "logo_link_4": "",
+            "logo_text_4": "Create new lamps",
+            "logo_link_5": "",
+            "logo_text_5": "",
+            "logo_link_6": "",
+            "logo_text_6": "",
+            "logo_link_7": "",
+            "logo_text_7": "",
+            "logo_link_8": "",
+            "logo_text_8": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_42784c1_ECrDg7"
+      ],
+      "settings": {}
     },
     "93c72a6c-f37d-432e-8104-d1f2a08adc05": {
       "type": "product-list",
@@ -825,8 +830,8 @@
     "17686627017bea076d",
     "parallax_banner_JKcKiG",
     "featured_collections_1_FW6aWb",
-    "brand_carousel_dnJR8V",
     "list_image_Y6TH8D",
+    "17692939121f0c05b8",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
     "scrolling_text_M9DwVE",
     "advanced_content_rzNHjz",
