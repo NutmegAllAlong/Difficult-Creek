@@ -1,6 +1,758 @@
+{% doc %}
+  @prompt
+    Create a logo carousel section with individual logo blocks where each logo can have an image, a link, and a text label that displays below the logo image. The text label should be customizable for each logo block so the merchant can type in brand names. Include settings for text alignment, font size, and spacing between the logo and text., Please add the ability to have a subtitle and title to this block
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-logo-carousel-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-logo-carousel-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-logo-carousel-header-{{ ai_gen_id }} {
+    text-align: {{ block.settings.heading_alignment }};
+    margin-bottom: {{ block.settings.heading_spacing }}px;
+  }
+
+  .ai-logo-carousel-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_font_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    font-weight: {{ block.settings.subtitle_font_weight }};
+    margin: 0 0 {{ block.settings.subtitle_spacing }}px;
+    line-height: 1.4;
+    text-transform: {{ block.settings.subtitle_transform }};
+    letter-spacing: {{ block.settings.subtitle_letter_spacing }}em;
+  }
+
+  .ai-logo-carousel-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    color: {{ block.settings.title_color }};
+    font-weight: {{ block.settings.title_font_weight }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-logo-carousel-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.logos_per_row_desktop }}, 1fr);
+    gap: {{ block.settings.logo_spacing }}px;
+    align-items: center;
+  }
+
+  .ai-logo-item-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: {{ block.settings.text_alignment }};
+    text-align: {{ block.settings.text_alignment }};
+    gap: {{ block.settings.image_text_spacing }}px;
+  }
+
+  .ai-logo-link-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    transition: opacity 0.3s ease;
+  }
+
+  .ai-logo-link-{{ ai_gen_id }}:hover {
+    opacity: {{ block.settings.hover_opacity | divided_by: 100.0 }};
+  }
+
+  .ai-logo-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    display: flex;
+    justify-content: {{ block.settings.text_alignment }};
+  }
+
+  .ai-logo-image-{{ ai_gen_id }} {
+    max-width: {{ block.settings.logo_max_width }}px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .ai-logo-placeholder-{{ ai_gen_id }} {
+    max-width: {{ block.settings.logo_max_width }}px;
+    width: 100%;
+    height: auto;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 2;
+  }
+
+  .ai-logo-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-logo-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_font_size }}px;
+    color: {{ block.settings.text_color }};
+    font-weight: {{ block.settings.text_font_weight }};
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-logo-carousel-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.logos_per_row_tablet }}, 1fr);
+    }
+
+    .ai-logo-carousel-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.8 }}px;
+    }
+
+    .ai-logo-carousel-subtitle-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subtitle_font_size | times: 0.9 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-logo-carousel-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat({{ block.settings.logos_per_row_mobile }}, 1fr);
+    }
+
+    .ai-logo-carousel-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.7 }}px 0 {{ block.settings.section_padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-logo-carousel-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_font_size | times: 0.7 }}px;
+    }
+
+    .ai-logo-carousel-subtitle-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subtitle_font_size | times: 0.85 }}px;
+    }
+  }
+{% endstyle %}
+
+<logo-carousel-{{ ai_gen_id }} class="ai-logo-carousel-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-logo-carousel-container-{{ ai_gen_id }}">
+    {% if block.settings.subtitle != blank or block.settings.title != blank %}
+      <div class="ai-logo-carousel-header-{{ ai_gen_id }}">
+        {% if block.settings.subtitle != blank %}
+          <p class="ai-logo-carousel-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+        {% endif %}
+        {% if block.settings.title != blank %}
+          <h2 class="ai-logo-carousel-title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-logo-carousel-grid-{{ ai_gen_id }}">
+      {% for i in (1..8) %}
+        {% liquid
+          assign logo_image_key = 'logo_image_' | append: i
+          assign logo_link_key = 'logo_link_' | append: i
+          assign logo_text_key = 'logo_text_' | append: i
+          
+          assign logo_image = block.settings[logo_image_key]
+          assign logo_link = block.settings[logo_link_key]
+          assign logo_text = block.settings[logo_text_key]
+        %}
+
+        {% if logo_image or logo_text != blank %}
+          <div class="ai-logo-item-{{ ai_gen_id }}">
+            {% if logo_link != blank %}
+              <a href="{{ logo_link }}" class="ai-logo-link-{{ ai_gen_id }}">
+            {% else %}
+              <div class="ai-logo-link-{{ ai_gen_id }}">
+            {% endif %}
+              <div class="ai-logo-image-wrapper-{{ ai_gen_id }}">
+                {% if logo_image %}
+                  <img
+                    src="{{ logo_image | image_url: width: 400 }}"
+                    alt="{{ logo_image.alt | default: logo_text | escape }}"
+                    class="ai-logo-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="{{ logo_image.width }}"
+                    height="{{ logo_image.height }}"
+                  >
+                {% else %}
+                  <div class="ai-logo-placeholder-{{ ai_gen_id }}">
+                    {{ 'image' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+              </div>
+            {% if logo_link != blank %}
+              </a>
+            {% else %}
+              </div>
+            {% endif %}
+
+            {% if logo_text != blank %}
+              <p class="ai-logo-text-{{ ai_gen_id }}">{{ logo_text }}</p>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</logo-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class LogoCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+    }
+
+    customElements.define('logo-carousel-{{ ai_gen_id }}', LogoCarousel{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Logo carousel",
+  "tag": null,
+  "class": "logo-carousel-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "placeholder": "Our partners"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "placeholder": "Trusted by leading brands"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "label": "Spacing below heading",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Subtitle style"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Text transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_letter_spacing",
+      "label": "Letter spacing",
+      "min": 0,
+      "max": 0.5,
+      "step": 0.1,
+      "unit": "em",
+      "default": 0.2
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color",
+      "default": "#7f4a88"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_spacing",
+      "label": "Spacing below subtitle",
+      "min": 5,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#231f20"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "logos_per_row_desktop",
+      "label": "Logos per row on desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "logos_per_row_tablet",
+      "label": "Logos per row on tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "logos_per_row_mobile",
+      "label": "Logos per row on mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Logo style"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": "Logo max width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "logo_spacing",
+      "label": "Spacing between logos",
+      "min": 10,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "hover_opacity",
+      "label": "Hover opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Brand name style"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color",
+      "default": "#343a40"
+    },
+    {
+      "type": "range",
+      "id": "image_text_spacing",
+      "label": "Spacing between logo and text",
+      "min": 5,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#faf5f2"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Logo 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_1",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_1",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_1",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_2",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_2",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_2",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_3",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_3",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_3",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_4",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_4",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_4",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_5",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_5",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_5",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_6",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_6",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_6",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_7",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_7",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_7",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    },
+    {
+      "type": "header",
+      "content": "Logo 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image_8",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_8",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "logo_text_8",
+      "label": "Brand name",
+      "placeholder": "Enter brand name"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo carousel"
+    }
+  ]
+}
 {% endschema %}
