@@ -386,7 +386,7 @@
       "custom_css": [],
       "settings": {
         "animation": "",
-        "setwidth": "container-fluid",
+        "setwidth": "container",
         "bgsection": "#ffffff",
         "countdown_header": "",
         "title_top": "",
@@ -730,7 +730,7 @@
         "show": 2,
         "arrows": false,
         "draggable": true,
-        "dots": true,
+        "dots": false,
         "infinite": true,
         "paddingsection": "30px 0px 10px 0px",
         "paddingmobile": "50px 0px 50px 0px",
