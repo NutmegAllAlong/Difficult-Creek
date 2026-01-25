@@ -2032,26 +2032,25 @@ initPhotoSwipeFromDOM('.my-gallery');
 (function() {
   console.log('Sold out badge script starting...');
   
-  let productData;
-  try {
-    productData = {{ product | json }};
-    console.log('Product data loaded, total variants:', productData.variants.length);
-  } catch(e) {
-    console.error('Error loading product data:', e);
-    return;
-  }
+  // Build a lightweight variant availability map
+  const variantAvailability = {
+    {%- for variant in product.variants -%}
+      "{{ variant.option1 }}|{{ variant.option2 }}": {{ variant.available | json }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  };
+  
+  console.log('Variant availability map loaded');
   
   function updateSoldOutBadge() {
     console.log('updateSoldOutBadge called');
     
-    // Get selected size and color
     const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
     const colorInput = document.querySelector('input[name="color"]:checked');
     const soldOutBadge = document.querySelector('.js-soldout-badge');
     
-    console.log('Size input:', sizeInput ? sizeInput.value : 'none');
-    console.log('Color input:', colorInput ? colorInput.value : 'none');
-    console.log('Badge element:', soldOutBadge);
+    console.log('Size:', sizeInput ? sizeInput.value : 'none');
+    console.log('Color:', colorInput ? colorInput.value : 'none');
+    console.log('Badge:', soldOutBadge);
     
     if (!soldOutBadge) {
       console.log('No badge element found!');
@@ -2061,39 +2060,30 @@ initPhotoSwipeFromDOM('.my-gallery');
     if (sizeInput && colorInput) {
       const size = sizeInput.value;
       const color = colorInput.value;
+      const key = size + '|' + color;
       
-      console.log('Looking for variant:', size, '+', color);
+      console.log('Looking up key:', key);
+      const isAvailable = variantAvailability[key];
+      console.log('Is available:', isAvailable);
       
-      // Find the matching variant
-      const variant = productData.variants.find(function(v) {
-        return v.option1 === size && v.option2 === color;
-      });
-      
-      if (variant) {
-        console.log('Found variant:', variant.id, 'Available:', variant.available);
-        // Show badge if variant is not available
-        soldOutBadge.style.display = variant.available ? 'none' : 'inline-block';
-        console.log('Badge display set to:', soldOutBadge.style.display);
-      } else {
-        console.log('No matching variant found');
+      if (isAvailable !== undefined) {
+        soldOutBadge.style.display = isAvailable ? 'none' : 'inline-block';
+        console.log('Badge display:', soldOutBadge.style.display);
       }
     } else {
-      console.log('Missing size or color selection');
       soldOutBadge.style.display = 'none';
     }
   }
   
-  // Update on page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', updateSoldOutBadge);
   } else {
     updateSoldOutBadge();
   }
   
-  // Update when variant changes
   document.addEventListener('change', function(e) {
     if (e.target.name === 'color' || e.target.name === 'diameter-size') {
-      console.log('Variant option changed:', e.target.name, '=', e.target.value);
+      console.log('Change detected:', e.target.name, '=', e.target.value);
       setTimeout(updateSoldOutBadge, 100);
     }
   });
@@ -2101,6 +2091,7 @@ initPhotoSwipeFromDOM('.my-gallery');
   console.log('Sold out badge script initialized');
 })();
 </script>
+
 
 
 <script>
