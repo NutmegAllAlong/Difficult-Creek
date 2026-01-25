@@ -186,7 +186,7 @@
         "rows": 4,
         "txtbutton": "show all",
         "urlbtn": "",
-        "paddingsection": "0px 0px 0px 0px",
+        "paddingsection": "20px 0px 0px 0px",
         "paddingmobile": "40px 0px 40px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
@@ -274,7 +274,7 @@
         "draggable": true,
         "dots": true,
         "infinite": true,
-        "paddingsection": "50px 0px 0px 0px",
+        "paddingsection": "20px 0px 0px 0px",
         "paddingmobile": "40px 0px 40px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
@@ -434,7 +434,7 @@
         "style_section": "style_1",
         "limit": 8,
         "show": 4,
-        "paddingsection": "100px 0px 35px 0px",
+        "paddingsection": "20px 0px 20px 0px",
         "paddingmobile": "50px 0px 20px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
