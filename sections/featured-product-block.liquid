@@ -2030,19 +2030,39 @@ initPhotoSwipeFromDOM('.my-gallery');
 <script>
 // Show/hide sold out badge based on selected variant
 (function() {
-  const productData = {{ product | json }};
+  console.log('Sold out badge script starting...');
+  
+  let productData;
+  try {
+    productData = {{ product | json }};
+    console.log('Product data loaded, total variants:', productData.variants.length);
+  } catch(e) {
+    console.error('Error loading product data:', e);
+    return;
+  }
   
   function updateSoldOutBadge() {
+    console.log('updateSoldOutBadge called');
+    
     // Get selected size and color
     const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
     const colorInput = document.querySelector('input[name="color"]:checked');
     const soldOutBadge = document.querySelector('.js-soldout-badge');
     
-    if (!soldOutBadge) return;
+    console.log('Size input:', sizeInput ? sizeInput.value : 'none');
+    console.log('Color input:', colorInput ? colorInput.value : 'none');
+    console.log('Badge element:', soldOutBadge);
+    
+    if (!soldOutBadge) {
+      console.log('No badge element found!');
+      return;
+    }
     
     if (sizeInput && colorInput) {
       const size = sizeInput.value;
       const color = colorInput.value;
+      
+      console.log('Looking for variant:', size, '+', color);
       
       // Find the matching variant
       const variant = productData.variants.find(function(v) {
@@ -2050,11 +2070,15 @@ initPhotoSwipeFromDOM('.my-gallery');
       });
       
       if (variant) {
+        console.log('Found variant:', variant.id, 'Available:', variant.available);
         // Show badge if variant is not available
         soldOutBadge.style.display = variant.available ? 'none' : 'inline-block';
+        console.log('Badge display set to:', soldOutBadge.style.display);
+      } else {
+        console.log('No matching variant found');
       }
     } else {
-      // Hide badge if no selection
+      console.log('Missing size or color selection');
       soldOutBadge.style.display = 'none';
     }
   }
@@ -2069,12 +2093,14 @@ initPhotoSwipeFromDOM('.my-gallery');
   // Update when variant changes
   document.addEventListener('change', function(e) {
     if (e.target.name === 'color' || e.target.name === 'diameter-size') {
+      console.log('Variant option changed:', e.target.name, '=', e.target.value);
       setTimeout(updateSoldOutBadge, 100);
     }
   });
+  
+  console.log('Sold out badge script initialized');
 })();
 </script>
-
 
 
 <script>
