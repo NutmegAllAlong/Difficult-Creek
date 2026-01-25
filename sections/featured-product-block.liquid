@@ -2028,26 +2028,6 @@ initPhotoSwipeFromDOM('.my-gallery');
 {% endunless %}
 
 <script>
-  // Override default values of shop.strings for each template.
-  // Alternate product templates can change values of
-  // add to cart button, sold out, and unavailable states here.
-  window.productStrings = {
-    addToCart: {{ 'products.product.add_to_cart' | t | json }},
-    soldOut: {{ 'products.product.sold_out' | t | json }},
-    unavailable: {{ 'products.product.unavailable' | t | json }}
-  }
-</script>
-
-<script>
-  (function() {
-    var productSection = document.querySelector('[data-section-id="{{ section.id }}"]');
-    if (productSection && typeof theme !== 'undefined' && theme.Product) {
-      new theme.Product(productSection);
-    }
-  })();
-</script>
-
-<script>
 // Show/hide sold out badge based on selected variant
 (function() {
   function updateSoldOutBadge() {
@@ -2077,3 +2057,25 @@ initPhotoSwipeFromDOM('.my-gallery');
   });
 })();
 </script>
+
+<script>
+  // Override default values of shop.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  window.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }}
+  }
+</script>
+
+<script>
+  (function() {
+    var productSection = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (productSection && typeof theme !== 'undefined' && theme.Product) {
+      new theme.Product(productSection);
+    }
+  })();
+</script>
+
+
