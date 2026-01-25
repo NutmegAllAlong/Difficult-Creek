@@ -634,6 +634,30 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
+    "featured_products_rjf8Fg": {
+      "type": "featured-products",
+      "name": "Product Grid",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "Always creating",
+        "title": "Newest Arrivals",
+        "des": "",
+        "align-heading": "center",
+        "collection": "new-arrivals",
+        "enable_creative": false,
+        "padding": true,
+        "colgrid": "col-lg-3",
+        "rows": 4,
+        "txtbutton": "show all",
+        "urlbtn": "",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
     "line_DNhnUk": {
       "type": "line",
       "name": "Divider",
@@ -874,6 +898,7 @@
     "advanced_content_rzNHjz",
     "video_C3h87N",
     "49ea361e-0da7-4685-ab7c-4fee03ca4689",
+    "featured_products_rjf8Fg",
     "line_DNhnUk",
     "076802e8-4d1d-49c0-92cf-72ec8c7302a1",
     "1768657946359d74d3",
