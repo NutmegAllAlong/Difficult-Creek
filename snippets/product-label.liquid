@@ -72,9 +72,7 @@
         {%- endif -%}
     {%- endfor -%}
     {%- comment -%} tag soldout {%- endcomment -%}
-    {%- unless product.available -%}
-    <span class="product-tag product-tag--absolute {{ txtupper }}" aria-hidden="true" style="background-color: {{ settings.sold_bg }};color:{{ settings.sold_cl }}">
-        {{ 'products.product.sold_out' | t }}
-    </span>
-    {% endunless %}
-    </div>
+    {%- comment -%} tag soldout - only show for currently selected variant {%- endcomment -%}
+<span class="product-tag product-tag--absolute {{ txtupper }} js-soldout-badge" aria-hidden="true" style="background-color: {{ settings.sold_bg }};color:{{ settings.sold_cl }}; display: none;">
+    {{ 'products.product.sold_out' | t }}
+</span>
