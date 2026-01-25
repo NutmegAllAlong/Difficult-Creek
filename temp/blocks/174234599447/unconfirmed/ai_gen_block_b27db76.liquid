@@ -1,6 +1,143 @@
+{% doc %}
+  @prompt
+    Create a rich text content block with three editable fields: a subtitle, a title, and body text. The subtitle should use the CSS class "subtop" and the title should use the CSS class "section-title-1" to inherit the theme's existing typography styles. The body text should use standard paragraph styling. Include settings in the block schema to allow the merchant to edit the subtitle text, title text, and body text content. The block should have a max-width container setting (default 800px) and center alignment.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-rich-text-container-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-rich-text-content-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-rich-text-subtitle-{{ ai_gen_id }} {
+    margin-bottom: 16px;
+  }
+
+  .ai-rich-text-title-{{ ai_gen_id }} {
+    margin-bottom: 24px;
+  }
+
+  .ai-rich-text-body-{{ ai_gen_id }} {
+    line-height: 1.6;
+  }
+
+  .ai-rich-text-body-{{ ai_gen_id }} p {
+    margin-bottom: 16px;
+  }
+
+  .ai-rich-text-body-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+{% endstyle %}
+
+<rich-text-content-{{ ai_gen_id }}
+  class="ai-rich-text-container-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-rich-text-content-{{ ai_gen_id }}">
+    {% if block.settings.subtitle != blank %}
+      <div class="ai-rich-text-subtitle-{{ ai_gen_id }} subtop">
+        {{ block.settings.subtitle }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.title != blank %}
+      <div class="ai-rich-text-title-{{ ai_gen_id }} section-title-1">
+        {{ block.settings.title }}
+      </div>
+    {% endif %}
+
+    {% if block.settings.body_text != blank %}
+      <div class="ai-rich-text-body-{{ ai_gen_id }}">
+        {{ block.settings.body_text }}
+      </div>
+    {% endif %}
+  </div>
+</rich-text-content-{{ ai_gen_id }}>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Rich text content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Welcome"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Rich Text Content Block"
+    },
+    {
+      "type": "richtext",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "<p>Add your main content here. This rich text block allows you to create engaging content with multiple paragraphs and formatting options.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
+      "label": "Maximum width",
+      "default": 800
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text content"
+    }
+  ]
+}
 {% endschema %}
