@@ -2046,3 +2046,34 @@ initPhotoSwipeFromDOM('.my-gallery');
     }
   })();
 </script>
+
+<script>
+// Show/hide sold out badge based on selected variant
+(function() {
+  function updateSoldOutBadge() {
+    const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
+    const soldOutBadge = document.querySelector('.js-soldout-badge');
+    
+    if (variantIdInput && soldOutBadge) {
+      const selectedOption = variantIdInput.options ? variantIdInput.options[variantIdInput.selectedIndex] : null;
+      const isDisabled = selectedOption && selectedOption.disabled;
+      
+      soldOutBadge.style.display = isDisabled ? 'inline-block' : 'none';
+    }
+  }
+  
+  // Update on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateSoldOutBadge);
+  } else {
+    updateSoldOutBadge();
+  }
+  
+  // Update when variant changes
+  document.addEventListener('change', function(e) {
+    if (e.target.name === 'color' || e.target.name === 'diameter-size' || e.target.name === 'id') {
+      setTimeout(updateSoldOutBadge, 100);
+    }
+  });
+})();
+</script>
