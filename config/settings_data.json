@@ -127,7 +127,7 @@
     "top_label": 16,
     "left_label": 16,
     "radius_label": 2,
-    "new_label_enable": false,
+    "new_label_enable": true,
     "new_label_cl": "#ffffff",
     "new_label_day": 30,
     "sale_label_enable": false,
