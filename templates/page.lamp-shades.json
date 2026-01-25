@@ -76,40 +76,24 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "blocks_LhEeG9": {
+    "blocks_pqMVXf": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_35e220a_MikRnW": {
-          "type": "ai_gen_block_35e220a",
-          "name": "Rich text",
+        "ai_gen_block_fb49b85_KJUT3R": {
+          "type": "ai_gen_block_fb49b85",
           "settings": {
-            "heading": "A FEW ITEMS TO CONSIDER WHEN",
-            "heading_size": 18,
-            "heading_color": "#7f4a88",
-            "heading_alignment": "center",
-            "subtitle": "Ordering Custom Lamp Shades",
-            "subtitle_size": 32,
-            "subtitle_color": "#231f20",
-            "body_text": "<ul><li>Some fabrics aren't suitable for large Empire or Drum lamp shades due to scale of pattern or size.</li><li>Availability is limited to fabric on hand. If you see a fabric you adore, order soon while supplies last. Some fabrics are out of print and thus no longer available.</li><li>If you have your own fabric -or- if there's a special fabric you want to order to use on a custom lamp shade, let us know, we can do that!</li><li>Drum lamp shades are easy to make taller or shorter - let us know you preference. </li></ul>",
-            "body_size": 16,
-            "body_color": "#343a40",
-            "body_alignment": "left",
-            "link_color": "#7f4a88",
-            "link_hover_color": "#a5e9e1",
-            "header_spacing": 32,
-            "heading_subtitle_spacing": 12,
-            "paragraph_spacing": 16,
-            "list_item_spacing": 8,
-            "content_max_width": 800,
-            "section_padding_top": 60,
-            "section_padding_bottom": 60,
-            "background_color": "#faf5f2"
+            "subtitle": "A FEW ITEMS TO CONSIDER WHEN ORDERING",
+            "title": "Custom Lamp Shades",
+            "text": "<p>Some fabrics aren't suitable for large Empire or Drum lamp shades due to scale of pattern or size.<br/><br/>Availability is limited to fabric on hand. If you see a fabric you adore, order soon while supplies last. Some fabrics are out of print and thus no longer available.<br/><br/>If you have your own fabric -or- if there's a special fabric you want to order to use on a custom lamp shade, let us know, we can do that!<br/><br/>Drum lamp shades are easy to make taller or shorter - let us know you preference. </p>",
+            "max_width": 800,
+            "link_color": "#231f20",
+            "desktop_width_percent": 100
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_35e220a_MikRnW"
+        "ai_gen_block_fb49b85_KJUT3R"
       ],
       "name": "Rich text",
       "settings": {}
@@ -212,29 +196,34 @@
         "cart_cl_hover": "#ffffff"
       }
     },
-    "rich_text_jWxB4Y": {
-      "type": "rich-text",
-      "name": "Rich text",
-      "settings": {
-        "animation": "",
-        "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "A few important items",
-        "title": "Ordering Custom Lamp Shades",
-        "text": "<p>&lt;ul&gt;&lt;li&gt;Some fabrics are not suitable for large Empire or Drum lamp shades due to scale of pattern or size.&lt;/li&gt;</p><p>&lt;li&gt;Availability is limited to fabric on hand. If you see a fabric you adore, order soon while supplies last. Some fabrics are out of print and thus no longer available.&lt;/li&gt;</p><p>&lt;li&gt;If you have your own fabric -or- if there's a special fabric you want to order to use on a custom lamp shade, let us know, we can do that!&lt;/li&gt;</p><p>&lt;li&gt;Drum lamp shades are easy to make taller or shorter - let us know you preference.&lt;/li&gt;&lt;/ul&gt;</p>",
-        "align-heading": "center",
-        "paddingsection": "40px 0px 40px 40px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
+    "1769301404d17942e0": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_fb49b85_hJ6gdR": {
+          "type": "ai_gen_block_fb49b85",
+          "disabled": true,
+          "settings": {
+            "subtitle": "A few items to consider when",
+            "title": "Ordering Custom Lamp Shades",
+            "text": "<p>Some fabrics aren't suitable for large Empire or Drum lamp shades due to scale of pattern or size.<br/><br/>Availability is limited to fabric on hand. If you see a fabric you adore, order soon while supplies last. Some fabrics are out of print and thus no longer available.<br/><br/>If you have your own fabric -or- if there's a special fabric you want to order to use on a custom lamp shade, let us know, we can do that!<br/><br/>Drum lamp shades are easy to make taller or shorter - let us know you preference. </p>",
+            "max_width": 800,
+            "link_color": "#7f4a88",
+            "desktop_width_percent": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_fb49b85_hJ6gdR"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
     "featured_collections_1_U8rfgM",
-    "blocks_LhEeG9",
+    "blocks_pqMVXf",
     "featured_product_block_3W3Kxn",
-    "rich_text_jWxB4Y"
+    "1769301404d17942e0"
   ]
 }
