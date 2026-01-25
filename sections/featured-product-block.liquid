@@ -2030,35 +2030,32 @@ initPhotoSwipeFromDOM('.my-gallery');
 <script>
 // Show/hide sold out badge based on selected variant
 (function() {
-  console.log('Sold out badge script loaded');
+  const productData = {{ product | json }};
   
   function updateSoldOutBadge() {
-    console.log('updateSoldOutBadge called');
-    
-    const variantIdInput = document.querySelector('select[name="id"], input[name="id"]');
+    // Get selected size and color
+    const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
+    const colorInput = document.querySelector('input[name="color"]:checked');
     const soldOutBadge = document.querySelector('.js-soldout-badge');
     
-    console.log('Variant input:', variantIdInput);
-    console.log('Badge element:', soldOutBadge);
+    if (!soldOutBadge) return;
     
-    if (variantIdInput && soldOutBadge) {
-      if (variantIdInput.tagName === 'SELECT') {
-        const selectedOption = variantIdInput.options[variantIdInput.selectedIndex];
-        const isDisabled = selectedOption.disabled;
-        const variantText = selectedOption.text;
-        
-        console.log('Selected option:', variantText);
-        console.log('Is disabled?', isDisabled);
-        console.log('Option element:', selectedOption);
-        
-        soldOutBadge.style.display = isDisabled ? 'inline-block' : 'none';
-        console.log('Badge display set to:', soldOutBadge.style.display);
-      } else {
-        // It's a hidden input, check variant availability differently
-        console.log('Input type, value:', variantIdInput.value);
+    if (sizeInput && colorInput) {
+      const size = sizeInput.value;
+      const color = colorInput.value;
+      
+      // Find the matching variant
+      const variant = productData.variants.find(function(v) {
+        return v.option1 === size && v.option2 === color;
+      });
+      
+      if (variant) {
+        // Show badge if variant is not available
+        soldOutBadge.style.display = variant.available ? 'none' : 'inline-block';
       }
     } else {
-      console.log('Missing elements!');
+      // Hide badge if no selection
+      soldOutBadge.style.display = 'none';
     }
   }
   
@@ -2071,13 +2068,13 @@ initPhotoSwipeFromDOM('.my-gallery');
   
   // Update when variant changes
   document.addEventListener('change', function(e) {
-    console.log('Change event on:', e.target.name, e.target.value);
-    if (e.target.name === 'color' || e.target.name === 'diameter-size' || e.target.name === 'id') {
+    if (e.target.name === 'color' || e.target.name === 'diameter-size') {
       setTimeout(updateSoldOutBadge, 100);
     }
   });
 })();
 </script>
+
 
 
 <script>
