@@ -2030,7 +2030,6 @@ initPhotoSwipeFromDOM('.my-gallery');
 <script>
 // Show/hide sold out badge based on selected variant
 (function() {
-  console.log('Sold out badge script starting...');
   
   // Build a lightweight variant availability map
   const variantAvailability = {
@@ -2039,36 +2038,22 @@ initPhotoSwipeFromDOM('.my-gallery');
     {%- endfor -%}
   };
   
-  console.log('Variant availability map loaded');
-  
   function updateSoldOutBadge() {
-    console.log('updateSoldOutBadge called');
     
     const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
     const colorInput = document.querySelector('input[name="color"]:checked');
     const soldOutBadge = document.querySelector('.js-soldout-badge');
     
-    console.log('Size:', sizeInput ? sizeInput.value : 'none');
-    console.log('Color:', colorInput ? colorInput.value : 'none');
-    console.log('Badge:', soldOutBadge);
-    
-    if (!soldOutBadge) {
-      console.log('No badge element found!');
-      return;
-    }
     
     if (sizeInput && colorInput) {
       const size = sizeInput.value;
       const color = colorInput.value;
       const key = size + '|' + color;
       
-      console.log('Looking up key:', key);
       const isAvailable = variantAvailability[key];
-      console.log('Is available:', isAvailable);
       
       if (isAvailable !== undefined) {
         soldOutBadge.style.display = isAvailable ? 'none' : 'inline-block';
-        console.log('Badge display:', soldOutBadge.style.display);
       }
     } else {
       soldOutBadge.style.display = 'none';
@@ -2088,7 +2073,6 @@ initPhotoSwipeFromDOM('.my-gallery');
     }
   });
   
-  console.log('Sold out badge script initialized');
 })();
 </script>
 
