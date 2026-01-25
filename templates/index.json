@@ -822,6 +822,43 @@
     "17686595944d1ff123": {
       "type": "_blocks",
       "settings": {}
+    },
+    "1769300262150074b1": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_35e220a_chg6mF": {
+          "type": "ai_gen_block_35e220a",
+          "settings": {
+            "heading": "Rich text heading",
+            "heading_size": 36,
+            "heading_color": "#231f20",
+            "heading_alignment": "center",
+            "subtitle": "Add a subtitle to complement your heading",
+            "subtitle_size": 18,
+            "subtitle_color": "#7f4a88",
+            "body_text": "<p>Use this section to add rich text content with bullet points and formatting.</p><ul><li>First bullet point</li><li>Second bullet point</li><li>Third bullet point</li></ul><p>Add additional paragraphs as needed to tell your story.</p>",
+            "body_size": 16,
+            "body_color": "#343a40",
+            "body_alignment": "left",
+            "link_color": "#7f4a88",
+            "link_hover_color": "#a5e9e1",
+            "header_spacing": 32,
+            "heading_subtitle_spacing": 12,
+            "paragraph_spacing": 16,
+            "list_item_spacing": 8,
+            "content_max_width": 800,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "background_color": "#faf5f2"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_35e220a_chg6mF"
+      ],
+      "disabled": true,
+      "settings": {}
     }
   },
   "order": [
@@ -842,6 +879,7 @@
     "1768657946359d74d3",
     "3e04d8d0-b36c-4e9e-8f16-6987ee712faa",
     "176858797718304c30",
-    "17686595944d1ff123"
+    "17686595944d1ff123",
+    "1769300262150074b1"
   ]
 }

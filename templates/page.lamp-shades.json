@@ -76,6 +76,43 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
+    "blocks_LhEeG9": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_35e220a_KVCa34": {
+          "type": "ai_gen_block_35e220a",
+          "settings": {
+            "heading": "To Consider When Ordering Custom Shades",
+            "heading_size": 36,
+            "heading_color": "#231f20",
+            "heading_alignment": "center",
+            "subtitle": "Add a subtitle to complement your heading",
+            "subtitle_size": 18,
+            "subtitle_color": "#7f4a88",
+            "body_text": "<ul><li>Some fabrics aren't suitable for large Empire or Drum lamp shades due to scale of pattern or size.</li><li>Availability is limited to fabric on hand. If you see a fabric you adore, order soon while supplies last. Some fabrics are out of print and thus no longer available.</li><li>If you have your own fabric -or- if there's a special fabric you want to order to use on a custom lamp shade, let us know, we can do that!</li><li>Drum lamp shades are easy to make taller or shorter - let us know you preference. </li></ul>",
+            "body_size": 16,
+            "body_color": "#343a40",
+            "body_alignment": "left",
+            "link_color": "#7f4a88",
+            "link_hover_color": "#a5e9e1",
+            "header_spacing": 32,
+            "heading_subtitle_spacing": 12,
+            "paragraph_spacing": 16,
+            "list_item_spacing": 8,
+            "content_max_width": 800,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "background_color": "#faf5f2"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_35e220a_KVCa34"
+      ],
+      "name": "Rich text",
+      "settings": {}
+    },
     "featured_product_block_3W3Kxn": {
       "type": "featured-product-block",
       "blocks": {
@@ -195,6 +232,7 @@
   "order": [
     "main",
     "featured_collections_1_U8rfgM",
+    "blocks_LhEeG9",
     "featured_product_block_3W3Kxn",
     "rich_text_jWxB4Y"
   ]
