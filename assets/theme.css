@@ -4421,9 +4421,13 @@ p a:not(.button):focus,
 .slick-next.slick-disabled{
   opacity: 0.35;
 }
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon-theme' !important;  /* Changed */
+}
+
 .slick-prev:before,
 .slick-next:before {
-  font-family: icomoon-theme !important;
+  font-family: 'icomoon-theme' !important;  /* Changed */
   font-size: 18px;
   line-height: 1;
   color: #000;
