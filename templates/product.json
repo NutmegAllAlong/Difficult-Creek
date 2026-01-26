@@ -487,8 +487,10 @@
       ],
       "custom_css": [
         ".txt-body {text-align: right !important;}",
-        ".col-lg-7 {max-width: 100% !important;}",
-        ".parallax-banner__wraper {background-position: center;}"
+        ".col-lg-7 {max-width: 100% !important; padding: 0px 0px 0px 20px;}",
+        ".parallax-banner__wraper {background-position: center;}",
+        ".container {display: flex;}",
+        ".right-item {margin-left: 45px; /* Pushes the item to the right */}"
       ],
       "settings": {
         "animation": "fade",
