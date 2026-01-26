@@ -4443,7 +4443,7 @@ p a:not(.button):focus,
   right: -6px;
 }
 .slick-prev:before {
-  content: "\e903";
+  content: "\e907";  /* arrow-thin-left */
 }
 [dir="rtl"] .slick-prev:before {
   content: "\e904";
@@ -4468,8 +4468,9 @@ p a:not(.button):focus,
   right: auto;
 }
 .slick-next:before {
-  content: "\e904";
+  content: "\e905";  /* arrow-right */
 }
+
 [dir="rtl"] .slick-next:before {
   content: "\e903";
 }
