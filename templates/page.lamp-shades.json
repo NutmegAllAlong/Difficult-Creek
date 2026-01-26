@@ -129,6 +129,7 @@
         },
         "fakeviewer_QVVq4W": {
           "type": "fakeviewer",
+          "disabled": true,
           "settings": {
             "fake_view_min": 12,
             "fake_view_max": 30,
@@ -227,6 +228,7 @@
         },
         "fakeviewer_WPaJiF": {
           "type": "fakeviewer",
+          "disabled": true,
           "settings": {
             "fake_view_min": 12,
             "fake_view_max": 30,
