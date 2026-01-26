@@ -2276,7 +2276,7 @@
       "pnewsletter": {
         "type": "pnewsletter",
         "settings": {
-          "pnewletter_enable": true,
+          "pnewletter_enable": false,
           "pnew_style": "pnew_style-2",
           "pnew-width": 850,
           "pnew-height": 480,
@@ -2396,8 +2396,7 @@
             "type": "color",
             "settings": {
               "name_color": "Year of the Dragon by Lewis & Irene",
-              "name_color_hex": "#000000",
-              "image_color": "shopify://shop_images/Year_of_the_Dragon_D_A866_Lewis_Irene.heic"
+              "name_color_hex": "#000000"
             }
           },
           "color_wYQDNX": {
@@ -2492,32 +2491,28 @@
             "type": "color",
             "settings": {
               "name_color": "Minnows by Kaffe Fassett",
-              "name_color_hex": "#30aba5",
-              "image_color": "shopify://shop_images/PWBM100_Minnows_by_Kaffe_Fassett.heic"
+              "name_color_hex": "#30aba5"
             }
           },
           "color_C49Lxf": {
             "type": "color",
             "settings": {
               "name_color": "Year of the Dragon D by Lewis & Irene",
-              "name_color_hex": "#ffffff",
-              "image_color": "shopify://shop_images/Year_of_the_Dragon_D_A862_Lewis_Irene.heic"
+              "name_color_hex": "#ffffff"
             }
           },
           "color_URDbMQ": {
             "type": "color",
             "settings": {
               "name_color": "Enchanted D by Lewis & Irene",
-              "name_color_hex": "#696868",
-              "image_color": "shopify://shop_images/Lewis_Irene_Enchanted_D_A547.heic"
+              "name_color_hex": "#696868"
             }
           },
           "color_K4NtKW": {
             "type": "color",
             "settings": {
               "name_color": "Enchanted by Lewis & Irene",
-              "name_color_hex": "#16615a",
-              "image_color": "shopify://shop_images/Enchanted_D_A543_Lewis_Irene.heic"
+              "name_color_hex": "#16615a"
             }
           },
           "color_JJ6iKG": {
@@ -2564,8 +2559,7 @@
             "type": "color",
             "settings": {
               "name_color": "Year of the Dragon Abstract by Lewis & Irene",
-              "name_color_hex": "#000000",
-              "image_color": "shopify://shop_images/Year_of_the_Dragon_Lewis_Irene.heic"
+              "name_color_hex": "#000000"
             }
           },
           "color_AG8eqW": {
