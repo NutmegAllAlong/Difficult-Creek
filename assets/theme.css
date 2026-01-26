@@ -6095,13 +6095,13 @@ p a:not(.button):focus,
   left: -10px;
 }
 .product-single__thumbnails.slick-initialized .slick-prev:before {
-  content: "\e903";
+  content: "\e907";  /* arrow-thin-left */
 }
 .product-single__thumbnails.slick-initialized .slick-next {
   right: -10px;
 }
 .product-single__thumbnails.slick-initialized .slick-next:before {
-  content: "\e904";
+  content: "\e905";  /* arrow-right */
 }
 .product-single__thumbnails.slick-initialized .slick-disabled {
   opacity: 0;
