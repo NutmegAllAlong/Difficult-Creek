@@ -217,7 +217,7 @@
           "type": "buttons",
           "settings": {
             "enable_local_pickup": true,
-            "enable_hurrify": true,
+            "enable_hurrify": false,
             "enable_payment_button": true,
             "waitlist": true,
             "product_selector": "radio",
