@@ -486,7 +486,8 @@
         "dd148053-296c-4c9b-99a6-63c2328328fe"
       ],
       "custom_css": [
-        ".txt-body {text-align: right !important;}"
+        ".txt-body {text-align: right !important;}",
+        ".col-lg-7 {max-width: 100% !important;}"
       ],
       "settings": {
         "animation": "fade",
