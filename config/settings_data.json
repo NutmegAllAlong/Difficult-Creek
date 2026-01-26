@@ -528,7 +528,7 @@
       "product-suggest": {
         "type": "product-suggest",
         "settings": {
-          "enable": true,
+          "enable": false,
           "duration": 8,
           "text": "Someone recently bought"
         }
