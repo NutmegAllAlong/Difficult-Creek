@@ -486,7 +486,7 @@
         "dd148053-296c-4c9b-99a6-63c2328328fe"
       ],
       "custom_css": [
-        ".txt-body {text-align: right !important;}",
+        ".txt-body {text-align: left !important;}",
         ".col-lg-7 {max-width: 100% !important;}",
         ".parallax-banner__wraper {background-position: center;}",
         ".container {display: flex;}",
@@ -500,8 +500,8 @@
         "image": "shopify://shop_images/Effortless_style_banner_2.jpg",
         "height_section": "750",
         "height_section_mobile": "450",
-        "align": "right",
-        "position_text": "bot-right",
+        "align": "left",
+        "position_text": "bot-left",
         "bg_box": "#ffffff",
         "opacity_bgbox": 0,
         "title_color": "#ffffff",
