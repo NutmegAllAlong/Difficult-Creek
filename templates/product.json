@@ -488,7 +488,7 @@
       "custom_css": [
         ".txt-body {text-align: right !important;}",
         ".col-lg-7 {max-width: 100% !important;}",
-        ".parallax-banner__wraper {background-position: top;}"
+        ".parallax-banner__wraper {background-position: center;}"
       ],
       "settings": {
         "animation": "fade",
