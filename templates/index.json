@@ -187,7 +187,7 @@
         "rows": 4,
         "txtbutton": "show all",
         "urlbtn": "",
-        "paddingsection": "20px 0px 0px 0px",
+        "paddingsection": "20px 0px 20px 0px",
         "paddingmobile": "40px 0px 40px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
