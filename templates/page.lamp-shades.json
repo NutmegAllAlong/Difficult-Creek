@@ -159,6 +159,10 @@
             "stab_title4": "",
             "stab_content4": ""
           }
+        },
+        "separator_6E3BRT": {
+          "type": "separator",
+          "settings": {}
         }
       },
       "block_order": [
@@ -168,7 +172,8 @@
         "buttons_JmtpUB",
         "fakeviewer_QVVq4W",
         "share_MMmFeH",
-        "tabfix_MAG9Cq"
+        "tabfix_MAG9Cq",
+        "separator_6E3BRT"
       ],
       "custom_css": [],
       "name": "Featured Product Display",
