@@ -1,3 +1,7 @@
+i[class*="icon-"] {
+  font-family: 'icomoon-theme' !important;
+}
+
 .grid {
   *zoom: 1;
 }
