@@ -184,22 +184,6 @@
         "bgsection": "#ffffff"
       }
     },
-    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6": {
-      "type": "contact-form",
-      "settings": {
-        "animation": "",
-        "bgsection": "rgba(0,0,0,0)",
-        "title_top": "",
-        "title": "Got Any Questions?",
-        "des": "Use the form below to get in touch with us for questions or to discuss a custom lamp shade",
-        "align-heading": "center",
-        "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms of Service</a> apply.</p>",
-        "paddingsection": "80px 0px 80px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
     "e47bb256-2659-485f-9896-382aaec96e87": {
       "type": "map",
       "disabled": true,
@@ -274,7 +258,6 @@
     "fb754d90-39ba-47df-8255-8b3096ae9437",
     "c025329d-7132-4163-b678-b778c06ac8f9",
     "1769361336c15264d0",
-    "863c2be4-cbba-4ba1-ba39-64e0fe639fc6",
     "e47bb256-2659-485f-9896-382aaec96e87",
     "a1490854-4f8f-471c-864a-2fb0e79e264b"
   ]
