@@ -527,50 +527,6 @@
     "sections": {
       "product-suggest": {
         "type": "product-suggest",
-        "blocks": {
-          "1560580908623": {
-            "type": "product",
-            "disabled": true,
-            "settings": {
-              "product": "aloe-vera-hydration-soap",
-              "local": "in Bridgetown, Barbados",
-              "time": "About 46 minutes ago"
-            }
-          },
-          "1597367617767": {
-            "type": "product",
-            "disabled": true,
-            "settings": {
-              "product": "charcoal-detox-facial-soap",
-              "local": "in Beijing, China",
-              "time": "about 16 minutes ago"
-            }
-          },
-          "519db978-bce0-47e7-8820-fe5f9a9fb3ee": {
-            "type": "product",
-            "disabled": true,
-            "settings": {
-              "product": "activated-charcoal-mint-body-soap",
-              "local": "in Paris, France",
-              "time": "about 19 minutes ago"
-            }
-          },
-          "44445cbf-83f8-4e5b-b0a5-d49b24331183": {
-            "type": "product",
-            "disabled": true,
-            "settings": {
-              "product": "lemon-basil-uplifting-soap-bar",
-              "local": "in Blackburn, UK",
-              "time": "about 21 minutes ago"
-            }
-          }
-        },
-        "block_order": [
-          "1560580908623",
-          "1597367617767",
-          "519db978-bce0-47e7-8820-fe5f9a9fb3ee",
-          "44445cbf-83f8-4e5b-b0a5-d49b24331183"
-        ],
         "settings": {
           "enable": true,
           "duration": 8,
