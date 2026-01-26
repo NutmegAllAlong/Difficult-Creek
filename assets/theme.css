@@ -4468,7 +4468,7 @@ p a:not(.button):focus,
   right: auto;
 }
 .slick-next:before {
-  content: "\e905";  /* arrow-right */
+  content: "\e908";  /* arrow-right */
 }
 
 [dir="rtl"] .slick-next:before {
@@ -6101,7 +6101,7 @@ p a:not(.button):focus,
   right: -10px;
 }
 .product-single__thumbnails.slick-initialized .slick-next:before {
-  content: "\e905";  /* arrow-right */
+  content: "\e908";  /* arrow-right */
 }
 .product-single__thumbnails.slick-initialized .slick-disabled {
   opacity: 0;
