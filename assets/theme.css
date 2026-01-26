@@ -2977,6 +2977,18 @@ figcaption .bg-des {
   margin-left: -5px;
   display: none;
 }
+
+.site-nav__link .icon-arrow-right,
+.site-nav__link .icon-arrow-right:before,
+.meganav__link .icon-arrow-right,
+.meganav__link .icon-arrow-right:before,
+i.icon-arrow-right,
+i.icon-arrow-right:before {
+  font-family: 'icomoon-theme' !important;
+  content: "\e905" !important;
+}
+
+
 .site-nav__dropdown {
   pointer-events: none;
 }
