@@ -4423,7 +4423,7 @@ p a:not(.button):focus,
 }
 .slick-prev:before,
 .slick-next:before {
-  font-family: icomoon !important;
+  font-family: icomoon-theme !important;
   font-size: 18px;
   line-height: 1;
   color: #000;
