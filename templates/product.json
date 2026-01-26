@@ -476,7 +476,7 @@
         "dd148053-296c-4c9b-99a6-63c2328328fe": {
           "type": "paragraph",
           "settings": {
-            "subtext": "<p class=\"col-lg-7 col-12 mx-auto\">Embrace effortless elegance with our curated collection of chic styles designed for the eclectic home. Unlock exclusive offers and redefine your home's style with ease.</p>"
+            "subtext": "<p class=\"col-lg-7 col-12 mx-auto\">Embrace effortless elegance with our curated collection of chic styles designed for the eclectic home.</p>"
           }
         }
       },
@@ -496,7 +496,7 @@
         "animation": "fade",
         "setwidth": "full",
         "bgsection": "#ffffff",
-        "parrallax_enable": true,
+        "parrallax_enable": false,
         "image": "shopify://shop_images/Effortless_style_banner_2.jpg",
         "height_section": "750",
         "height_section_mobile": "450",
