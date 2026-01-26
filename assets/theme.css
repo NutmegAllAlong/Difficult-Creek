@@ -6082,7 +6082,7 @@ p a:not(.button):focus,
 }
 .product-single__thumbnails.slick-initialized .slick-prev:before,
 .product-single__thumbnails.slick-initialized .slick-next:before {
-  font-family: icomoon !important;
+  font-family: icomoon-theme !important;
   font-size: 16px;
   line-height: 1;
   color: #000;
