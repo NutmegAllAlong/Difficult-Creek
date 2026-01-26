@@ -61,6 +61,13 @@
     "ea7af2bd-7a4c-4129-ae32-bacb42814742": {
       "type": "featured-collections-3",
       "blocks": {
+        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5": {
+          "type": "collection",
+          "settings": {
+            "collection": "asian-lamps",
+            "image": "shopify://shop_images/Asian_Lamps.png"
+          }
+        },
         "4a36101a-baa0-4a6b-aee6-5f7f00c28b02": {
           "type": "collection",
           "settings": {
@@ -91,26 +98,18 @@
         },
         "5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86": {
           "type": "collection",
-          "disabled": true,
           "settings": {
-            "collection": "kids-gentle-soaps"
-          }
-        },
-        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "organic-facial-bars"
+            "collection": "candlestick-lamps"
           }
         }
       },
       "block_order": [
+        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5",
         "4a36101a-baa0-4a6b-aee6-5f7f00c28b02",
         "4a23ad15-f46c-41b2-a652-f47841e11d49",
         "4207c9e4-bbe8-43d4-b9fe-4ad7b689ea67",
         "4ed3a5c4-6354-4eb8-96e7-982ff3d16a57",
-        "5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86",
-        "9bbeb24f-ddab-448f-8cdb-ac1c29d621c5"
+        "5fe0a32a-29ab-49b2-a9d7-1f3e2a04da86"
       ],
       "settings": {
         "animation": "fade-up",
@@ -129,7 +128,7 @@
         "size_title": "h5",
         "button_link": "",
         "button": "",
-        "perviewDesktop": 5,
+        "perviewDesktop": 6,
         "spaceBetween": 30,
         "nowrap": true,
         "arrows": true,
