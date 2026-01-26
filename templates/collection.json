@@ -129,7 +129,7 @@
         "button_link": "",
         "button": "",
         "perviewDesktop": 6,
-        "spaceBetween": 30,
+        "spaceBetween": 20,
         "nowrap": true,
         "arrows": true,
         "scrollbar": false,
