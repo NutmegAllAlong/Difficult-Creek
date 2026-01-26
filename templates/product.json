@@ -486,11 +486,7 @@
         "dd148053-296c-4c9b-99a6-63c2328328fe"
       ],
       "custom_css": [
-        ".txt-body {text-align: left !important;}",
-        ".col-lg-7 {max-width: 100% !important;}",
-        ".parallax-banner__wraper {background-position: center;}",
-        ".container {display: flex;}",
-        ".right-item {margin-right: 10px; /* Pushes the item to the left */}"
+        ".col-lg-7 {max-width: 100% !important;}"
       ],
       "settings": {
         "animation": "fade",
