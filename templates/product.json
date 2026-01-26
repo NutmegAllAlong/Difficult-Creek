@@ -494,7 +494,7 @@
         "animation": "fade",
         "setwidth": "full",
         "bgsection": "#ffffff",
-        "parrallax_enable": true,
+        "parrallax_enable": false,
         "image": "shopify://shop_images/Effortless_style_banner.jpg",
         "height_section": "650",
         "height_section_mobile": "450",
