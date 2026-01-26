@@ -2276,17 +2276,18 @@
       "pnewsletter": {
         "type": "pnewsletter",
         "settings": {
-          "pnewletter_enable": false,
+          "pnewletter_enable": true,
           "pnew_style": "pnew_style-2",
           "pnew-width": 850,
           "pnew-height": 480,
           "pnewletter_time_delay": 3,
           "pnewletter_time": 20,
           "pnewletter_background": "#faf5f2",
-          "pnewletter_title": "Stay Styled, Stay Informed!",
+          "pnewletter_bgimage": "shopify://shop_images/atomicCeramic-newsletter.jpg",
+          "pnewletter_title": "Every light tells a story — stay glowing with us!",
           "pnewletter_title_cl": "",
           "pnew_size_heading": "h3",
-          "pnewletter_description": "<p>Unlock Beauty Secrets and Exclusive Offers! Join our fashion community and be the first to know about the latest trends, exclusive collections, and insider deals.</p>",
+          "pnewletter_description": "<p>Transform your space with luminous, one-of-a-kind lighting — handcrafted from premium materials and designed with soul.</p><p> Join our newsletter to be the first to see new upcycled lamp releases, exclusive behind-the-scenes stories from the artisan’s studio, and early access to bespoke custom designs.</p>",
           "pnewletter_description_cl": ""
         }
       },
