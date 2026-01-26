@@ -2999,6 +2999,7 @@ figcaption .bg-des {
 }
 .site-nav .dropdown-toggle:after {
   display: none !important;
+  font-family: 'icomoon-theme' !important; /* to override the progus icomoon file */
 }
 #NavDrawer .menu-label,
 .site-nav__dropdown .menu-label {
