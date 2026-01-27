@@ -498,10 +498,18 @@ if (sizeDisplay) {
   // Update images (existing code)
   console.log('Variant object:', variant);
   console.log('Featured image:', variant.featured_image);
+  console.log('Image:', variant.image);
 
-    if (variant.featured_image && variant.featured_image.src) {
-      const variantImageSrc = variant.featured_image.src;
-      console.log('Found variant image:', variantImageSrc);
+  const variantImageSrc = variant.featured_image ? variant.featured_image.src : variant.image;
+
+  if (variantImageSrc) {
+  console.log('Found variant image:', variantImageSrc);
+  
+    const imagesToUpdate = blockContainer.querySelectorAll('.product-single__photo img');
+  console.log('Found images to update in {{ unique_id }}:', imagesToUpdate.length);
+  
+  imagesToUpdate.forEach(function(img) {
+
        
       // Find images ONLY in THIS block's gallery
       const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
