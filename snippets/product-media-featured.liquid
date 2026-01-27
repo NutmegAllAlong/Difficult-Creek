@@ -181,7 +181,7 @@
     </style>
 <div class="photos {{ layout_style }}">
   <div class="photos__item photos__item--main" data-aos="fade">
-    <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
+    <div class="my-gallery gallery-wrap{{ unique_id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
     {%- assign non_variant_image_count = 0 -%}
       {%- for media in product.media -%}
@@ -201,11 +201,11 @@
         {% case media.media_type %}
         {% when 'image' %}
             <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" 
-              class="photo-image {% if image == featured_image %}  slick-current {% endif %} product-single__photo product__photo-container product__photo-container-{{ section.id }} "
-                id="ProductPhoto{{ section.id }}"
+              class="photo-image {% if image == featured_image %}  slick-current {% endif %} product-single__photo product__photo-container product__photo-container-{{ unique_id }} "
+                id="ProductPhoto{{ unique_id }}"
                 data-image-id="{{ image.id }}">
                 <a href="{{ image | image_url: width: 1400 }}" itemprop="contentUrl" data-size="1400x1400"
-                class="product__photo-wrapper product__photo-wrapper-{{ section.id }} {{ image_size }} "
+                class="product__photo-wrapper product__photo-wrapper-{{ unique_id }} {{ image_size }} "
                 style="padding-top:{{ 1 | divided_by: image.aspect_ratio | times: 100 }}%;">
                 {% assign img_url = image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
                 <img itemprop="thumbnail" class="lazyload {% unless image == featured_image %} lazypreload{% endunless %}"
@@ -222,8 +222,8 @@
             </figure>
         {% when 'video' %}
 
-              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
-                id="ProductPhoto{{ section.id }}"
+              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ unique_id }} " 
+                id="ProductPhoto{{ unique_id }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                 <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
@@ -251,8 +251,8 @@
                 </deferred-media>
               </div> 
         {% when 'external_video' %}
-              <div  class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
-                id="ProductPhoto{{ section.id }}"
+              <div  class="product-single__photo product-single__video product__photo-container product__photo-container-{{ unique_id }} " 
+                id="ProductPhoto{{ unique_id }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                   <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
@@ -285,8 +285,8 @@
                   </deferred-media>
                 </div>
         {% when 'model' %}
-              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
-                id="ProductPhoto{{ section.id }}"
+              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ unique_id }} " 
+                id="ProductPhoto{{ unique_id }}"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                   <div class="product-media-modal__model" data-media-id="{{ media.id }}">
@@ -330,8 +330,8 @@
                
                 </div>
         {% else %}
-              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
-                id="ProductPhoto{{ section.id }}"
+              <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ unique_id }} " 
+                id="ProductPhoto{{ unique_id }}"
                 style="max-width: {% render 'image-width' with image: image, width: 480 %}px;"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
@@ -359,7 +359,7 @@
       
 {%- if non_variant_image_count > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
-      <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
+      <div class="product-single__thumbnails product-single__thumbnails-{{ unique_id }} product-single__thumbnails--static">
 {%- for media in product.media -%}
   {%- assign is_variant_image = false -%}
   {%- for variant in product.variants -%}
@@ -374,9 +374,9 @@
   {%- endif -%}
 {% assign image = media %}
 
-        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
+        <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ unique_id }}{% if image == featured_image %} is-active {% endif %}" 
   data-image-id="{{ image.id }}">
-          <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ section.id }}"
+          <a href="{{ media | image_url: width: 1200 }}"  class="product-single__thumbnail product-single__thumbnail-{{ unique_id }}"
             {% if media.media_type == 'video' %}
             data-videoid="{{ image.id }}"
             {% endif %}>
@@ -460,10 +460,10 @@ console.log('Variant switcher loading...');
     {%- endfor -%}
   ];
   
-  console.log('Loaded variants for {{ section.id }}:', variants.length);
+  console.log('Loaded variants for {{ unique_id }}:', variants.length);
   
   function updateVariantImage(variantId) {
-    console.log('Updating for variant ID in {{ section.id }}:', variantId);
+    console.log('Updating for variant ID in {{ unique_id }}:', variantId);
     
     const variant = variants.find(function(v) {
       return String(v.id) === String(variantId);
@@ -474,7 +474,7 @@ console.log('Variant switcher loading...');
       
       // Find images ONLY in THIS block's gallery
       const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
-      console.log('Found images to update in {{ section.id }}:', allImages.length);
+      console.log('Found images to update in {{ unique_id }}:', allImages.length);
       
       allImages.forEach(function(img) {
         console.log('Updating image, old src:', img.src);
@@ -496,7 +496,7 @@ console.log('Variant switcher loading...');
         if (item.href) item.href = variant.image;
       });
       
-      console.log('All images updated in {{ section.id }}!');
+      console.log('All images updated in {{ unique_id }}!');
     } else {
       console.log('No variant or image found for ID:', variantId);
     }
@@ -510,14 +510,14 @@ console.log('Variant switcher loading...');
     if (sizeInput && colorInput) {
       const size = sizeInput.value;
       const color = colorInput.value;
-      console.log('Looking for variant in {{ section.id }} with size:', size, 'color:', color);
+      console.log('Looking for variant in {{ unique_id }} with size:', size, 'color:', color);
       
       const variant = variants.find(function(v) {
         return v.option1 === size && v.option2 === color;
       });
       
       if (variant) {
-        console.log('Found variant by options in {{ section.id }}:', variant.id);
+        console.log('Found variant by options in {{ unique_id }}:', variant.id);
         return variant.id;
       }
     }
@@ -525,15 +525,15 @@ console.log('Variant switcher loading...');
   }
   
   function init() {
-    console.log('Initializing {{ section.id }}...');
+    console.log('Initializing {{ unique_id }}...');
     
     // Listen for color changes ONLY in THIS block
     const colorInputs = blockContainer.querySelectorAll('input[name="color"]');
-    console.log('Found color inputs in {{ section.id }}:', colorInputs.length);
+    console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
     
     colorInputs.forEach(function(input) {
       input.addEventListener('change', function() {
-        console.log('Color changed in {{ section.id }} to:', input.value);
+        console.log('Color changed in {{ unique_id }} to:', input.value);
         const variantId = getSelectedVariantByOptions();
         if (variantId) {
           updateVariantImage(variantId);
@@ -543,11 +543,11 @@ console.log('Variant switcher loading...');
     
     // Listen for size changes ONLY in THIS block
     const sizeInputs = blockContainer.querySelectorAll('input[name="diameter-size"], select[name="diameter-size"]');
-    console.log('Found size inputs in {{ section.id }}:', sizeInputs.length);
+    console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
     
     sizeInputs.forEach(function(input) {
       input.addEventListener('change', function() {
-        console.log('Size changed in {{ section.id }} to:', input.value);
+        console.log('Size changed in {{ unique_id }} to:', input.value);
         const variantId = getSelectedVariantByOptions();
         if (variantId) {
           updateVariantImage(variantId);
