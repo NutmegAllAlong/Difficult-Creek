@@ -391,10 +391,16 @@
     assign left_size = 'col-md-7 col-12'
     assign right_size = 'col-md-5 col-12'
     endcase
-    assign featured_img = current_variant.featured_image | default: product.featured_image 
-
+-%}
+{% if product.tags contains 'custom-fabric-variants' %}
+  {%- assign featured_img = product.featured_image -%}
+{% else %}
+  {%- assign featured_img = current_variant.featured_image | default: product.featured_image -%}
+{% endif %}
+{%- liquid
     assign media_style = section.settings.media_style
-  -%}
+-%}
+
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | image_url: width: 600, height: 600 }}">
