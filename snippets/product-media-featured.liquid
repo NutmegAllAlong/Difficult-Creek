@@ -450,16 +450,19 @@ console.log('Variant switcher loading...');
   }
   
   const variants = [
-    {%- for variant in product.variants -%}
-      {
-        id: {{ variant.id | json }},
-        image: {{ variant.image.src | json }},
-        option1: {{ variant.option1 | json }},
-        option2: {{ variant.option2 | json }},
-        price: {{ variant.price | json }}
-      }{%- unless forloop.last -%},{%- endunless -%}
-    {%- endfor -%}
-  ];
+  {%- for variant in product.variants -%}
+    {
+      id: {{ variant.id | json }},
+      image: {{ variant.image.src | json }},
+      option1: {{ variant.option1 | json }},
+      option2: {{ variant.option2 | json }},
+      price: {{ variant.price | json }},
+      available: {{ variant.available | json }},
+      inventory_quantity: {{ variant.inventory_quantity | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+];
+
   
   console.log('Loaded variants for {{ unique_id }}:', variants.length);
   
@@ -505,7 +508,33 @@ console.log('Variant switcher loading...');
         console.log('Updated color display to:', colorValue);
       }
     }
-    
+
+    // Update stock display
+    const stockElement = document.getElementById('ProductStock-{{ section.id }}');
+    if (stockElement) {
+      if (variant.available && variant.inventory_quantity > 0) {
+        stockElement.textContent = variant.inventory_quantity + ' available';
+        stockElement.classList.remove('product-single__stock--out');
+        console.log('Updated stock to:', variant.inventory_quantity);
+      } else {
+      stockElement.textContent = 'Sold out';
+      stockElement.classList.add('product-single__stock--out');
+      console.log('Variant is sold out');
+      }
+    }
+
+    // Update Add to Cart button
+    const addToCartButton = blockContainer.querySelector('[name="add"]');
+    if (addToCartButton) {
+      if (variant.available) {
+        addToCartButton.disabled = false;
+        addToCartButton.textContent = 'Add to cart';
+        } else {
+        addToCartButton.disabled = true;
+        addToCartButton.textContent = 'Sold out';
+      }
+    }
+
     // Update images
     console.log('Variant object:', variant);
     console.log('Featured image:', variant.featured_image);
@@ -543,49 +572,75 @@ console.log('Variant switcher loading...');
     }
   }
   
-  function updatePriceAndSize(variantId) {
-    console.log('Updating price and size for variant ID in {{ unique_id }}:', variantId);
-    
-    const variant = variants.find(function(v) { return v.id === variantId; });
-    
-    if (!variant) {
-      console.log('Variant not found for ID:', variantId);
-      return;
-    }
-    
-    // Update price
-    const priceElement = document.getElementById('ProductPrice-{{ section.id }}');
-    if (priceElement && variant.price) {
-      const formattedPrice = (variant.price / 100).toFixed(2);
-      priceElement.textContent = '$' + formattedPrice;
-      priceElement.setAttribute('content', formattedPrice);
-      console.log('Updated price to:', formattedPrice);
-    }
-    
-    // Update size display
-    const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
-    if (sizeDisplay) {
-      const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
-      if (sizeInput) {
-        const sizeOptionIndex = sizeInput.getAttribute('data-index');
-        const sizeValue = sizeOptionIndex === 'option1' ? variant.option1 : variant.option2;
-        sizeDisplay.textContent = sizeValue;
-        console.log('Updated size display to:', sizeValue);
-      }
-    }
-    
-    // Update color display
-    const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
-    if (colorDisplay) {
-      const colorInput = blockContainer.querySelector('input[name="color"]:checked');
-      if (colorInput) {
-        const colorOptionIndex = colorInput.getAttribute('data-index');
-        const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
-        colorDisplay.textContent = colorValue;
-        console.log('Updated color display to:', colorValue);
-      }
+function updatePriceAndSize(variantId) {
+  console.log('Updating price and size for variant ID in {{ unique_id }}:', variantId);
+  
+  const variant = variants.find(function(v) { return v.id === variantId; });
+  
+  if (!variant) {
+    console.log('Variant not found for ID:', variantId);
+    return;
+  }
+  
+  // Update price
+  const priceElement = document.getElementById('ProductPrice-{{ section.id }}');
+  if (priceElement && variant.price) {
+    const formattedPrice = (variant.price / 100).toFixed(2);
+    priceElement.textContent = '$' + formattedPrice;
+    priceElement.setAttribute('content', formattedPrice);
+    console.log('Updated price to:', formattedPrice);
+  }
+  
+  // Update size display
+  const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
+  if (sizeDisplay) {
+    const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
+    if (sizeInput) {
+      const sizeOptionIndex = sizeInput.getAttribute('data-index');
+      const sizeValue = sizeOptionIndex === 'option1' ? variant.option1 : variant.option2;
+      sizeDisplay.textContent = sizeValue;
+      console.log('Updated size display to:', sizeValue);
     }
   }
+  
+  // Update color display
+  const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
+  if (colorDisplay) {
+    const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+    if (colorInput) {
+      const colorOptionIndex = colorInput.getAttribute('data-index');
+      const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
+      colorDisplay.textContent = colorValue;
+      console.log('Updated color display to:', colorValue);
+    }
+  }
+  
+  // Update stock display
+  const stockElement = document.getElementById('ProductStock-{{ section.id }}');
+  if (stockElement) {
+    if (variant.available && variant.inventory_quantity > 0) {
+      stockElement.textContent = variant.inventory_quantity + ' available';
+      stockElement.classList.remove('product-single__stock--out');
+      console.log('Updated stock to:', variant.inventory_quantity);
+    } else {
+      stockElement.textContent = 'Sold out';
+      stockElement.classList.add('product-single__stock--out');
+      console.log('Variant is sold out');
+    }
+  }
+
+  // Update Add to Cart button
+  const addToCartButton = blockContainer.querySelector('[name="add"]');
+  if (addToCartButton) {
+    if (variant.available) {
+      addToCartButton.disabled = false;
+      addToCartButton.textContent = 'Add to cart';
+    } else {
+      addToCartButton.disabled = true;
+      addToCartButton.textContent = 'Sold out';
+    }
+  }
+} 
 
   function getSelectedVariantByOptions() {
     const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
