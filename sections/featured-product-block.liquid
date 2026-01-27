@@ -2036,8 +2036,15 @@ initPhotoSwipeFromDOM('.my-gallery');
 // Show/hide sold out badge based on selected variant
 (function() {
   // Find THIS block's container using the unique block ID
-  const blockContainer = document.querySelector('#shopify-block-{{ unique_id }}');
-  if (!blockContainer) return;
+const blockContainer = document.querySelector('#shopify-block-{{ unique_id }}');
+console.log('Looking for container: #shopify-block-{{ unique_id }}');
+console.log('Found container:', blockContainer);
+if (!blockContainer) {
+  console.log('Container not found! Trying to find what exists...');
+  console.log('All elements with shopify-block:', document.querySelectorAll('[id^="shopify-block-"]'));
+  return;
+}
+
   
   // Build a lightweight variant availability map
   const variantAvailability = {
