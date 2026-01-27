@@ -528,7 +528,7 @@ console.log('Variant switcher loading...');
     console.log('Initializing {{ unique_id }}...');
     
     // Listen for color changes ONLY in THIS block
-    const colorInputs = blockContainer.querySelectorAll('input[name="color"]');
+    const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
     console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
     
     colorInputs.forEach(function(input) {
@@ -542,7 +542,7 @@ console.log('Variant switcher loading...');
     });
     
     // Listen for size changes ONLY in THIS block
-    const sizeInputs = blockContainer.querySelectorAll('input[name="diameter-size"], select[name="diameter-size"]');
+    const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
     console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
     
     sizeInputs.forEach(function(input) {
