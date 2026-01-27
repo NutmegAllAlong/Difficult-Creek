@@ -580,15 +580,15 @@ slate.Variants = (function() {
      * @return {event}  variantImageChange
      */
     _updateImages: function(variant) {
-      var variantImage = variant.featured_image || {};
-      var currentVariantImage = this.currentVariant.featured_image || {};
+    // Don't switch images for custom products with fabric swatches
+    if (this.product.tags && this.product.tags.includes('custom-fabric-variants')) {
+    return;
+  }
+  
+    var variantImage = variant.featured_image || {};
+    var currentVariantImage = this.currentVariant.featured_image || {};
+    // ... rest of existing code stays the same
 
-      if (
-        !variant.featured_image ||
-        variantImage.src === currentVariantImage.src
-      ) {
-        return;
-      }
 
       this.$container.trigger({
         type: 'variantImageChange',
