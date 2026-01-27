@@ -493,7 +493,19 @@ console.log('Variant switcher loading...');
         console.log('Updated size display to:', sizeValue);
       }
     }
-    
+
+    // Update color display
+    const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
+    if (colorDisplay) {
+      const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+      if (colorInput) {
+        const colorOptionIndex = colorInput.getAttribute('data-index');
+        const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
+        colorDisplay.textContent = colorValue;
+        console.log('Updated color display to:', colorValue);
+      }
+    }
+
     // Update images
     console.log('Variant object:', variant);
     console.log('Featured image:', variant.featured_image);
@@ -562,7 +574,18 @@ console.log('Variant switcher loading...');
       }
     }
   }
-  
+    // Update color display
+    const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
+    if (colorDisplay) {
+      const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+      if (colorInput) {
+        const colorOptionIndex = colorInput.getAttribute('data-index');
+        const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
+        colorDisplay.textContent = colorValue;
+        console.log('Updated color display to:', colorValue);
+      }
+    }
+
   function getSelectedVariantByOptions() {
     const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
     const colorInput = blockContainer.querySelector('input[name="color"]:checked');
