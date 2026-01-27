@@ -2030,6 +2030,9 @@ initPhotoSwipeFromDOM('.my-gallery');
 <script>
 // Show/hide sold out badge based on selected variant
 (function() {
+  // Find THIS block's container using the unique block ID
+  const blockContainer = document.querySelector('#shopify-section-{{ section.id }}');
+  if (!blockContainer) return;
   
   // Build a lightweight variant availability map
   const variantAvailability = {
@@ -2039,11 +2042,10 @@ initPhotoSwipeFromDOM('.my-gallery');
   };
   
   function updateSoldOutBadge() {
-    
-    const sizeInput = document.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
-    const colorInput = document.querySelector('input[name="color"]:checked');
-    const soldOutBadge = document.querySelector('.js-soldout-badge');
-    
+    // Scope selectors to THIS block only
+    const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
+    const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+    const soldOutBadge = blockContainer.querySelector('.js-soldout-badge');
     
     if (sizeInput && colorInput) {
       const size = sizeInput.value;
@@ -2055,7 +2057,7 @@ initPhotoSwipeFromDOM('.my-gallery');
       if (isAvailable !== undefined) {
         soldOutBadge.style.display = isAvailable ? 'none' : 'inline-block';
       }
-    } else {
+    } else if (soldOutBadge) {
       soldOutBadge.style.display = 'none';
     }
   }
@@ -2066,17 +2068,16 @@ initPhotoSwipeFromDOM('.my-gallery');
     updateSoldOutBadge();
   }
   
-  document.addEventListener('change', function(e) {
+  // Scope event listener to THIS block's container
+  blockContainer.addEventListener('change', function(e) {
     if (e.target.name === 'color' || e.target.name === 'diameter-size') {
-      console.log('Change detected:', e.target.name, '=', e.target.value);
+      console.log('Change detected in block {{ section.id }}:', e.target.name, '=', e.target.value);
       setTimeout(updateSoldOutBadge, 100);
     }
   });
   
 })();
 </script>
-
-
 
 <script>
   // Override default values of shop.strings for each template.
