@@ -98,7 +98,7 @@
           "type": "service",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
-            "title": "Emails",
+            "title": "Email",
             "description": "amie@difficultcreek.com",
             "icon": "<i class=\"icon-mail\"></i>"
           }
