@@ -1277,7 +1277,7 @@
           "enable_slideshow": true,
           "slideshow_height_adapt": "750",
           "slideshow_height_mobile": "500",
-          "setwidth": "container",
+          "setwidth": "container-fluid",
           "slideshow_mobile": true,
           "autorotate": true,
           "autorotate_speed": 5,
