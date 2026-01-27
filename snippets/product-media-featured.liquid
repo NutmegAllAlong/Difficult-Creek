@@ -481,17 +481,27 @@ console.log('Variant switcher loading...');
     console.log('Updated price to:', formattedPrice);
   }
   
-  // Update size display
-  const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
-  if (sizeDisplay && variant.option2) {
-    sizeDisplay.textContent = variant.option2;
-    console.log('Updated size display to:', variant.option2);
+  // Update size display - detect which option is the size
+const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
+if (sizeDisplay) {
+  // Check which option is the size by looking at the input's data-index
+  const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
+  if (sizeInput) {
+    const sizeOptionIndex = sizeInput.getAttribute('data-index'); // "option1" or "option2"
+    const sizeValue = sizeOptionIndex === 'option1' ? variant.option1 : variant.option2;
+    sizeDisplay.textContent = sizeValue;
+    console.log('Updated size display to:', sizeValue);
   }
+}
+
   
   // Update images (existing code)
-  if (variant.featured_image && variant.featured_image.src) {
-    const variantImageSrc = variant.featured_image.src;
-    console.log('Found variant image:', variantImageSrc);
+  console.log('Variant object:', variant);
+  console.log('Featured image:', variant.featured_image);
+
+    if (variant.featured_image && variant.featured_image.src) {
+      const variantImageSrc = variant.featured_image.src;
+      console.log('Found variant image:', variantImageSrc);
        
       // Find images ONLY in THIS block's gallery
       const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
