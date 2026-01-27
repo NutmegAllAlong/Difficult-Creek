@@ -133,8 +133,8 @@
         "draggable": true,
         "dots": true,
         "infinite": true,
-        "paddingsection": "64px 0px 64px 0px",
-        "paddingmobile": "32px 0px 8px 0px",
+        "paddingsection": "24px 0px 24px 0px",
+        "paddingmobile": "24px 0px 8px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
@@ -167,8 +167,8 @@
             "form_alignment": "center",
             "padding_top": 20,
             "padding_bottom": 24,
-            "padding_right": 0,
-            "padding_left": 0
+            "padding_right": 5,
+            "padding_left": 5
           }
         }
       },
@@ -245,8 +245,8 @@
         "e_small": true,
         "left_html": "",
         "e_right": false,
-        "paddingsection": "80px 0px 80px 0px",
-        "paddingmobile": "60px 0px 60px 0px",
+        "paddingsection": "30px 0px 30px 0px",
+        "paddingmobile": "20px 0px 20px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
