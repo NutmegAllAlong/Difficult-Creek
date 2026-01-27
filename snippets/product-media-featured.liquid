@@ -463,15 +463,36 @@ console.log('Variant switcher loading...');
   console.log('Loaded variants for {{ unique_id }}:', variants.length);
   
   function updateVariantImage(variantId) {
-    console.log('Updating for variant ID in {{ unique_id }}:', variantId);
-    
-    const variant = variants.find(function(v) {
-      return String(v.id) === String(variantId);
-    });
-    
-    if (variant && variant.image) {
-      console.log('Found variant image:', variant.image);
-      
+  console.log('Updating for variant ID in {{ unique_id }}:', variantId);
+  
+  const variant = variants.find(function(v) { return v.id === variantId; });
+  
+  if (!variant) {
+    console.log('Variant not found for ID:', variantId);
+    return;
+  }
+  
+  // Update price
+  const priceElement = document.getElementById('ProductPrice-{{ section.id }}');
+  if (priceElement && variant.price) {
+    const formattedPrice = (variant.price / 100).toFixed(2);
+    priceElement.textContent = '$' + formattedPrice;
+    priceElement.setAttribute('content', formattedPrice);
+    console.log('Updated price to:', formattedPrice);
+  }
+  
+  // Update size display
+  const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
+  if (sizeDisplay && variant.option2) {
+    sizeDisplay.textContent = variant.option2;
+    console.log('Updated size display to:', variant.option2);
+  }
+  
+  // Update images (existing code)
+  if (variant.featured_image && variant.featured_image.src) {
+    const variantImageSrc = variant.featured_image.src;
+    console.log('Found variant image:', variantImageSrc);
+       
       // Find images ONLY in THIS block's gallery
       const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
       console.log('Found images to update in {{ unique_id }}:', allImages.length);
