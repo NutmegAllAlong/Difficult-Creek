@@ -668,60 +668,47 @@ function updatePriceAndSize(variantId) {
     return null;
   }
   
-  function init() {
-    console.log('Initializing {{ unique_id }}...');
-    
-    const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
-    console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
-    console.log('First input class:', colorInputs[0] ? colorInputs[0].className : 'none');
-    console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
+function init() {
+  console.log('Initializing {{ unique_id }}...');
+  
+  const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
+  console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
+  console.log('First input class:', colorInputs[0] ? colorInputs[0].className : 'none');
+  console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
 
-    colorInputs.forEach(function(input) {
-      input.addEventListener('change', function(e) {
-        e.stopPropagation();
-        console.log('Color changed in {{ unique_id }} to:', input.value);
-        const variantId = getSelectedVariantByOptions();
-        if (variantId) {
-          updateVariantImage(variantId);
-        }
-      });
-    });
-    
-    const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
-    console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
-    
-    sizeInputs.forEach(function(input) {
-      input.addEventListener('change', function(e) {
-        e.stopPropagation();
-        console.log('Size changed in {{ unique_id }} to:', input.value);
-        const variantId = getSelectedVariantByOptions();
-        if (variantId) {
-          updatePriceAndSize(variantId);
-        }
-      });
-    });
-    const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
-    console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
-    
-    sizeInputs.forEach(function(input) {
-      input.addEventListener('change', function(e) {
-        e.stopPropagation();
-        console.log('Size changed in {{ unique_id }} to:', input.value);
-        const variantId = getSelectedVariantByOptions();
-        if (variantId) {
-          updatePriceAndSize(variantId);
-        }
-      });
-    });
-
-    // Set initial variant on load with a small delay to ensure DOM is ready
-    setTimeout(function() {
-      const initialVariantId = getSelectedVariantByOptions();
-      if (initialVariantId) {
-        updatePriceAndSize(initialVariantId);
+  colorInputs.forEach(function(input) {
+    input.addEventListener('change', function(e) {
+      e.stopPropagation();
+      console.log('Color changed in {{ unique_id }} to:', input.value);
+      const variantId = getSelectedVariantByOptions();
+      if (variantId) {
+        updateVariantImage(variantId);
       }
-    }, 100);
-  }
+    });
+  });
+  
+  const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
+  console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
+  
+  sizeInputs.forEach(function(input) {
+    input.addEventListener('change', function(e) {
+      e.stopPropagation();
+      console.log('Size changed in {{ unique_id }} to:', input.value);
+      const variantId = getSelectedVariantByOptions();
+      if (variantId) {
+        updatePriceAndSize(variantId);
+      }
+    });
+  });
+  
+  // Set initial variant on load with a small delay to ensure DOM is ready
+  setTimeout(function() {
+    const initialVariantId = getSelectedVariantByOptions();
+    if (initialVariantId) {
+      updatePriceAndSize(initialVariantId);
+    }
+  }, 100);
+}
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
