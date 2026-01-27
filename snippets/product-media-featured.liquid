@@ -495,16 +495,16 @@ console.log('Variant switcher loading...');
     }
 
     // Update color display
-  const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
-  if (colorDisplay) {
-    const colorInput = blockContainer.querySelector('input[name="color"]:checked');
-    if (colorInput) {
-      const colorOptionIndex = colorInput.getAttribute('data-index');
-      const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
-      colorDisplay.textContent = colorValue;
-      console.log('Updated color display to:', colorValue);
+    const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
+    if (colorDisplay) {
+      const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+      if (colorInput) {
+        const colorOptionIndex = colorInput.getAttribute('data-index');
+        const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
+        colorDisplay.textContent = colorValue;
+        console.log('Updated color display to:', colorValue);
+      }
     }
-  }
     
     // Update images
     console.log('Variant object:', variant);
@@ -562,30 +562,30 @@ console.log('Variant switcher loading...');
       console.log('Updated price to:', formattedPrice);
     }
     
-  // Update size display
-  const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
-  if (sizeDisplay) {
-    const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
-    if (sizeInput) {
-      const sizeOptionIndex = sizeInput.getAttribute('data-index');
-      const sizeValue = sizeOptionIndex === 'option1' ? variant.option1 : variant.option2;
-      sizeDisplay.textContent = sizeValue;
-      console.log('Updated size display to:', sizeValue);
+    // Update size display
+    const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
+    if (sizeDisplay) {
+      const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
+      if (sizeInput) {
+        const sizeOptionIndex = sizeInput.getAttribute('data-index');
+        const sizeValue = sizeOptionIndex === 'option1' ? variant.option1 : variant.option2;
+        sizeDisplay.textContent = sizeValue;
+        console.log('Updated size display to:', sizeValue);
+      }
+    }
+    
+    // Update color display
+    const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
+    if (colorDisplay) {
+      const colorInput = blockContainer.querySelector('input[name="color"]:checked');
+      if (colorInput) {
+        const colorOptionIndex = colorInput.getAttribute('data-index');
+        const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
+        colorDisplay.textContent = colorValue;
+        console.log('Updated color display to:', colorValue);
+      }
     }
   }
-  
-  // Update color display
-  const colorDisplay = blockContainer.querySelector('.js-swatch-display--2');
-  if (colorDisplay) {
-    const colorInput = blockContainer.querySelector('input[name="color"]:checked');
-    if (colorInput) {
-      const colorOptionIndex = colorInput.getAttribute('data-index');
-      const colorValue = colorOptionIndex === 'option1' ? variant.option1 : variant.option2;
-      colorDisplay.textContent = colorValue;
-      console.log('Updated color display to:', colorValue);
-    }
-  }
-}
 
   function getSelectedVariantByOptions() {
     const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
@@ -653,7 +653,7 @@ console.log('Variant switcher loading...');
         updatePriceAndSize(initialVariantId);
       }
     }, 100);
-
+  }
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -662,6 +662,7 @@ console.log('Variant switcher loading...');
   }
 })();
 </script>
+
 
 {% if media_style == 'media-bottom' %}
   </div>
