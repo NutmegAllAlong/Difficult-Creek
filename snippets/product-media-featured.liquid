@@ -534,7 +534,8 @@ console.log('Variant switcher loading...');
     console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
 
     colorInputs.forEach(function(input) {
-      input.addEventListener('change', function() {
+      input.addEventListener('change', function(e) {
+      e.stopPropagation(); // Prevent event from bubbling to other listeners
         console.log('Color changed in {{ unique_id }} to:', input.value);
         const variantId = getSelectedVariantByOptions();
         if (variantId) {
@@ -548,7 +549,8 @@ console.log('Variant switcher loading...');
     console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
     
     sizeInputs.forEach(function(input) {
-      input.addEventListener('change', function() {
+      input.addEventListener('change', function(e) {
+      e.stopPropagation(); // Prevent event from bubbling to other listeners
         console.log('Size changed in {{ unique_id }} to:', input.value);
         const variantId = getSelectedVariantByOptions();
         if (variantId) {
