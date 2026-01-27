@@ -2112,4 +2112,38 @@ if (!blockContainer) {
   })();
 </script>
 
-
+<script>
+(function() {
+  const blockId = '{{ block.id }}';
+  const sectionContainer = document.querySelector('#shopify-section-{{ section.id }}');
+  
+  if (sectionContainer && blockId) {
+    // Fix input IDs to be unique per block
+    const colorInputs = sectionContainer.querySelectorAll('input[name="color"]');
+    colorInputs.forEach(function(input) {
+      const oldId = input.id;
+      const newId = oldId + '-' + blockId;
+      input.id = newId;
+      
+      // Update the corresponding label
+      const label = sectionContainer.querySelector('label[for="' + oldId + '"]');
+      if (label) {
+        label.setAttribute('for', newId);
+      }
+    });
+    
+    // Fix size input IDs
+    const sizeInputs = sectionContainer.querySelectorAll('input[name="diameter-size"]');
+    sizeInputs.forEach(function(input) {
+      const oldId = input.id;
+      const newId = oldId + '-' + blockId;
+      input.id = newId;
+      
+      const label = sectionContainer.querySelector('label[for="' + oldId + '"]');
+      if (label) {
+        label.setAttribute('for', newId);
+      }
+    });
+  }
+})();
+</script>
