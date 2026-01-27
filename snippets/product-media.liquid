@@ -1,8 +1,9 @@
 <!-- product-media.liquid -->
 {%- liquid
-  # Build array of variant image IDs for comparison
-  assign variant_image_ids = product.variants | map: 'image' | map: 'id' | compact
+  # Build array of variant image URLs for comparison (not IDs)
+  assign variant_image_urls = product.variants | map: 'image' | map: 'src' | compact
 -%}
+
 
 {%- comment -%} DEBUG - Remove after testing {%- endcomment -%}
 <div style="background: yellow; padding: 10px; margin: 10px;">
@@ -158,8 +159,8 @@
         
 {%- for media in product.media -%}
   {%- assign is_swatch = false -%}
-  {%- for vid in variant_image_ids -%}
-    {%- if media.id == vid -%}
+  {%- for v_url in variant_image_urls -%}
+  {%- if media.src == v_url -%}
       {%- assign is_swatch = true -%}
       {%- break -%}
     {%- endif -%}
@@ -319,8 +320,8 @@
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
         {%- for media in product.media -%}
           {%- assign is_swatch = false -%}
-          {%- for vid in variant_image_ids -%}
-            {%- if media.id == vid -%}
+          {%- for v_url in variant_image_urls -%}
+            {%- if media.src == v_url -%}
               {%- assign is_swatch = true -%}
               {%- break -%}
             {%- endif -%}
