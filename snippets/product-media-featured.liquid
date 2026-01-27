@@ -534,15 +534,19 @@ console.log('Variant switcher loading...');
     console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
 
     colorInputs.forEach(function(input) {
-      input.addEventListener('change', function(e) {
-      e.stopPropagation(); // Prevent event from bubbling to other listeners
-        console.log('Color changed in {{ unique_id }} to:', input.value);
-        const variantId = getSelectedVariantByOptions();
-        if (variantId) {
-          updateVariantImage(variantId);
-        }
-      });
-    });
+    input.addEventListener('change', function(e) {
+    e.stopPropagation();
+    console.log('Color changed in {{ unique_id }} to:', input.value);
+    console.log('Event target:', e.target);
+    console.log('Event target class:', e.target.className);
+    console.log('Listener attached to input with class:', input.className);
+    const variantId = getSelectedVariantByOptions();
+    if (variantId) {
+      updateVariantImage(variantId);
+    }
+  });
+});
+
     
     // Listen for size changes ONLY in THIS block
     const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
