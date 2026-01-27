@@ -2114,27 +2114,26 @@ if (!blockContainer) {
 
 <script>
 (function() {
-  const blockId = '{{ block.id }}';
   const sectionId = '{{ section.id }}';
   
   function fixInputIds() {
     const sectionContainer = document.querySelector('#shopify-section-' + sectionId);
     
-    if (!sectionContainer || !blockId) {
-      console.log('Container or block ID not found for', sectionId);
+    if (!sectionContainer) {
+      console.log('Container not found for', sectionId);
       return;
     }
     
-    console.log('Fixing input IDs for block:', blockId);
+    console.log('Fixing input IDs for section:', sectionId);
     
     // Fix color input IDs
     const colorInputs = sectionContainer.querySelectorAll('input[name="color"]');
-    console.log('Found', colorInputs.length, 'color inputs to fix');
+    console.log('Found', colorInputs.length, 'color inputs to fix in', sectionId);
     
     colorInputs.forEach(function(input) {
       const oldId = input.id;
-      if (!oldId.includes(blockId)) {
-        const newId = oldId + '-' + blockId;
+      if (!oldId.includes(sectionId)) {
+        const newId = oldId + '-' + sectionId;
         input.id = newId;
         console.log('Fixed input ID:', oldId, '->', newId);
         
@@ -2151,8 +2150,8 @@ if (!blockContainer) {
     const sizeInputs = sectionContainer.querySelectorAll('input[name="diameter-size"]');
     sizeInputs.forEach(function(input) {
       const oldId = input.id;
-      if (!oldId.includes(blockId)) {
-        const newId = oldId + '-' + blockId;
+      if (!oldId.includes(sectionId)) {
+        const newId = oldId + '-' + sectionId;
         input.id = newId;
         
         const label = sectionContainer.querySelector('label[for="' + oldId + '"]');
