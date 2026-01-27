@@ -2669,11 +2669,6 @@
       "1660925094098c539e"
     ],
     "blocks": {
-      "3516830543601639398": {
-        "type": "shopify://apps/swatchy-colour-swatches/blocks/color-swatches/9ffb0fa4-bc83-4328-b49f-930bca91f3cf",
-        "disabled": false,
-        "settings": {}
-      },
       "18387101310985349768": {
         "type": "shopify://apps/progus-store-locator/blocks/app-embed/d7896016-8cc9-45e0-860e-ba85ba3d5be4",
         "disabled": false,
@@ -2691,6 +2686,11 @@
           "city": "",
           "groups": ""
         }
+      },
+      "3516830543601639398": {
+        "type": "shopify://apps/swatchy-colour-swatches/blocks/color-swatches/9ffb0fa4-bc83-4328-b49f-930bca91f3cf",
+        "disabled": true,
+        "settings": {}
       }
     }
   },
