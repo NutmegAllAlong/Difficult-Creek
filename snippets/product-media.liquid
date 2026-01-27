@@ -1,11 +1,9 @@
 <!-- product-media.liquid -->
 {%- liquid
-  # Filter out variant-attached swatch images from gallery
-  assign variant_image_ids = product.variants | map: 'image' | map: 'id'
-  assign filtered_media = product.media | where_exp: "media", "variant_image_ids contains media.id == false"
-  
-  # Use filtered_media instead of product.media in the rest of this snippet
+  # Build array of variant image IDs for comparison
+  assign variant_image_ids = product.variants | map: 'image' | map: 'id' | compact
 -%}
+
 
 {%- liquid
     assign lazy = false
@@ -139,7 +137,17 @@
     <div class="photos__item photos__item--main" data-aos="fade">
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
         
-        {%- for media in filtered_media -%}
+{%- for media in product.media -%}
+  {%- assign is_swatch = false -%}
+  {%- for vid in variant_image_ids -%}
+    {%- if media.id == vid -%}
+      {%- assign is_swatch = true -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- unless is_swatch -%}
+
         {%- liquid
           assign image = media
         -%}
@@ -283,13 +291,26 @@
                 {{ media | media_tag }}
               </div>
         {% endcase %}
+        {%- endunless -%}
       {%- endfor -%}
       </div>
     </div>
     {%- if product.images.size > 1 -%}
     <div class="photos__item photos__item--thumbs {{ layout_mobile }}">
       <div class="product-single__thumbnails product-single__thumbnails-{{ section.id }} product-single__thumbnails--static">
-        {%- for media in filtered_media -%}
+        {%- for media in product.media -%}
+          {%- assign is_swatch = false -%}
+          {%- for vid in variant_image_ids -%}
+            {%- if media.id == vid -%}
+              {%- assign is_swatch = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+  
+        {%- unless is_swatch -%}
+          {% assign image = media %}
+          
+          {%- comment -%} rest of your thumbnail code {%- endcomment -%}
         {% assign image = media %}
         <div class="item product-single__thumbnail-item product-single__thumbnail-item-{{ section.id }}{% if image == featured_image %} is-active {% endif %}" 
           data-image-id="{{ image.id }}">
@@ -322,6 +343,7 @@
               </span>
           </a>
         </div>
+      {%- endunless -%}
         {%- endfor -%}
       </div>
     </div>
