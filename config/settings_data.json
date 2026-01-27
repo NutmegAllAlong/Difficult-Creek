@@ -3381,7 +3381,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "/* Hide Foamy theme sticky cart on lampshades page */.sticky-cart-wr {display: none !important;}"
+      "/* Hide sticky cart only on lampshades page */body.template-page .sticky-cart-wr {display: none !important;}"
     ]
   }
 }
