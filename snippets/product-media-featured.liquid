@@ -450,15 +450,17 @@ console.log('Variant switcher loading...');
   }
   
   const variants = [
-    {%- for variant in product.variants -%}
-      {
-        id: {{ variant.id | json }},
-        image: {{ variant.image.src | json }},
-        option1: {{ variant.option1 | json }},
-        option2: {{ variant.option2 | json }}
-      }{%- unless forloop.last -%},{%- endunless -%}
-    {%- endfor -%}
-  ];
+  {%- for variant in product.variants -%}
+    {
+      id: {{ variant.id | json }},
+      image: {{ variant.image.src | json }},
+      option1: {{ variant.option1 | json }},
+      option2: {{ variant.option2 | json }},
+      price: {{ variant.price | json }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+];
+
   
   console.log('Loaded variants for {{ unique_id }}:', variants.length);
   
