@@ -39,7 +39,7 @@
         "collection_width": "container",
         "products_per_page": 32,
         "collection_perrow": "3",
-        "type_pagination": "pagi",
+        "type_pagination": "scroll",
         "enable_viewcolumn": true,
         "enable_filtering": true,
         "enable_sorting": true,
