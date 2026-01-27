@@ -180,6 +180,7 @@
         },
         "883720d7-3346-4495-85a0-add8b3d7a51f": {
           "type": "trust-badge",
+          "disabled": true,
           "settings": {
             "trust-heading": "Guarantee safe checkout",
             "width_image": 50
