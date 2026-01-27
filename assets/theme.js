@@ -580,11 +580,14 @@ slate.Variants = (function() {
      * @return {event}  variantImageChange
      */
     _updateImages: function(variant) {
-    // Don't switch images for custom products with fabric swatches
-    if (this.product.tags && this.product.tags.includes('custom-fabric-variants')) {
-    return;
-    }
+      console.log('Product tags:', this.product.tags);
+      console.log('Has custom tag?', this.product.tags && this.product.tags.includes('custom-fabric-variants'));
   
+  // Don't switch images for custom products with fabric swatches
+      if (this.product.tags && this.product.tags.includes('custom-fabric-variants')) {
+    return;
+      }
+    
     var variantImage = variant.featured_image || {};
     var currentVariantImage = this.currentVariant.featured_image || {};
     // ... rest of existing code stays the same
