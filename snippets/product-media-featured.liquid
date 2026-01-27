@@ -505,34 +505,34 @@ const variantImageSrc = variant.featured_image ? variant.featured_image.src : va
 if (variantImageSrc) {
   console.log('Found variant image:', variantImageSrc);
   
-  const imagesToUpdate = blockContainer.querySelectorAll('.product-single__photo img');
-  console.log('Found images to update in {{ unique_id }}:', imagesToUpdate.length);
+  // Find images ONLY in THIS block's gallery
+  const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
+  console.log('Found images to update in {{ unique_id }}:', allImages.length);
   
-  imagesToUpdate.forEach(function(img) {
-       
-      // Find images ONLY in THIS block's gallery
-      const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
-      console.log('Found images to update in {{ unique_id }}:', allImages.length);
-      
-      allImages.forEach(function(img) {
-        console.log('Updating image, old src:', img.src);
-        img.src = variant.image;
-        img.srcset = variant.image;
-        img.setAttribute('data-src', variant.image);
-        console.log('New src:', img.src);
-        
-        // Remove lazyload
-        img.classList.remove('lazyload', 'lazypreload');
-        img.classList.add('lazyloaded');
-      });
-      
-      // Update PhotoSwipe/zoom data ONLY in THIS block
-      const photoswipeItems = blockContainer.querySelectorAll('[data-mfp-src], [data-zoom-src], .product__photo-wrapper');
-      photoswipeItems.forEach(function(item) {
-        item.setAttribute('data-mfp-src', variant.image);
-        item.setAttribute('data-zoom-src', variant.image);
-        if (item.href) item.href = variant.image;
-      });
+  allImages.forEach(function(img) {
+    console.log('Updating image, old src:', img.src);
+    img.src = variantImageSrc;
+    img.srcset = variantImageSrc;
+    img.setAttribute('data-src', variantImageSrc);
+    console.log('New src:', variantImageSrc);
+    
+    // Remove lazyload
+    img.classList.remove('lazyload', 'lazypreload');
+    img.classList.add('lazyloaded');
+  });
+  
+  // Update PhotoSwipe/zoom data ONLY in THIS block
+  const photoswipeItems = blockContainer.querySelectorAll('[data-mfp-src], [data-zoom-src], .product__photo-wrapper');
+  photoswipeItems.forEach(function(item) {
+    item.setAttribute('data-mfp-src', variantImageSrc);
+    item.setAttribute('data-zoom-src', variantImageSrc);
+    if (item.href) item.href = variantImageSrc;
+  });
+  
+  console.log('All images updated in {{ unique_id }}!');
+} else {
+  console.log('No variant or image found for ID:', variantId);
+}
       
       console.log('All images updated in {{ unique_id }}!');
     } else {
