@@ -646,11 +646,14 @@ console.log('Variant switcher loading...');
       });
     });
     
-    const initialVariantId = getSelectedVariantByOptions();
-    if (initialVariantId) {
-      updatePriceAndSize(initialVariantId);
-    }
-  }
+    // Set initial variant on load with a small delay to ensure DOM is ready
+    setTimeout(function() {
+      const initialVariantId = getSelectedVariantByOptions();
+      if (initialVariantId) {
+        updatePriceAndSize(initialVariantId);
+      }
+    }, 100);
+
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
