@@ -419,7 +419,7 @@ console.log('Product: {{ product.title }}');
 {% endunless %}">
 
 
-{% render 'product-media-featured', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style, unique_id: block.id %}
+{% render 'product-media-featured', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style, unique_id: section.id, block_id: block.id %}
 
 </div>
 
@@ -2036,8 +2036,9 @@ initPhotoSwipeFromDOM('.my-gallery');
 // Show/hide sold out badge based on selected variant
 (function() {
   // Find THIS block's container using the unique block ID
-const blockContainer = document.querySelector('#shopify-block-{{ unique_id }}');
-console.log('Looking for container: #shopify-block-{{ unique_id }}');
+const blockContainer = document.querySelector('#shopify-section-{{ unique_id }}').closest('[id*="{{ block_id }}"]') || document.querySelector('#shopify-section-{{ unique_id }}');
+console.log('Looking for section: #shopify-section-{{ unique_id }}');
+console.log('Looking for block: {{ block_id }}');
 console.log('Found container:', blockContainer);
 if (!blockContainer) {
   console.log('Container not found! Trying to find what exists...');
