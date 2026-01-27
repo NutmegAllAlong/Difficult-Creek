@@ -506,8 +506,12 @@ console.log('Variant switcher loading...');
     // Find variant based on selected options ONLY in THIS block
     const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
     const colorInput = blockContainer.querySelector('input[name="color"]:checked');
-    
-    if (sizeInput && colorInput) {
+  
+  console.log('getSelectedVariantByOptions in {{ unique_id }}');
+  console.log('Size input:', sizeInput);
+  console.log('Color input:', colorInput);
+  
+  if (sizeInput && colorInput) {
       const size = sizeInput.value;
       const color = colorInput.value;
       console.log('Looking for variant in {{ unique_id }} with size:', size, 'color:', color);
