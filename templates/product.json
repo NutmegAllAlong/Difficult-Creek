@@ -225,7 +225,7 @@
         "sizeguide_enable": false,
         "sizeguide_title": "Size Guide",
         "sizeguide_page": "sizechart",
-        "crosssell_title": "Cross selling",
+        "crosssell_title": "",
         "upsell_accept": "Add to cart",
         "upsell_decline": "No, thanks",
         "upsell_time": 3,
