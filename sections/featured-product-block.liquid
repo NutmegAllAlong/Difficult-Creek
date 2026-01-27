@@ -419,7 +419,7 @@ console.log('Product: {{ product.title }}');
 {% endunless %}">
 
 
-  {% render 'product-media-featured', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style %}
+{% render 'product-media-featured', product: product, featured_image: featured_img, image_size: section.settings.image_size, loop: section.settings.enable_video_looping, media_style: media_style, unique_id: block.id %}
 
 </div>
 
@@ -2036,7 +2036,7 @@ initPhotoSwipeFromDOM('.my-gallery');
 // Show/hide sold out badge based on selected variant
 (function() {
   // Find THIS block's container using the unique block ID
-  const blockContainer = document.querySelector('#shopify-section-{{ section.id }}');
+  const blockContainer = document.querySelector('#shopify-block-{{ unique_id }}');
   if (!blockContainer) return;
   
   // Build a lightweight variant availability map
