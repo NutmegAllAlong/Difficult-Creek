@@ -530,7 +530,9 @@ console.log('Variant switcher loading...');
     // Listen for color changes ONLY in THIS block
     const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
     console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
-    
+    console.log('First input class:', colorInputs[0] ? colorInputs[0].className : 'none');
+    console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
+
     colorInputs.forEach(function(input) {
       input.addEventListener('change', function() {
         console.log('Color changed in {{ unique_id }} to:', input.value);
