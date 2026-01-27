@@ -129,7 +129,7 @@
     "radius_label": 2,
     "new_label_enable": true,
     "new_label_cl": "#ffffff",
-    "new_label_day": 30,
+    "new_label_day": 14,
     "sale_label_enable": false,
     "sale_label_text": "Sale",
     "tagsale": "percent",
