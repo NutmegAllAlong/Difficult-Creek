@@ -4,27 +4,6 @@
   assign variant_image_urls = product.variants | map: 'image' | map: 'src' | compact
 -%}
 
-
-{%- comment -%} DEBUG - Remove after testing {%- endcomment -%}
-<div style="background: yellow; padding: 10px; margin: 10px;">
-  <strong>DEBUG INFO:</strong><br>
-  Total media: {{ product.media.size }}<br>
-  Variant image IDs: {{ variant_image_ids | join: ', ' }}<br>
-  <br>
-  {% for media in product.media limit: 5 %}
-    Media {{ forloop.index }} ID: {{ media.id }} - Is swatch? 
-    {% assign is_swatch = false %}
-    {% for vid in variant_image_ids %}
-      {% if media.id == vid %}
-        {% assign is_swatch = true %}
-      {% endif %}
-    {% endfor %}
-    {{ is_swatch }}<br>
-  {% endfor %}
-</div>
-
-
-
 {%- liquid
     assign lazy = false
 
