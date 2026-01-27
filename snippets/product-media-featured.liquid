@@ -460,12 +460,50 @@ console.log('Variant switcher loading...');
     }{%- unless forloop.last -%},{%- endunless -%}
   {%- endfor -%}
 ];
+function init() {
+  console.log('Initializing {{ unique_id }}...');
+  
+  // Listen for color changes ONLY in THIS block
+  const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
+  console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
+  console.log('First input class:', colorInputs[0] ? colorInputs[0].className : 'none');
+  console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
 
+  colorInputs.forEach(function(input) {
+    input.addEventListener('change', function(e) {
+      e.stopPropagation();
+      console.log('Color changed in {{ unique_id }} to:', input.value);
+      const variantId = getSelectedVariantByOptions();
+      if (variantId) {
+        updateVariantImage(variantId); // Update image, price, size
+      }
+    });
+  });
   
-  console.log('Loaded variants for {{ unique_id }}:', variants.length);
+  // Listen for size changes ONLY in THIS block
+  const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
+  console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
   
-  function updateVariantImage(variantId) {
-  console.log('Updating for variant ID in {{ unique_id }}:', variantId);
+  sizeInputs.forEach(function(input) {
+    input.addEventListener('change', function(e) {
+      e.stopPropagation();
+      console.log('Size changed in {{ unique_id }} to:', input.value);
+      const variantId = getSelectedVariantByOptions();
+      if (variantId) {
+        updatePriceAndSize(variantId); // Only update price and size, NOT image
+      }
+    });
+  });
+  
+  // Set initial variant on load
+  const initialVariantId = getSelectedVariantByOptions();
+  if (initialVariantId) {
+    updatePriceAndSize(initialVariantId);
+  }
+}
+
+function updatePriceAndSize(variantId) {
+  console.log('Updating price and size for variant ID in {{ unique_id }}:', variantId);
   
   const variant = variants.find(function(v) { return v.id === variantId; });
   
@@ -483,7 +521,7 @@ console.log('Variant switcher loading...');
     console.log('Updated price to:', formattedPrice);
   }
   
-  // Update size display - detect which option is the size
+  // Update size display
   const sizeDisplay = blockContainer.querySelector('.js-swatch-display--1');
   if (sizeDisplay) {
     const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked');
@@ -494,109 +532,7 @@ console.log('Variant switcher loading...');
       console.log('Updated size display to:', sizeValue);
     }
   }
-  
-  // Update images
-  console.log('Variant object:', variant);
-  console.log('Featured image:', variant.featured_image);
-  console.log('Image:', variant.image);
-
-  const variantImageSrc = variant.featured_image ? variant.featured_image.src : variant.image;
-
-  if (variantImageSrc) {
-    console.log('Found variant image:', variantImageSrc);
-    
-    const allImages = blockContainer.querySelectorAll('.product__photo-container img, .product-single__photo img, .product-photo-container img');
-    console.log('Found images to update in {{ unique_id }}:', allImages.length);
-    
-    allImages.forEach(function(img) {
-      console.log('Updating image, old src:', img.src);
-      img.src = variantImageSrc;
-      img.srcset = variantImageSrc;
-      img.setAttribute('data-src', variantImageSrc);
-      console.log('New src:', variantImageSrc);
-      
-      img.classList.remove('lazyload', 'lazypreload');
-      img.classList.add('lazyloaded');
-    });
-    
-    const photoswipeItems = blockContainer.querySelectorAll('[data-mfp-src], [data-zoom-src], .product__photo-wrapper');
-    photoswipeItems.forEach(function(item) {
-      item.setAttribute('data-mfp-src', variantImageSrc);
-      item.setAttribute('data-zoom-src', variantImageSrc);
-      if (item.href) item.href = variantImageSrc;
-    });
-    
-    console.log('All images updated in {{ unique_id }}!');
-  } else {
-    console.log('No variant or image found for ID:', variantId);
-  }
 }
-  
-  function getSelectedVariantByOptions() {
-    // Find variant based on selected options ONLY in THIS block
-    const sizeInput = blockContainer.querySelector('input[name="diameter-size"]:checked, select[name="diameter-size"]');
-    const colorInput = blockContainer.querySelector('input[name="color"]:checked');
-  
-  console.log('getSelectedVariantByOptions in {{ unique_id }}');
-  console.log('Size input:', sizeInput);
-  console.log('Color input:', colorInput);
-  
-  if (sizeInput && colorInput) {
-      const size = sizeInput.value;
-      const color = colorInput.value;
-      console.log('Looking for variant in {{ unique_id }} with size:', size, 'color:', color);
-      
-      const variant = variants.find(function(v) {
-        return v.option1 === size && v.option2 === color;
-      });
-      
-      if (variant) {
-        console.log('Found variant by options in {{ unique_id }}:', variant.id);
-        return variant.id;
-      }
-    }
-    return null;
-  }
-  
-  function init() {
-    console.log('Initializing {{ unique_id }}...');
-    
-    // Listen for color changes ONLY in THIS block
-    const colorInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="color"]');
-    console.log('Found color inputs in {{ unique_id }}:', colorInputs.length);
-    console.log('First input class:', colorInputs[0] ? colorInputs[0].className : 'none');
-    console.log('First input closest section:', colorInputs[0] ? colorInputs[0].closest('[id^="shopify-section-"]').id : 'none');
-
-    colorInputs.forEach(function(input) {
-    input.addEventListener('change', function(e) {
-    e.stopPropagation();
-    console.log('Color changed in {{ unique_id }} to:', input.value);
-    console.log('Event target:', e.target);
-    console.log('Event target class:', e.target.className);
-    console.log('Listener attached to input with class:', input.className);
-    const variantId = getSelectedVariantByOptions();
-    if (variantId) {
-      updateVariantImage(variantId);
-    }
-  });
-});
-
-    
-    // Listen for size changes ONLY in THIS block
-    const sizeInputs = blockContainer.querySelectorAll('input.single-option-selector-{{ unique_id }}[name="diameter-size"], select.single-option-selector-{{ unique_id }}[name="diameter-size"]');
-    console.log('Found size inputs in {{ unique_id }}:', sizeInputs.length);
-    
-    sizeInputs.forEach(function(input) {
-      input.addEventListener('change', function(e) {
-      e.stopPropagation(); // Prevent event from bubbling to other listeners
-        console.log('Size changed in {{ unique_id }} to:', input.value);
-        const variantId = getSelectedVariantByOptions();
-        if (variantId) {
-          updateVariantImage(variantId);
-        }
-      });
-    });
-  }
   
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
