@@ -583,7 +583,7 @@ slate.Variants = (function() {
     // Don't switch images for custom products with fabric swatches
     if (this.product.tags && this.product.tags.includes('custom-fabric-variants')) {
     return;
-  }
+    }
   
     var variantImage = variant.featured_image || {};
     var currentVariantImage = this.currentVariant.featured_image || {};
