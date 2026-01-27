@@ -4,13 +4,6 @@
   <script>
 console.log('Featured product block loaded: {{ section.id }}');
 console.log('Product: {{ product.title }}');
-
-// Log all variant input changes with block ID
-document.addEventListener('change', function(e) {
-  if (e.target.type === 'radio' && (e.target.name === 'color' || e.target.name === 'diameter-size')) {
-    console.log('CHANGE EVENT - Block: {{ section.id }}, Product: {{ product.title }}, Input:', e.target.name, '=', e.target.value);
-  }
-}, true); // Use capture phase
 </script>
 
 
