@@ -227,7 +227,7 @@
             "waitlist": true,
             "product_selector": "radio",
             "sw_color_product": true,
-            "color_circle": true,
+            "color_circle": false,
             "size_color": "small-38"
           }
         },
@@ -283,7 +283,7 @@
         "media_size": "small",
         "image_size": "square",
         "enable_video_looping": true,
-        "stock_enable": false,
+        "stock_enable": true,
         "sizeguide_enable": false,
         "sizeguide_title": "Size guide",
         "sizeguide_page": "",
