@@ -56,12 +56,19 @@
             "collection": "cone-lamp-shades",
             "image": "shopify://shop_images/cone-lamp-shade.png"
           }
+        },
+        "collection_GztBgA": {
+          "type": "collection",
+          "settings": {
+            "collection": "hand-sewn-lampshades"
+          }
         }
       },
       "block_order": [
         "collection_ntcY3k",
         "collection_wXY9BF",
-        "collection_B4BDXM"
+        "collection_B4BDXM",
+        "collection_GztBgA"
       ],
       "custom_css": [],
       "name": "Collection list Swiper",
