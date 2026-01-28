@@ -40,12 +40,20 @@
             "image": "shopify://shop_images/cone-lamp-shade.png",
             "icon": ""
           }
+        },
+        "collection_CEyz9w": {
+          "type": "collection",
+          "settings": {
+            "collection": "hand-sewn-lampshades",
+            "icon": ""
+          }
         }
       },
       "block_order": [
         "collection_Pz6dLM",
         "collection_CtxE9H",
-        "collection_XiiQwq"
+        "collection_XiiQwq",
+        "collection_CEyz9w"
       ],
       "name": "Collection list",
       "settings": {
