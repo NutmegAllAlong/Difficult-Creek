@@ -1200,7 +1200,7 @@
           "1590404620420": {
             "type": "image",
             "settings": {
-              "image": "shopify://shop_images/Happiness_lamp_banner_fc9eb8ee-96c3-415a-b3c8-c410a5c40a5d.png",
+              "image": "shopify://shop_images/Happiness_lamp_banner_2.jpg",
               "width_image": 600,
               "alignment": "center center",
               "text_alignment": "left center",
@@ -1272,7 +1272,8 @@
         ],
         "custom_css": [
           "[class*=\"container\"] .d-inline-block {max-width: 475px;}",
-          "@media (max-width: 480px) {.content {padding: 1rem; }}"
+          "@media (max-width: 480px) {.content {padding: 1rem; }}",
+          "@media screen and (max-width: 480px) {h1, h2, h3, h4 {font-size: 24px !important; }}"
         ],
         "settings": {
           "enable_slideshow": true,
