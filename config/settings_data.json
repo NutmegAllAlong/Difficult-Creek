@@ -1271,7 +1271,8 @@
           "1590405549465"
         ],
         "custom_css": [
-          "[class*=\"container\"] .d-inline-block {max-width: 475px;}"
+          "[class*=\"container\"] .d-inline-block {max-width: 475px;}",
+          "@media (max-width: 480px) {.content {padding: 1rem; }}"
         ],
         "settings": {
           "enable_slideshow": true,
