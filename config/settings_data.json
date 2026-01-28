@@ -2671,6 +2671,19 @@
       "1660925094098c539e"
     ],
     "blocks": {
+      "7086640959720015946": {
+        "type": "shopify://apps/etsy-reviews-importer/blocks/app-embed-block/3097aa22-461b-43b8-a321-7f2066009684",
+        "disabled": true,
+        "settings": {}
+      },
+      "11369704496446426329": {
+        "type": "shopify://apps/etsy-reviews-importer/blocks/floating-review-slider-embed/3097aa22-461b-43b8-a321-7f2066009684",
+        "disabled": false,
+        "settings": {
+          "position": "bottom",
+          "alignment": "left"
+        }
+      },
       "18387101310985349768": {
         "type": "shopify://apps/progus-store-locator/blocks/app-embed/d7896016-8cc9-45e0-860e-ba85ba3d5be4",
         "disabled": false,
@@ -2683,16 +2696,11 @@
           "icon_color": "#ffffff",
           "size": "2",
           "shape": "2",
-          "position": "2",
+          "position": "3",
           "tags": "",
           "city": "",
           "groups": ""
         }
-      },
-      "3516830543601639398": {
-        "type": "shopify://apps/swatchy-colour-swatches/blocks/color-swatches/9ffb0fa4-bc83-4328-b49f-930bca91f3cf",
-        "disabled": true,
-        "settings": {}
       }
     }
   },
