@@ -28,7 +28,7 @@
         "collection_CtxE9H": {
           "type": "collection",
           "settings": {
-            "collection": "empire-lampshades",
+            "collection": "empire-lamp-shades",
             "image": "shopify://shop_images/empire_turquoise.png",
             "icon": ""
           }
@@ -36,7 +36,7 @@
         "collection_XiiQwq": {
           "type": "collection",
           "settings": {
-            "collection": "cone-lampshades",
+            "collection": "cone-lamp-shades",
             "image": "shopify://shop_images/cone-lamp-shade.png",
             "icon": ""
           }
