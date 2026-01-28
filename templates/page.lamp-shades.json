@@ -329,6 +329,34 @@
         "ai_gen_block_fb49b85_hJ6gdR"
       ],
       "settings": {}
+    },
+    "banner_singer_cwnw4A": {
+      "type": "banner-singer",
+      "name": "Banner singer",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "60px 0px 60px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px",
+        "zindex": "0",
+        "bgsection": "#ffffff",
+        "subtop": "Coming soon",
+        "banner_title": "Cone Lamp Shades",
+        "color_title": "#000",
+        "des_banner": "",
+        "color_des": "#000",
+        "countdown": "",
+        "text_link": "",
+        "link": "",
+        "color_link": "#000",
+        "color_btn": "#000",
+        "border_btn": "#000",
+        "bg_btn": "transparent",
+        "text_align": "center",
+        "item_align": "center"
+      }
     }
   },
   "order": [
@@ -337,6 +365,7 @@
     "1769302588c5484801",
     "featured_product_block_3W3Kxn",
     "featured_product_block_km3gAY",
-    "1769301404d17942e0"
+    "1769301404d17942e0",
+    "banner_singer_cwnw4A"
   ]
 }
