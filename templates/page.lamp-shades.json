@@ -334,7 +334,7 @@
       "type": "banner-singer",
       "name": "Banner singer",
       "settings": {
-        "animation": "",
+        "animation": "fade",
         "setwidth": "container",
         "paddingsection": "0px 0px 0px 0px",
         "paddingmobile": "60px 0px 60px 0px",
