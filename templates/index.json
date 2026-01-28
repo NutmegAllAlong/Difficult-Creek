@@ -46,14 +46,14 @@
         "collection_wXY9BF": {
           "type": "collection",
           "settings": {
-            "collection": "empire-lampshades",
+            "collection": "empire-lamp-shades",
             "image": "shopify://shop_images/empire_turquoise.png"
           }
         },
         "collection_B4BDXM": {
           "type": "collection",
           "settings": {
-            "collection": "cone-lampshades",
+            "collection": "cone-lamp-shades",
             "image": "shopify://shop_images/cone-lamp-shade.png"
           }
         }
