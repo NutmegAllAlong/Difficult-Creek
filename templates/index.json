@@ -63,7 +63,9 @@
         "collection_wXY9BF",
         "collection_B4BDXM"
       ],
-      "custom_css": [],
+      "custom_css": [
+        ".des-header {text-align: left;}"
+      ],
       "name": "Collection list Swiper",
       "settings": {
         "animation": "fade-right",
