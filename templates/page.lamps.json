@@ -126,7 +126,7 @@
         "show_count": true,
         "button_text": "",
         "enable_carousel": true,
-        "arrows": false,
+        "arrows": true,
         "draggable": true,
         "dots": true,
         "infinite": true,
