@@ -54,7 +54,7 @@
           "type": "collection",
           "settings": {
             "collection": "cone-lamp-shades",
-            "image": "shopify://shop_images/cone-lamp-shade.png"
+            "image": "shopify://shop_images/Cone_Lamp_Shade.png"
           }
         },
         "collection_GztBgA": {
@@ -697,7 +697,6 @@
           "type": "quote",
           "settings": {
             "title": "",
-            "avatar": "shopify://shop_images/Margo_-_Lavender_and_Gold_7_Drum_Lampshade_with_Art_Deco_Pattern.webp",
             "author": "Margo",
             "info": "",
             "rate": 5,
