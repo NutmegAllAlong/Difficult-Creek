@@ -37,7 +37,7 @@
           "type": "collection",
           "settings": {
             "collection": "cone-lamp-shades",
-            "image": "shopify://shop_images/cone-lamp-shade.png",
+            "image": "shopify://shop_images/Cone_Lamp_Shade.png",
             "icon": ""
           }
         },
@@ -444,16 +444,16 @@
         "bgsection": "#ffffff",
         "subtop": "Coming soon",
         "banner_title": "Cone Lamp Shades",
-        "color_title": "#000",
+        "color_title": "#000000",
         "des_banner": "",
-        "color_des": "#000",
+        "color_des": "#000000",
         "countdown": "",
         "text_link": "",
         "link": "",
-        "color_link": "#000",
-        "color_btn": "#000",
-        "border_btn": "#000",
-        "bg_btn": "transparent",
+        "color_link": "#000000",
+        "color_btn": "#000000",
+        "border_btn": "#000000",
+        "bg_btn": "rgba(0,0,0,0)",
         "text_align": "center",
         "item_align": "center"
       }
