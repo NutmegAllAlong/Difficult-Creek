@@ -2170,7 +2170,7 @@
               "menu_collection_2": "empire-lamp-shades",
               "menu_collection_3": "cone-lamp-shades",
               "menu_collection_4": "hand-sewn-lampshades",
-              "menu_collection_5": "vintage-antique-lamps",
+              "menu_collection_5": "",
               "menu_collection_6": ""
             }
           },
@@ -2184,7 +2184,7 @@
               "enable_items_count": false,
               "image_size": "portrait",
               "menu_collection_width": 75,
-              "menu_collection_1": "vintage-antique",
+              "menu_collection_1": "vintage-antique-lamps",
               "menu_collection_2": "custom-built-lamps",
               "menu_collection_3": "asian-lamps",
               "menu_collection_4": "candlestick-lamps",
