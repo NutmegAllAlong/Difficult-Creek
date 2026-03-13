@@ -64,14 +64,13 @@
         },
         "1431e891-e819-4fa1-8416-0cb3956f0e39": {
           "type": "description",
-          "disabled": true,
           "settings": {
             "enable_tab": true,
             "title_tab": "Description"
           }
         },
-        "review_kxRJGd": {
-          "type": "review",
+        "judge_me_reviews_preview_badge_feWUN9": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d": {
@@ -201,7 +200,7 @@
         "bf089f50-667c-4417-a84a-9478625741a1",
         "11f6643a-6bb6-4db9-a512-9c0eefc8c3b8",
         "1431e891-e819-4fa1-8416-0cb3956f0e39",
-        "review_kxRJGd",
+        "judge_me_reviews_preview_badge_feWUN9",
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d",
         "0a71f30d-dba2-4bca-a64d-c3cc2ed17e7d",
         "8d4704f6-d81d-4390-9ec5-af58698bef51",
@@ -309,6 +308,7 @@
         "custom_liquid_bRCrxN",
         "86f16245-d6c0-4cfd-a4c8-f96a893dc128"
       ],
+      "disabled": true,
       "settings": {
         "paddingsection": "48px 0px 40px 0px",
         "paddingmobile": "32px 0px 32px 0px",

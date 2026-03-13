@@ -2283,7 +2283,7 @@
           "h6 {color: #7f4a88 !important;}"
         ],
         "settings": {
-          "pnewletter_enable": true,
+          "pnewletter_enable": false,
           "pnew_style": "pnew_style-2",
           "pnew-width": 850,
           "pnew-height": 480,
@@ -2706,6 +2706,11 @@
           "city": "",
           "groups": ""
         }
+      },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
