@@ -1695,13 +1695,14 @@
           "item_Kwq4NU": {
             "type": "Item",
             "settings": {
-              "code": "Custom Lamp shades in 30 Fabrics | Drum, Empire & Cone Styles",
-              "button_text": "Browse Shades",
-              "button_link": "shopify://collections/lampshades"
+              "code": "15% OFF Your First Order Subscribe & Save",
+              "button_text": "",
+              "button_link": ""
             }
           },
           "afb084a9-2a31-4207-9d23-694c0f6b1281": {
             "type": "Item",
+            "disabled": true,
             "settings": {
               "code": "Metallic, Floral & Geometric Lamp shades | Made to Order",
               "button_text": "Design Your Shade",
@@ -1710,6 +1711,7 @@
           },
           "d1700b8f-2c10-4138-bb4a-06374b008a14": {
             "type": "Item",
+            "disabled": true,
             "settings": {
               "code": "Shop Asian, Brass & Vintage Lamps | Custom-Built & One-of-a-Kind",
               "button_text": "Shop Lamps",
