@@ -2277,6 +2277,9 @@
       },
       "pnewsletter": {
         "type": "pnewsletter",
+        "custom_css": [
+          "h6 {color: #7f4a88 !important;}"
+        ],
         "settings": {
           "pnewletter_enable": true,
           "pnew_style": "pnew_style-2",
@@ -2289,7 +2292,7 @@
           "pnewletter_title": "Every light tells a story — stay glowing with us!",
           "pnewletter_title_cl": "",
           "pnew_size_heading": "h3",
-          "pnewletter_description": "<p>Transform your space with luminous, one-of-a-kind lighting — handcrafted from premium materials and designed with soul.</p><p> Join our newsletter to be the first to see new upcycled lamp releases, exclusive behind-the-scenes stories from the artisan’s studio, and early access to bespoke custom designs.</p>",
+          "pnewletter_description": "<p>Transform your space with luminous, one-of-a-kind lighting — handcrafted from premium materials and designed with soul.</p><p> Join our newsletter to be the first to see new upcycled lamp releases, exclusive behind-the-scenes stories from the artisan’s studio, and early access to bespoke custom designs.</p>\n<p></p><h6>Get 15% OFF your first order</h6>",
           "pnewletter_description_cl": ""
         }
       },
