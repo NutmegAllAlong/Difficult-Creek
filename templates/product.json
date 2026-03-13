@@ -70,6 +70,10 @@
             "title_tab": "Description"
           }
         },
+        "review_kxRJGd": {
+          "type": "review",
+          "settings": {}
+        },
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d": {
           "type": "tabcustom",
           "disabled": true,
@@ -197,6 +201,7 @@
         "bf089f50-667c-4417-a84a-9478625741a1",
         "11f6643a-6bb6-4db9-a512-9c0eefc8c3b8",
         "1431e891-e819-4fa1-8416-0cb3956f0e39",
+        "review_kxRJGd",
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d",
         "0a71f30d-dba2-4bca-a64d-c3cc2ed17e7d",
         "8d4704f6-d81d-4390-9ec5-af58698bef51",
@@ -288,6 +293,7 @@
         },
         "86f16245-d6c0-4cfd-a4c8-f96a893dc128": {
           "type": "related-product",
+          "disabled": true,
           "settings": {
             "title_heading": "Related products",
             "product_list": [
