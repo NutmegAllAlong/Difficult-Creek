@@ -100,6 +100,9 @@
       }
     }
 {% endstyle %}
+{% assign collection = collections['on-sale'] %}
+{% if collection.products_count > 0 %}
+
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}">
   {%- render 'style-section' -%}
 <div class="{{ section.settings.setwidth }}">
@@ -180,7 +183,7 @@
   </div>
 </div>
 </div>
-
+{% endif %}
 {% schema %}
 {
   "name": "Product list (carousel)",
