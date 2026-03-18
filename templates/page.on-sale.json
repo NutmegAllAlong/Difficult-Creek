@@ -11,10 +11,36 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {}
+    },
+    "featured_products_RkXTqq": {
+      "type": "featured-products",
+      "name": "Product Grid",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#ffffff",
+        "title_top": "LIMITED TIME ONLY",
+        "title": "On Sale Now",
+        "des": "Discover premium lamp shades at exceptional prices. Our sale collection features carefully selected pieces with limited-time discounts - beautiful lighting for your home at unbeatable value. Shop now before these deals are gone!",
+        "align-heading": "center",
+        "collection": "on-sale",
+        "enable_creative": false,
+        "padding": true,
+        "colgrid": "col-lg-3",
+        "rows": 4,
+        "txtbutton": "",
+        "urlbtn": "",
+        "paddingsection": "20px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "featured_products_RkXTqq"
   ]
 }
