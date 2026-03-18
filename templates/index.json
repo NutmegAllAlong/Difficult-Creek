@@ -180,7 +180,7 @@
       "type": "product-list",
       "name": "Product list (carousel)",
       "settings": {
-        "animation": "",
+        "animation": "zoom-in",
         "setwidth": "container",
         "bgsection": "#ffffff",
         "countdown_header": "",
