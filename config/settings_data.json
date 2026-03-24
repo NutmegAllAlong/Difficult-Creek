@@ -2316,7 +2316,7 @@
             "settings": {
               "widthlogofooter": 130,
               "title": "difficult creek",
-              "text": "<ul style=\"line-height:1.6;\">\n    <li style=\"font-weight:200;\" class=\"mb-4\">\n        <b>We're located at</b><br>5133 Clay's Mill Rd.<br>Scottsburg, VA 24589\n    </li>\n    <li>\n        <div>\n<span style=\"font-weight:500;\">Tel:</span> 703-434-6497</div>\n        <div>\n<span style=\"font-weight:500;\">E:</span> amie@difficultcreek.com</div>\n    </li>\n    \n</ul>",
+              "text": "<ul style=\"line-height:1.6;\">\n    <li style=\"font-weight:200;\" class=\"mb-4\">\n        <b>We're located at</b><br>5133 Clay's Mill Rd.<br>Scottsburg, VA 24589\n    </li>\n        <b>Store Hours </b><br>Tuesday 10 am - 5 pm<br>Friday 10 am - 5 pm<br>Saturyday 2:30 pm - 5 pm<br>Sunday 12 pm - 4 pm<br><br>\n    \n    <li>\n        <div>\n<span style=\"font-weight:500;\">Tel:</span> 703-434-6497</div>\n        <div>\n<span style=\"font-weight:500;\">E:</span> amie@difficultcreek.com</div>\n    </li>\n    \n</ul>",
               "show_social": false,
               "width": "25%"
             }
