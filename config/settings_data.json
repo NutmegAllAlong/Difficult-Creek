@@ -2194,6 +2194,24 @@
               "menu_collection_6": "brass-lamps"
             }
           },
+          "menu_collection_7Arq4B": {
+            "type": "menu-collection",
+            "settings": {
+              "menu_title": "More Decor",
+              "menu_width": "container",
+              "menu_column": 6,
+              "enable_menu_collection": true,
+              "enable_items_count": true,
+              "image_size": "square",
+              "menu_collection_width": 25,
+              "menu_collection_1": "vintage-vessels",
+              "menu_collection_2": "curious-creatures",
+              "menu_collection_3": "",
+              "menu_collection_4": "",
+              "menu_collection_5": "",
+              "menu_collection_6": ""
+            }
+          },
           "bd742a30-30ad-494f-bb7a-d35c5cd1f2ae": {
             "type": "topbar",
             "disabled": true,
@@ -2209,6 +2227,7 @@
         "block_order": [
           "menu_collection_ErnjeB",
           "281b36cf-b829-4a1c-a3a5-5a7c0a30225a",
+          "menu_collection_7Arq4B",
           "bd742a30-30ad-494f-bb7a-d35c5cd1f2ae"
         ],
         "custom_css": [
