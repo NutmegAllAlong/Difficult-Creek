@@ -2199,7 +2199,7 @@
             "settings": {
               "menu_title": "More Decor",
               "menu_width": "container",
-              "menu_column": 6,
+              "menu_column": 1,
               "enable_menu_collection": true,
               "enable_items_count": true,
               "image_size": "square",
