@@ -32,6 +32,14 @@
             "icon": ""
           }
         },
+        "collection_h7A84E": {
+          "type": "collection",
+          "settings": {
+            "collection": "mid-century-modern-lamps",
+            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
+            "icon": ""
+          }
+        },
         "collection_Utpk4B": {
           "type": "collection",
           "settings": {
@@ -48,14 +56,6 @@
             "icon": ""
           }
         },
-        "collection_h7A84E": {
-          "type": "collection",
-          "settings": {
-            "collection": "mid-century-modern-lamps",
-            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
-            "icon": ""
-          }
-        },
         "collection_tHY6bQ": {
           "type": "collection",
           "settings": {
@@ -67,9 +67,9 @@
       "block_order": [
         "collection_JJRGqK",
         "collection_KjYPx6",
+        "collection_h7A84E",
         "collection_Utpk4B",
         "collection_KpMGAh",
-        "collection_h7A84E",
         "collection_tHY6bQ"
       ],
       "name": "Collection list",
