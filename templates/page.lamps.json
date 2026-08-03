@@ -75,7 +75,7 @@
       "name": "Collection list",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "setwidth": "container-fluid",
         "bgsection": "#faf5f2",
         "title_top": "",
         "title": "Our Lamps",
