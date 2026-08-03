@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "featured_collections_1_44NiUL": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_JJRGqK": {
+          "type": "collection",
+          "settings": {
+            "collection": "vintage-antique-lamps",
+            "image": "shopify://shop_images/Vintage_and_Antique_Lamps.png",
+            "icon": ""
+          }
+        },
+        "collection_KjYPx6": {
+          "type": "collection",
+          "settings": {
+            "collection": "custom-built-lamps",
+            "image": "shopify://shop_images/BrassandGlassA2.png",
+            "icon": ""
+          }
+        },
+        "collection_h7A84E": {
+          "type": "collection",
+          "settings": {
+            "collection": "mid-century-modern-lamps",
+            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
+            "icon": ""
+          }
+        },
+        "collection_Utpk4B": {
+          "type": "collection",
+          "settings": {
+            "collection": "asian-lamps",
+            "image": "shopify://shop_images/Asian_Lamps.png",
+            "icon": ""
+          }
+        },
+        "collection_KpMGAh": {
+          "type": "collection",
+          "settings": {
+            "collection": "brass-lamps",
+            "image": "shopify://shop_images/BrassLampA12.png",
+            "icon": ""
+          }
+        },
+        "collection_tHY6bQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "candlestick-lamps",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_JJRGqK",
+        "collection_KjYPx6",
+        "collection_h7A84E",
+        "collection_Utpk4B",
+        "collection_KpMGAh",
+        "collection_tHY6bQ"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#faf5f2",
+        "title_top": "",
+        "title": "Our Lamps",
+        "des": "Enjoy our wide variety of lamps including Vintage & Antique, Mid Century Modern, Brass, Asian and more.",
+        "align-heading": "center",
+        "size_image": "square",
+        "style_item": "bottom",
+        "rows": "2",
+        "show": 3,
+        "radius": 0,
+        "space": 10,
+        "size_text": "h5",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": false,
+        "arrows": true,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "featured_collections_1_44NiUL"
+  ]
+}
