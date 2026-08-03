@@ -2203,7 +2203,7 @@
               "enable_menu_collection": true,
               "enable_items_count": true,
               "image_size": "square",
-              "menu_collection_width": 25,
+              "menu_collection_width": 50,
               "menu_collection_1": "vintage-vessels",
               "menu_collection_2": "curious-creatures",
               "menu_collection_3": "",
