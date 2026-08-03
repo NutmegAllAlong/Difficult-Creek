@@ -40,19 +40,19 @@
             "icon": ""
           }
         },
-        "collection_h7A84E": {
-          "type": "collection",
-          "settings": {
-            "collection": "mid-century-modern-lamps",
-            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
-            "icon": ""
-          }
-        },
         "collection_KpMGAh": {
           "type": "collection",
           "settings": {
             "collection": "brass-lamps",
             "image": "shopify://shop_images/BrassLampA12.png",
+            "icon": ""
+          }
+        },
+        "collection_h7A84E": {
+          "type": "collection",
+          "settings": {
+            "collection": "mid-century-modern-lamps",
+            "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
             "icon": ""
           }
         },
@@ -68,8 +68,8 @@
         "collection_JJRGqK",
         "collection_KjYPx6",
         "collection_Utpk4B",
-        "collection_h7A84E",
         "collection_KpMGAh",
+        "collection_h7A84E",
         "collection_tHY6bQ"
       ],
       "name": "Collection list",
