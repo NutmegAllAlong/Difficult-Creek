@@ -87,7 +87,7 @@
         "show": 3,
         "radius": 0,
         "space": 10,
-        "size_text": "h4",
+        "size_text": "h5",
         "show_count": true,
         "button_text": "",
         "enable_carousel": false,
