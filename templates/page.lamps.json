@@ -100,10 +100,70 @@
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
       }
+    },
+    "featured_collections_1_BfxGkU": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_TAz3xr": {
+          "type": "collection",
+          "settings": {
+            "collection": "novelty-lamps",
+            "icon": ""
+          }
+        },
+        "collection_gzbV4a": {
+          "type": "collection",
+          "settings": {
+            "collection": "pendant-and-swag-lights",
+            "icon": ""
+          }
+        },
+        "collection_fxmQWY": {
+          "type": "collection",
+          "settings": {
+            "collection": "oil-lamps",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_TAz3xr",
+        "collection_gzbV4a",
+        "collection_fxmQWY"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#FAF5F2",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "size_image": "auto",
+        "style_item": "bottom",
+        "rows": "1",
+        "show": 3,
+        "radius": 0,
+        "space": 15,
+        "size_text": "h4",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": true,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
     }
   },
   "order": [
     "main",
-    "featured_collections_1_44NiUL"
+    "featured_collections_1_44NiUL",
+    "featured_collections_1_BfxGkU"
   ]
 }
