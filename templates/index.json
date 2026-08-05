@@ -33,81 +33,6 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "featured_collections_3_hFwam4": {
-      "type": "featured-collections-3",
-      "blocks": {
-        "collection_ntcY3k": {
-          "type": "collection",
-          "settings": {
-            "collection": "drum-lampshades-1",
-            "image": "shopify://shop_images/drum_lamp_shade_floral_1.png"
-          }
-        },
-        "collection_wXY9BF": {
-          "type": "collection",
-          "settings": {
-            "collection": "empire-lamp-shades",
-            "image": "shopify://shop_images/empire_turquoise.png"
-          }
-        },
-        "collection_B4BDXM": {
-          "type": "collection",
-          "settings": {
-            "collection": "cone-lamp-shades",
-            "image": "shopify://shop_images/Cone_Lamp_Shade.png"
-          }
-        },
-        "collection_GztBgA": {
-          "type": "collection",
-          "settings": {
-            "collection": "hand-sewn-lampshades"
-          }
-        },
-        "collection_Jt7YW9": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_ntcY3k",
-        "collection_wXY9BF",
-        "collection_B4BDXM",
-        "collection_GztBgA",
-        "collection_Jt7YW9"
-      ],
-      "custom_css": [],
-      "name": "Collection list Swiper",
-      "settings": {
-        "animation": "fade-right",
-        "setwidth": "container",
-        "bgsection": "#f4efe9",
-        "title_top": "Made to Order",
-        "title": "Custom Made Lamp Shades",
-        "des": "We use only the finest fabrics to handcraft custom lamp shades and provide many fabric and size options to suit your space. Explore your options today",
-        "align-heading": "center",
-        "stylecollection": "namesup",
-        "size_image_col": "auto",
-        "color": "#000000",
-        "bg_overlay": "#222222",
-        "enable_gradient": false,
-        "opacity_overlay": 0,
-        "size_title": "h6",
-        "button_link": "shopify://pages/lampshades",
-        "button": "Start here",
-        "perviewDesktop": 4,
-        "spaceBetween": 30,
-        "nowrap": true,
-        "arrows": true,
-        "scrollbar": true,
-        "paddingsection": "50px 0px 0px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
     "17686627017bea076d": {
       "type": "_blocks",
       "blocks": {
@@ -134,6 +59,127 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "featured_collections_1_BpiHfB": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_Ggt94c": {
+          "type": "collection",
+          "settings": {
+            "collection": "drum-lampshades-1",
+            "image": "shopify://shop_images/drum_shades.png",
+            "icon": ""
+          }
+        },
+        "collection_WPfwVk": {
+          "type": "collection",
+          "settings": {
+            "collection": "empire-lamp-shades",
+            "image": "shopify://shop_images/empire_shades.png",
+            "icon": ""
+          }
+        },
+        "collection_bF9Pzp": {
+          "type": "collection",
+          "settings": {
+            "collection": "cone-lamp-shades",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_Ggt94c",
+        "collection_WPfwVk",
+        "collection_bF9Pzp"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "zoom-in-up",
+        "setwidth": "container-fluid",
+        "bgsection": "#FAF5F2",
+        "title_top": "Made to Order",
+        "title": "Custom Made Lamp Shades",
+        "des": "We use only the finest fabrics to handcraft custom lamp shades and provide many fabric and size options to suit your space. Explore your options today",
+        "align-heading": "center",
+        "size_image": "auto",
+        "style_item": "bottom",
+        "rows": "1",
+        "show": 3,
+        "radius": 0,
+        "space": 15,
+        "size_text": "h4",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": true,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "20px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "featured_collections_1_VRgfwt": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_Rx3dWb": {
+          "type": "collection",
+          "settings": {
+            "collection": "hand-sewn-lampshades",
+            "icon": ""
+          }
+        },
+        "collection_nm7dhb": {
+          "type": "collection",
+          "settings": {
+            "collection": "square-rectagular-other-shaped-shades",
+            "icon": ""
+          }
+        },
+        "collection_KzC4fB": {
+          "type": "collection",
+          "settings": {
+            "collection": "vintage-second-hand-lampshades",
+            "image": "shopify://shop_images/vintage_2nd_hand_shades.png",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_Rx3dWb",
+        "collection_nm7dhb",
+        "collection_KzC4fB"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#FAF5F2",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "size_image": "auto",
+        "style_item": "bottom",
+        "rows": "1",
+        "show": 3,
+        "radius": 0,
+        "space": 15,
+        "size_text": "h4",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": true,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
     },
     "parallax_banner_JKcKiG": {
       "type": "parallax-banner",
@@ -309,7 +355,7 @@
         "setwidth": "container",
         "bgsection": "#faf5f2",
         "title_top": "Explore Our Lamps Collection",
-        "title": "Asian, Vintage & Antique, Brass, Mid Century Modern and Custom Built",
+        "title": "Asian, Vintage & Antique, Brass, Mid Century Modern, Custom Built",
         "des": "",
         "align-heading": "center",
         "size_image": "square",
@@ -365,11 +411,11 @@
       ],
       "name": "Collection list",
       "settings": {
-        "animation": "",
+        "animation": "zoom-in-up",
         "setwidth": "container",
         "bgsection": "#FAF5F2",
-        "title_top": "",
-        "title": "",
+        "title_top": "Yes, there's more!",
+        "title": "Novelty Lamps, Pendant & Swag Lights, Oil Lamps",
         "des": "",
         "align-heading": "center",
         "size_image": "auto",
@@ -998,8 +1044,9 @@
   },
   "order": [
     "image_content_3_d7E47U",
-    "featured_collections_3_hFwam4",
     "17686627017bea076d",
+    "featured_collections_1_BpiHfB",
+    "featured_collections_1_VRgfwt",
     "parallax_banner_JKcKiG",
     "product_list_FxaULN",
     "product_list_6XUjxc",
