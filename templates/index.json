@@ -62,13 +62,21 @@
           "settings": {
             "collection": "hand-sewn-lampshades"
           }
+        },
+        "collection_Jt7YW9": {
+          "type": "collection",
+          "disabled": true,
+          "settings": {
+            "collection": ""
+          }
         }
       },
       "block_order": [
         "collection_ntcY3k",
         "collection_wXY9BF",
         "collection_B4BDXM",
-        "collection_GztBgA"
+        "collection_GztBgA",
+        "collection_Jt7YW9"
       ],
       "custom_css": [],
       "name": "Collection list Swiper",
@@ -306,8 +314,8 @@
         "align-heading": "center",
         "size_image": "square",
         "style_item": "bottom",
-        "rows": "1",
-        "show": 6,
+        "rows": "2",
+        "show": 3,
         "radius": 0,
         "space": 15,
         "size_text": "h6",
@@ -319,6 +327,66 @@
         "dots": true,
         "infinite": true,
         "paddingsection": "20px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "featured_collections_1_kYjr6i": {
+      "type": "featured-collections-1",
+      "blocks": {
+        "collection_F7VbhW": {
+          "type": "collection",
+          "settings": {
+            "collection": "novelty-lamps",
+            "image": "shopify://shop_images/novelty_nightlight.png",
+            "icon": ""
+          }
+        },
+        "collection_JyrcTi": {
+          "type": "collection",
+          "settings": {
+            "collection": "pendant-and-swag-lights",
+            "icon": ""
+          }
+        },
+        "collection_HxRyBf": {
+          "type": "collection",
+          "settings": {
+            "collection": "oil-lamps",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_F7VbhW",
+        "collection_JyrcTi",
+        "collection_HxRyBf"
+      ],
+      "name": "Collection list",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "bgsection": "#FAF5F2",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "size_image": "auto",
+        "style_item": "bottom",
+        "rows": "1",
+        "show": 3,
+        "radius": 0,
+        "space": 15,
+        "size_text": "h4",
+        "show_count": true,
+        "button_text": "",
+        "enable_carousel": true,
+        "arrows": false,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "paddingsection": "0px 0px 0px 0px",
         "paddingmobile": "40px 0px 40px 0px",
         "marginsection": "0px 0px 0px 0px",
         "marginmobile": "0px 0px 0px 0px"
@@ -936,6 +1004,7 @@
     "product_list_FxaULN",
     "product_list_6XUjxc",
     "featured_collections_1_FW6aWb",
+    "featured_collections_1_kYjr6i",
     "list_image_Y6TH8D",
     "17692939121f0c05b8",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
