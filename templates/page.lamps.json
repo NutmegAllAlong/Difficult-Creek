@@ -39,41 +39,12 @@
             "image": "shopify://shop_images/AldoLondiforBitossi_MCM.png",
             "icon": ""
           }
-        },
-        "collection_Utpk4B": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "asian-lamps",
-            "image": "shopify://shop_images/Asian_Lamps.png",
-            "icon": ""
-          }
-        },
-        "collection_KpMGAh": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "brass-lamps",
-            "image": "shopify://shop_images/BrassLampA12.png",
-            "icon": ""
-          }
-        },
-        "collection_tHY6bQ": {
-          "type": "collection",
-          "disabled": true,
-          "settings": {
-            "collection": "candlestick-lamps",
-            "icon": ""
-          }
         }
       },
       "block_order": [
         "collection_JJRGqK",
         "collection_KjYPx6",
-        "collection_h7A84E",
-        "collection_Utpk4B",
-        "collection_KpMGAh",
-        "collection_tHY6bQ"
+        "collection_h7A84E"
       ],
       "name": "Collection list",
       "settings": {
@@ -86,7 +57,7 @@
         "align-heading": "center",
         "size_image": "square",
         "style_item": "bottom",
-        "rows": "2",
+        "rows": "1",
         "show": 3,
         "radius": 0,
         "space": 10,
@@ -138,71 +109,11 @@
       ],
       "name": "Collection grid",
       "settings": {}
-    },
-    "featured_collections_1_BfxGkU": {
-      "type": "featured-collections-1",
-      "blocks": {
-        "collection_TAz3xr": {
-          "type": "collection",
-          "settings": {
-            "collection": "novelty-lamps",
-            "icon": ""
-          }
-        },
-        "collection_gzbV4a": {
-          "type": "collection",
-          "settings": {
-            "collection": "pendant-and-swag-lights",
-            "icon": ""
-          }
-        },
-        "collection_fxmQWY": {
-          "type": "collection",
-          "settings": {
-            "collection": "oil-lamps",
-            "icon": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_TAz3xr",
-        "collection_gzbV4a",
-        "collection_fxmQWY"
-      ],
-      "name": "Collection list",
-      "settings": {
-        "animation": "",
-        "setwidth": "container",
-        "bgsection": "#faf5f2",
-        "title_top": "",
-        "title": "",
-        "des": "",
-        "align-heading": "center",
-        "size_image": "auto",
-        "style_item": "bottom",
-        "rows": "1",
-        "show": 3,
-        "radius": 0,
-        "space": 15,
-        "size_text": "h4",
-        "show_count": true,
-        "button_text": "",
-        "enable_carousel": true,
-        "arrows": false,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "paddingsection": "0px 0px 0px 0px",
-        "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
     }
   },
   "order": [
     "main",
     "featured_collections_1_44NiUL",
-    "blocks_pGgP9J",
-    "featured_collections_1_BfxGkU"
+    "blocks_pGgP9J"
   ]
 }
