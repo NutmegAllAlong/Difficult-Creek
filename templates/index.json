@@ -96,7 +96,7 @@
       "settings": {
         "animation": "zoom-in-up",
         "setwidth": "container-fluid",
-        "bgsection": "#FAF5F2",
+        "bgsection": "#faf5f2",
         "title_top": "Made to Order",
         "title": "Custom Made Lamp Shades",
         "des": "We use only the finest fabrics to handcraft custom lamp shades and provide many fabric and size options to suit your space. Explore your options today",
@@ -156,7 +156,7 @@
       "settings": {
         "animation": "",
         "setwidth": "container-fluid",
-        "bgsection": "#FAF5F2",
+        "bgsection": "#faf5f2",
         "title_top": "",
         "title": "",
         "des": "",
@@ -413,7 +413,7 @@
       "settings": {
         "animation": "zoom-in-up",
         "setwidth": "container",
-        "bgsection": "#FAF5F2",
+        "bgsection": "#faf5f2",
         "title_top": "Yes, there's more!",
         "title": "Novelty Lamps, Pendant & Swag Lights, Oil Lamps",
         "des": "",
@@ -1040,6 +1040,40 @@
       ],
       "disabled": true,
       "settings": {}
+    },
+    "1786118037cb7ac9e7": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_021e122_3YnbK8": {
+          "type": "ai_gen_block_021e122",
+          "settings": {
+            "heading": "Shop by collection",
+            "heading_alignment": "center",
+            "heading_color": "#231f20",
+            "collection_1": "drum-lampshades-1",
+            "collection_2": "empire-lamp-shades",
+            "collection_3": "cone-lamp-shades",
+            "collection_4": "hand-sewn-lampshades",
+            "collection_5": "square-rectagular-other-shaped-shades",
+            "collection_6": "vintage-second-hand-lampshades",
+            "image_aspect_ratio": "1:1",
+            "image_border_radius": 8,
+            "title_font_size": 20,
+            "title_color": "#231f20",
+            "count_font_size": 14,
+            "count_color": "#343a40",
+            "grid_gap": 30,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "section_background": "#faf5f2"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_021e122_3YnbK8"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -1065,6 +1099,7 @@
     "3e04d8d0-b36c-4e9e-8f16-6987ee712faa",
     "176858797718304c30",
     "17686595944d1ff123",
-    "1769300262150074b1"
+    "1769300262150074b1",
+    "1786118037cb7ac9e7"
   ]
 }
