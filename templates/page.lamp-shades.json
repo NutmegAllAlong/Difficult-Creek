@@ -45,6 +45,7 @@
           "type": "collection",
           "settings": {
             "collection": "hand-sewn-lampshades",
+            "image": "shopify://shop_images/Hand_sewn_lamp_shade_bfd63012-dbee-4e6d-ba92-2856e14ec151.png",
             "icon": ""
           }
         }
