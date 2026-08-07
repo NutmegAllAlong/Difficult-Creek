@@ -14,6 +14,49 @@
       "disabled": true,
       "settings": {}
     },
+    "featured_collections_4_ieK6d9": {
+      "type": "featured-collections-4",
+      "blocks": {
+        "featured_collection_rWdBg3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "drum-lampshades-1",
+            "bgcol": "#82c4c3"
+          }
+        },
+        "featured_collection_wn67Mp": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "empire-lamp-shades",
+            "image": "shopify://shop_images/empire_shades.png",
+            "bgcol": "#82c4c3"
+          }
+        },
+        "featured_collection_hkQkwa": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cone-lamp-shades",
+            "bgcol": "#82c4c3"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_rWdBg3",
+        "featured_collection_wn67Mp",
+        "featured_collection_hkQkwa"
+      ],
+      "name": "Collection list Grid",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#ffffff",
+        "grid": "3",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
     "featured_collections_5_PFH6Kn": {
       "type": "featured-collections-5",
       "blocks": {
@@ -23,7 +66,7 @@
             "collection": "drum-lampshades-1",
             "color": "#ffffff",
             "enable_gradient": false,
-            "bg_overlay": "#222222",
+            "bg_overlay": "rgba(0,0,0,0)",
             "opacity_overlay": 0.2
           }
         },
@@ -604,6 +647,7 @@
   },
   "order": [
     "main",
+    "featured_collections_4_ieK6d9",
     "featured_collections_5_PFH6Kn",
     "featured_collections_5_HYH6iD",
     "featured_collections_1_U8rfgM",
