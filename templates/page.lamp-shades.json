@@ -21,6 +21,7 @@
           "type": "featured_collection",
           "settings": {
             "collection": "drum-lampshades-1",
+            "image": "shopify://shop_images/ChatGPT_Image_Aug_6_2026_07_34_39_AM.png",
             "bgcol": "#82c4c3"
           }
         },
@@ -36,6 +37,7 @@
           "type": "featured_collection",
           "settings": {
             "collection": "cone-lamp-shades",
+            "image": "shopify://shop_images/OPTIMIZE_BACKUP_PRODUCT_Red_hearts_cone_shade_9c84d1d9-bb0b-4d66-97de-4d85a16dd9c0.png",
             "bgcol": "#82c4c3"
           }
         }
