@@ -14,6 +14,41 @@
       "disabled": true,
       "settings": {}
     },
+    "blocks_fF4XGG": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_021e122_PtLWWw": {
+          "type": "ai_gen_block_021e122",
+          "settings": {
+            "heading": "Handcrafted Lamp Shades",
+            "heading_alignment": "center",
+            "heading_color": "#231f20",
+            "collection_1": "drum-lampshades-1",
+            "collection_2": "empire-lamp-shades",
+            "collection_3": "cone-lamp-shades",
+            "collection_4": "hand-sewn-lampshades",
+            "collection_5": "square-rectagular-other-shaped-shades",
+            "collection_6": "vintage-second-hand-lampshades",
+            "image_aspect_ratio": "1:1",
+            "image_border_radius": 8,
+            "title_font_size": 20,
+            "title_color": "#231f20",
+            "count_font_size": 14,
+            "count_color": "#343a40",
+            "grid_gap": 30,
+            "section_padding_top": 60,
+            "section_padding_bottom": 60,
+            "section_background": "#faf5f2"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_021e122_PtLWWw"
+      ],
+      "name": "Collection grid",
+      "settings": {}
+    },
     "featured_collections_4_ieK6d9": {
       "type": "featured-collections-4",
       "blocks": {
@@ -100,6 +135,7 @@
         "collection_hthkpz",
         "collection_TQ3rYz"
       ],
+      "disabled": true,
       "name": "Collection grid",
       "settings": {
         "animation": "",
@@ -162,6 +198,7 @@
         "collection_mPqW3E",
         "collection_j7KAXn"
       ],
+      "disabled": true,
       "name": "Collection grid",
       "settings": {
         "animation": "",
@@ -651,6 +688,7 @@
   },
   "order": [
     "main",
+    "blocks_fF4XGG",
     "featured_collections_4_ieK6d9",
     "featured_collections_5_PFH6Kn",
     "featured_collections_5_HYH6iD",
