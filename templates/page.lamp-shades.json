@@ -73,10 +73,13 @@
         "collection_DKTLEt",
         "collection_WwKEgy"
       ],
+      "custom_css": [
+        ".collection-list {display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto;}"
+      ],
       "name": "Collection list",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "setwidth": "container-fluid",
         "bgsection": "#faf5f2",
         "title_top": "one of a kind",
         "title": "Handcrafted Lamp Shades",
