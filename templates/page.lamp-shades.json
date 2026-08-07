@@ -14,6 +14,127 @@
       "disabled": true,
       "settings": {}
     },
+    "featured_collections_5_PFH6Kn": {
+      "type": "featured-collections-5",
+      "blocks": {
+        "collection_F47dgV": {
+          "type": "collection",
+          "settings": {
+            "collection": "drum-lampshades-1",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        },
+        "collection_hthkpz": {
+          "type": "collection",
+          "settings": {
+            "collection": "empire-lamp-shades",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        },
+        "collection_TQ3rYz": {
+          "type": "collection",
+          "settings": {
+            "collection": "cone-lamp-shades",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        }
+      },
+      "block_order": [
+        "collection_F47dgV",
+        "collection_hthkpz",
+        "collection_TQ3rYz"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#ffffff",
+        "title_top": "One of a Kind",
+        "title": "Handcrafted Lamp Shade",
+        "des": "",
+        "align-heading": "center",
+        "layout": "grid",
+        "col": "col-lg-4",
+        "enable_padding": true,
+        "size_image_col": "square",
+        "size_title": "h4",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
+    "featured_collections_5_HYH6iD": {
+      "type": "featured-collections-5",
+      "blocks": {
+        "collection_UGJc6L": {
+          "type": "collection",
+          "settings": {
+            "collection": "hand-sewn-lampshades",
+            "image": "shopify://shop_images/Hand_sewn_lamp_shade_bfd63012-dbee-4e6d-ba92-2856e14ec151.png",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        },
+        "collection_mPqW3E": {
+          "type": "collection",
+          "settings": {
+            "collection": "square-rectagular-other-shaped-shades",
+            "image": "shopify://shop_images/rectangular_rick_rack.png",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        },
+        "collection_j7KAXn": {
+          "type": "collection",
+          "settings": {
+            "collection": "vintage-second-hand-lampshades",
+            "image": "shopify://shop_images/vintage_2nd_hand_shades.png",
+            "color": "#ffffff",
+            "enable_gradient": false,
+            "bg_overlay": "#222222",
+            "opacity_overlay": 0.2
+          }
+        }
+      },
+      "block_order": [
+        "collection_UGJc6L",
+        "collection_mPqW3E",
+        "collection_j7KAXn"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "animation": "",
+        "setwidth": "container-fluid",
+        "bgsection": "#ffffff",
+        "title_top": "",
+        "title": "",
+        "des": "",
+        "align-heading": "center",
+        "layout": "grid",
+        "col": "col-lg-4",
+        "enable_padding": true,
+        "size_image_col": "square",
+        "size_title": "h4",
+        "paddingsection": "0px 0px 0px 0px",
+        "paddingmobile": "40px 0px 40px 0px",
+        "marginsection": "0px 0px 0px 0px",
+        "marginmobile": "0px 0px 0px 0px"
+      }
+    },
     "featured_collections_1_U8rfgM": {
       "type": "featured-collections-1",
       "blocks": {
@@ -73,6 +194,7 @@
         "collection_DKTLEt",
         "collection_WwKEgy"
       ],
+      "disabled": true,
       "custom_css": [
         ".collection-list {display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto;}"
       ],
@@ -482,6 +604,8 @@
   },
   "order": [
     "main",
+    "featured_collections_5_PFH6Kn",
+    "featured_collections_5_HYH6iD",
     "featured_collections_1_U8rfgM",
     "1769302588c5484801",
     "featured_product_block_3W3Kxn",
