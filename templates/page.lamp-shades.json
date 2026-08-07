@@ -47,6 +47,7 @@
         "featured_collection_wn67Mp",
         "featured_collection_hkQkwa"
       ],
+      "disabled": true,
       "name": "Collection list Grid",
       "settings": {
         "animation": "",
