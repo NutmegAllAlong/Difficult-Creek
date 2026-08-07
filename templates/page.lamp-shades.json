@@ -67,6 +67,7 @@
           "type": "collection",
           "settings": {
             "collection": "drum-lampshades-1",
+            "image": "shopify://shop_images/drum_shades.png",
             "color": "#ffffff",
             "enable_gradient": false,
             "bg_overlay": "rgba(0,0,0,0)",
@@ -113,10 +114,10 @@
         "enable_padding": true,
         "size_image_col": "square",
         "size_title": "h4",
-        "paddingsection": "0px 0px 0px 0px",
+        "paddingsection": "20px 0px 20px 0px",
         "paddingmobile": "40px 0px 40px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
+        "marginsection": "20px 0px 0px 0px",
+        "marginmobile": "20px 0px 0px 0px"
       }
     },
     "featured_collections_5_HYH6iD": {
