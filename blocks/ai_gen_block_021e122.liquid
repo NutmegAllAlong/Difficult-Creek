@@ -197,26 +197,10 @@
               <h3 class="ai-collection-card-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
               <p class="ai-collection-card-count-{{ ai_gen_id }}">
                 {{ collection.products_count }}
-                {% if collection.products_count == 1 %}
-                  product
-                {% else %}
-                  products
-                {% endif %}
+                {% if collection.products_count == 1 %}product{% else %}products{% endif %}
               </p>
             </div>
           </a>
-        {% else %}
-          <div class="ai-collection-card-{{ ai_gen_id }}">
-            <div class="ai-collection-card-image-wrapper-{{ ai_gen_id }}">
-              <div class="ai-collection-card-placeholder-{{ ai_gen_id }}">
-                {{ 'collection-1' | placeholder_svg_tag }}
-              </div>
-            </div>
-            <div class="ai-collection-card-info-{{ ai_gen_id }}">
-              <h3 class="ai-collection-card-title-{{ ai_gen_id }}">Collection {{ i }}</h3>
-              <p class="ai-collection-card-count-{{ ai_gen_id }}">0 products</p>
-            </div>
-          </div>
         {% endif %}
       {% endfor %}
     </div>
