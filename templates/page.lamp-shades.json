@@ -48,13 +48,30 @@
             "image": "shopify://shop_images/Hand_sewn_lamp_shade_bfd63012-dbee-4e6d-ba92-2856e14ec151.png",
             "icon": ""
           }
+        },
+        "collection_DKTLEt": {
+          "type": "collection",
+          "settings": {
+            "collection": "square-rectagular-other-shaped-shades",
+            "icon": ""
+          }
+        },
+        "collection_WwKEgy": {
+          "type": "collection",
+          "settings": {
+            "collection": "vintage-second-hand-lampshades",
+            "image": "shopify://shop_images/vintage_2nd_hand_shades.png",
+            "icon": ""
+          }
         }
       },
       "block_order": [
         "collection_Pz6dLM",
         "collection_CtxE9H",
         "collection_XiiQwq",
-        "collection_CEyz9w"
+        "collection_CEyz9w",
+        "collection_DKTLEt",
+        "collection_WwKEgy"
       ],
       "name": "Collection list",
       "settings": {
@@ -65,10 +82,10 @@
         "title": "Handcrafted Lamp Shades",
         "des": "",
         "align-heading": "center",
-        "size_image": "auto",
+        "size_image": "square",
         "style_item": "bottom",
-        "rows": "1",
-        "show": 4,
+        "rows": "2",
+        "show": 6,
         "radius": 0,
         "space": 15,
         "size_text": "h4",
