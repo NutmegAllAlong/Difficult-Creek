@@ -57,7 +57,7 @@
     {{#if rates}}
       {{#rates}}
         {{#if @first}}
-            Rates start at {{price}}.
+            {{#if price_is_free}}Free shipping!{{else}}Rates start at {{price}}.{{/if}}
         {{/if}}
       {{/rates}}
     {{else}}
