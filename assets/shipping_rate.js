@@ -34,6 +34,6 @@ _render({rates:e,address:r,success:!0}),jQuery("#"+_config.wrapperId+", #estimat
 Shopify.Cart.ShippingCalculator.show( {
   submitButton: theme.strings.shippingCalcSubmitButton,
   submitButtonDisabled: theme.strings.shippingCalcSubmitButtonDisabled,
-  customerIsLoggedIn: theme.strings.shippingCalcCustomerIsLoggedIn,
+  customerIsLoggedIn: false,
   moneyFormat: theme.strings.shippingCalcMoneyFormat
 } );
