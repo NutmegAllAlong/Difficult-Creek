@@ -2730,6 +2730,11 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "6582699281279556479": {
+        "type": "shopify://apps/delivery-estimated-countdown/blocks/delivery-estimate/019cfa40-830f-73ad-afad-5ca30496e65e",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
