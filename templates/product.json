@@ -26,6 +26,10 @@
           "type": "shortdesc",
           "settings": {}
         },
+        "essential_estimated_app_block_B8nJge": {
+          "type": "shopify://apps/essential-estimated/blocks/app-block/02a895dd-b5b5-4103-8966-c6914aa8309e",
+          "settings": {}
+        },
         "ff32ea77-bcea-43d3-8e38-55894c9d938a": {
           "type": "separator",
           "settings": {}
@@ -194,6 +198,7 @@
         "989bce2f-7961-4267-8e6c-40ff4bb0ed64",
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc",
         "1affb493-1e14-4893-9876-be8d348ee475",
+        "essential_estimated_app_block_B8nJge",
         "ff32ea77-bcea-43d3-8e38-55894c9d938a",
         "8288910a-1ad6-47df-b127-118bc1d2ce24",
         "7120c076-9673-4f15-a579-5efa29fefb6f",
