@@ -284,7 +284,7 @@
         {% else %}
               <div  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product-single__video product__photo-container product__photo-container-{{ section.id }} " 
                 id="ProductPhoto{{ section.id }}"
-                style="max-width: {% render 'image-width' with image: image, width: 480 %}px;"
+                style="max-width: {% render 'image-width' with image, image: image, width: 480 %}px;"
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                 {{ media | media_tag }}
@@ -369,4 +369,13 @@
       }
     </script>
     {%- endif -%}
-  </div>
+  </div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'image-width' with image: image, width: 480 %}"
+  to: "{% render 'image-width' with image, image: image, width: 480 %}"
+  position: 15279..15342
+{%- endcomment -%}

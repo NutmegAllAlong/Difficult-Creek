@@ -543,8 +543,8 @@
                   {{ product.metafields.info.affiliate_button }}
                 </a>
               {% else %} {% comment %}NORMAL PRODUCT{% endcomment %}
-                {% capture "form_class" %}product-form {% if block.settings.product_selector == 'select' %} product-form-select{% endif %} {% if block.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
-                {% capture "form_id" %}AddToCartForm-{{ section.id }}{%- endcapture %}
+                {% capture form_class %}product-form {% if block.settings.product_selector == 'select' %} product-form-select{% endif %} {% if block.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
+                {% capture form_id %}AddToCartForm-{{ section.id }}{%- endcapture %}
                 {% form 'product', product, class: form_class, id: form_id %}
                 {% unless product.has_only_default_variant %}
                 {% for option in product.options_with_values %}
@@ -2019,4 +2019,16 @@ initPhotoSwipeFromDOM('.my-gallery');
     soldOut: {{ 'products.product.sold_out' | t | json }},
     unavailable: {{ 'products.product.unavailable' | t | json }}
   }
-</script>
+</script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{% capture "form_class" %}'
+  to: "{% capture form_class %}"
+  position: 22945..22969
+- from: '{% capture "form_id" %}'
+  to: "{% capture form_id %}"
+  position: 23185..23206
+{%- endcomment -%}

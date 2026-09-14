@@ -554,8 +554,8 @@ console.log('Product: {{ product.title }}');
                   {{ product.metafields.info.affiliate_button }}
                 </a>
               {% else %} {% comment %}NORMAL PRODUCT{% endcomment %}
-                {% capture "form_class" %}product-form {% if block.settings.product_selector == 'select' %} product-form-select{% endif %} {% if block.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
-                {% capture "form_id" %}AddToCartForm-{{ section.id }}{%- endcapture %}
+                {% capture form_class %}product-form {% if block.settings.product_selector == 'select' %} product-form-select{% endif %} {% if block.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
+                {% capture form_id %}AddToCartForm-{{ section.id }}{%- endcapture %}
                 {% form 'product', product, class: form_class, id: form_id %}
                 {% unless product.has_only_default_variant %}
                 {% for option in product.options_with_values %}
@@ -2166,3 +2166,16 @@ if (!blockContainer) {
   setTimeout(fixInputIds, 500);
 })();
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{% capture "form_class" %}'
+  to: "{% capture form_class %}"
+  position: 23594..23618
+- from: '{% capture "form_id" %}'
+  to: "{% capture form_id %}"
+  position: 23835..23856
+{% endcomment %}

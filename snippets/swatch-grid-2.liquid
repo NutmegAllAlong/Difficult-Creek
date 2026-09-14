@@ -2,7 +2,7 @@
 {%- assign formId = section.id | append: '-' | append: product.id -%}
 <div class="js-customform pt-2" data-id="{{ formId }}">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
-  {%- capture "form_class" %}customform-{{ formId }} js-form--notice{%- endcapture -%}
+  {%- capture form_class %}customform-{{ formId }} js-form--notice{%- endcapture -%}
   {%- form 'product', product, class: form_class -%}
   {%- unless product.has_only_default_variant -%}
   {%- for option in product.options_with_values -%}
@@ -97,4 +97,13 @@
     		{{ product | json }}
   </script>
 </div>
-{%- endif -%}
+{%- endif -%}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: '{%- capture "form_class" %}'
+  to: "{%- capture form_class %}"
+  position: 236..261
+{%- endcomment -%}

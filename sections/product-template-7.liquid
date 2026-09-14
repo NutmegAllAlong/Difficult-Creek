@@ -185,7 +185,7 @@
               {%- for image in product.images -%}
               <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="product-single__photo product__photo-container product__photo-container-{{ section.id }} js{% unless image == featured_image %} hide{% endunless %}"
                     id="ProductPhoto{{ section.id }}"
-                   style="max-width: {% include 'image-width' with image: image, width: 480 %}px;"
+                   style="max-width: {% include 'image-width' with image, image: image, width: 480 %}px;"
                    data-image-id="{{ image.id }}">
                     <a href="{{ image | img_url: '1400x' }}" itemprop="contentUrl" data-size="1400x1400"
                     class="product__photo-wrapper product__photo-wrapper-{{ section.id }} zoom_image zoom zoom_enabled"
@@ -310,8 +310,8 @@
             </a>
             
           {% else %} {% comment %}NORMAL PRODUCT{% endcomment %}
-            {% capture "form_class" %}product-form{% if section.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
-            {% capture "form_id" %}AddToCartForm-{{ section.id }}{%- endcapture %}
+            {% capture form_class %}product-form{% if section.settings.enable_payment_button %} product-form--payment-button{% endif %}{%- endcapture %}
+            {% capture form_id %}AddToCartForm-{{ section.id }}{%- endcapture %}
             {% form 'product', product, class:form_class, id:form_id %}
             {% unless product.has_only_default_variant %}
             {% for option in product.options_with_values %}
@@ -1153,4 +1153,19 @@
       soldOut: {{ 'products.product.sold_out' | t | json }},
       unavailable: {{ 'products.product.unavailable' | t | json }}
     }
-  </script>
+  </script>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% include 'image-width' with image: image, width: 480 %}"
+  to: "{% include 'image-width' with image, image: image, width: 480 %}"
+  position: 5496..5560
+- from: '{% capture "form_class" %}'
+  to: "{% capture form_class %}"
+  position: 12647..12671
+- from: '{% capture "form_id" %}'
+  to: "{% capture form_id %}"
+  position: 12800..12821
+{%- endcomment -%}
