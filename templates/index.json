@@ -474,134 +474,8 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "list_image_Y6TH8D": {
-      "type": "list-image",
-      "blocks": {
-        "image_item_xLWm8V": {
-          "type": "image_item",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7622.heic",
-            "product": "pair-of-mcm-tan-and-gold-ceramic-lamps",
-            "top": 66,
-            "left": 20
-          }
-        },
-        "image_item_nRtNf4": {
-          "type": "image_item",
-          "settings": {
-            "image": "shopify://shop_images/BrassLampA13.heic",
-            "product": "vintage-brass-lamp",
-            "top": 30,
-            "left": 60
-          }
-        },
-        "image_item_KHtNmW": {
-          "type": "image_item",
-          "settings": {
-            "image": "shopify://shop_images/ArtGlassBlueTanLamp11.heic",
-            "product": "art-glass-lamp-in-blue-sandy-brown-and-white",
-            "top": 50,
-            "left": 10
-          }
-        },
-        "image_item_C49H8e": {
-          "type": "image_item",
-          "settings": {
-            "image": "shopify://shop_images/Jewel_tone_horizontal_strip_lampshade.heic",
-            "product": "jewel-tone-horizontal-stripes-drumshade",
-            "top": 30,
-            "left": 60
-          }
-        }
-      },
-      "block_order": [
-        "image_item_xLWm8V",
-        "image_item_nRtNf4",
-        "image_item_KHtNmW",
-        "image_item_C49H8e"
-      ],
-      "custom_css": [],
-      "settings": {
-        "animation": "",
-        "paddingsection": "40px 0px 0px 0px",
-        "paddingmobile": "45px 0px 0px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px",
-        "setwidth": "container-fluid",
-        "bgsection": "rgba(0,0,0,0)",
-        "title_top": "",
-        "title": "From Our Collections",
-        "des": "",
-        "align-heading": "center",
-        "arrows": true,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "rows": "1",
-        "show": 4
-      }
-    },
     "17692939121f0c05b8": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_42784c1_ECrDg7": {
-          "type": "ai_gen_block_42784c1",
-          "settings": {
-            "subtitle": "Given New Life",
-            "title": "Our Lamps are Renewed & Refreshed",
-            "heading_alignment": "center",
-            "heading_spacing": 40,
-            "subtitle_font_size": 14,
-            "subtitle_font_weight": "700",
-            "subtitle_transform": "uppercase",
-            "subtitle_letter_spacing": 0.2,
-            "subtitle_color": "#7f4a88",
-            "subtitle_spacing": 10,
-            "title_font_size": 34,
-            "title_font_weight": "600",
-            "title_color": "#231f20",
-            "logos_per_row_desktop": 4,
-            "logos_per_row_tablet": 4,
-            "logos_per_row_mobile": 2,
-            "desktop_width_percent": 100,
-            "logo_max_width": 150,
-            "logo_spacing": 40,
-            "hover_opacity": 70,
-            "text_alignment": "center",
-            "text_font_size": 14,
-            "text_font_weight": "400",
-            "text_color": "#343a40",
-            "image_text_spacing": 15,
-            "background_color": "#faf5f2",
-            "section_padding_top": 50,
-            "section_padding_bottom": 50,
-            "logo_image_1": "shopify://shop_images/rewiring.svg",
-            "logo_link_1": "",
-            "logo_text_1": "Rewiring",
-            "logo_image_2": "shopify://shop_images/refurbish_old_shade.svg",
-            "logo_link_2": "",
-            "logo_text_2": "Refurbish old shades",
-            "logo_image_3": "shopify://shop_images/replace_parts.svg",
-            "logo_link_3": "",
-            "logo_text_3": "Replace old parts",
-            "logo_image_4": "shopify://shop_images/create_new_lamps_b3b4e8cf-60c2-44b6-a57b-b87483b485ed.svg",
-            "logo_link_4": "",
-            "logo_text_4": "Create new lamps",
-            "logo_link_5": "",
-            "logo_text_5": "",
-            "logo_link_6": "",
-            "logo_text_6": "",
-            "logo_link_7": "",
-            "logo_text_7": "",
-            "logo_link_8": "",
-            "logo_text_8": ""
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_42784c1_ECrDg7"
-      ],
       "settings": {}
     },
     "93c72a6c-f37d-432e-8104-d1f2a08adc05": {
@@ -1079,36 +953,6 @@
     },
     "1786118037cb7ac9e7": {
       "type": "_blocks",
-      "blocks": {
-        "ai_gen_block_021e122_3YnbK8": {
-          "type": "ai_gen_block_021e122",
-          "settings": {
-            "heading": "Shop by collection",
-            "heading_alignment": "center",
-            "heading_color": "#231f20",
-            "collection_1": "drum-lampshades-1",
-            "collection_2": "empire-lamp-shades",
-            "collection_3": "cone-lamp-shades",
-            "collection_4": "hand-sewn-lampshades",
-            "collection_5": "square-rectagular-other-shaped-shades",
-            "collection_6": "vintage-second-hand-lampshades",
-            "image_aspect_ratio": "1:1",
-            "image_border_radius": 8,
-            "title_font_size": 20,
-            "title_color": "#231f20",
-            "count_font_size": 14,
-            "count_color": "#343a40",
-            "grid_gap": 30,
-            "section_padding_top": 60,
-            "section_padding_bottom": 60,
-            "section_background": "#faf5f2"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "ai_gen_block_021e122_3YnbK8"
-      ],
       "settings": {}
     }
   },
@@ -1123,7 +967,6 @@
     "featured_collections_1_FW6aWb",
     "blocks_qRgzgX",
     "featured_collections_1_kYjr6i",
-    "list_image_Y6TH8D",
     "17692939121f0c05b8",
     "93c72a6c-f37d-432e-8104-d1f2a08adc05",
     "scrolling_text_M9DwVE",
