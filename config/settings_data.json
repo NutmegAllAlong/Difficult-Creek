@@ -2708,9 +2708,19 @@
           "alignment": "left"
         }
       },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "8670728856252544919": {
+        "type": "shopify://apps/essential-estimated/blocks/app-embed/02a895dd-b5b5-4103-8966-c6914aa8309e",
+        "disabled": false,
+        "settings": {}
+      },
       "18387101310985349768": {
         "type": "shopify://apps/progus-store-locator/blocks/app-embed/d7896016-8cc9-45e0-860e-ba85ba3d5be4",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "show_title": true,
           "our_locations": "Our locations",
@@ -2723,18 +2733,11 @@
           "position": "3",
           "tags": "",
           "city": "",
-          "groups": ""
+          "groups": "",
+          "tags_ui_mode": "hidden",
+          "show_only_tags": "",
+          "hide_categories": ""
         }
-      },
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "8670728856252544919": {
-        "type": "shopify://apps/essential-estimated/blocks/app-embed/02a895dd-b5b5-4103-8966-c6914aa8309e",
-        "disabled": false,
-        "settings": {}
       }
     }
   },
